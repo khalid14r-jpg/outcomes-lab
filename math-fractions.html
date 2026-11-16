@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>الكسور الاعتيادية والأعداد الكسرية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@500;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: a math-notebook page; tabs on top split the outcome into seven practice activities and a final challenge; one activity shows at a time. */
+:root{
+  --bg:#EAF0F6;--grid:rgba(30,58,100,.07);--paper:#FFFFFF;--ink:#15233A;--muted:#566880;--line:#C7D3E3;
+  --a:#2E6BD6;--a-soft:rgba(46,107,214,.14);--b:#E08A1E;--b-soft:rgba(224,138,30,.16);
+  --ok:#17845A;--ok-soft:rgba(23,132,90,.12);--bad:#C2412B;--bad-soft:rgba(194,65,43,.11);
+  --rule:#FFF7E3;--rule-edge:#E9C878;
+  --p3:#7A4FD0;--p2:#2E6BD6;--p1:#17845A;--p0:#E08A1E;
+  --display:"Baloo Bhaijaan 2","IBM Plex Sans Arabic",system-ui,sans-serif;
+  --body:"IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1626;--grid:rgba(150,180,230,.06);--paper:#16213A;--ink:#E4ECF7;--muted:#9BACC4;--line:#2C3C5A;
+  --a:#6EA2FF;--a-soft:rgba(110,162,255,.16);--b:#F3AE52;--b-soft:rgba(243,174,82,.16);
+  --ok:#4CC48C;--ok-soft:rgba(76,196,140,.14);--bad:#F2806C;--bad-soft:rgba(242,128,108,.14);
+  --rule:#2A2716;--rule-edge:#7C6A2E;--p3:#B49BFF;--p2:#6EA2FF;--p1:#4CC48C;--p0:#F3AE52;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1626;--grid:rgba(150,180,230,.06);--paper:#16213A;--ink:#E4ECF7;--muted:#9BACC4;--line:#2C3C5A;
+  --a:#6EA2FF;--a-soft:rgba(110,162,255,.16);--b:#F3AE52;--b-soft:rgba(243,174,82,.16);
+  --ok:#4CC48C;--ok-soft:rgba(76,196,140,.14);--bad:#F2806C;--bad-soft:rgba(242,128,108,.14);
+  --rule:#2A2716;--rule-edge:#7C6A2E;--p3:#B49BFF;--p2:#6EA2FF;--p1:#4CC48C;--p0:#F3AE52;color-scheme:dark}
+*{box-sizing:border-box}[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px}
+.wrap{max-width:920px;margin:0 auto;padding:20px max(16px,env(safe-area-inset-right,0px)) 48px max(16px,env(safe-area-inset-left,0px))}
+header{display:grid;gap:12px;margin-bottom:18px}
+.badge{display:inline-flex;align-items:center;gap:8px;font:800 .95rem var(--display);color:#fff;background:var(--a);border-radius:999px;padding:2px 14px;justify-self:start}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(1.8rem,5vw,2.5rem);line-height:1.2;margin:0}
+.idea{margin:0;color:var(--muted)}.idea b{color:var(--ink)}
+.vocab{display:flex;flex-wrap:wrap;gap:6px}.vocab span{background:var(--b-soft);border-radius:8px;padding:0 10px;font-weight:600;font-size:.9rem}
+.progress{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:.92rem;color:var(--muted)}
+.rst{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px}.rst .rq{color:var(--bad);font-weight:600}
+.btn.sm{padding:3px 12px;font-size:.85rem}.btn.danger{background:var(--bad);border-color:var(--bad);color:#fff}
+.bar{flex:1;height:10px;border-radius:999px;background:var(--paper);border:1px solid var(--line);overflow:hidden;max-width:320px}
+.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+nav.steps{display:flex;flex-wrap:wrap;gap:8px}
+nav.steps button{font:600 .92rem var(--body);border:1.5px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:5px 14px;cursor:pointer}
+nav.steps button.ok::after{content:" ✓";color:var(--ok)}
+nav.steps button[aria-current="true"]{border-color:var(--a);background:var(--a);color:#fff}
+nav.steps button[aria-current="true"].ok::after{color:#fff}
+section.part{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
+.part-head h2{font-family:var(--display);font-weight:800;font-size:1.6rem;margin:0;line-height:1.3}
+.part-head p{margin:2px 0 0;color:var(--muted)}
+.ind{display:inline-block;font-size:.85rem;font-weight:700;color:var(--a);background:var(--a-soft);border-radius:8px;padding:1px 10px;margin-bottom:4px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;grid-template-columns:minmax(0,1fr);gap:12px;min-width:0}
+.count{margin:0;font-size:.9rem;color:var(--muted);font-weight:600}
+.qbox{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;min-width:0}
+.qbox.done{animation:pop .35s ease}
+@keyframes pop{50%{transform:scale(1.01)}}
+.qt{margin:0;font-weight:600;font-size:1.05rem}
+.qn2{margin:0;color:var(--muted);font-size:.88rem;font-weight:600}
+.hint{margin:0;color:var(--muted);font-size:.92rem}
+.muted{color:var(--muted);font-weight:500}
+.credit{margin:6px 0 0;padding-top:10px;border-top:1px dashed var(--line);color:var(--muted);font-size:.82rem;text-align:center}
+.n{direction:ltr;unicode-bidi:isolate;font-family:var(--display);font-weight:700;white-space:nowrap}
+.big{margin:0;font-size:clamp(1.5rem,6vw,2.2rem);text-align:center}
+.words{margin:0;font-size:1.15rem;font-weight:700;background:var(--rule);border:1.5px solid var(--rule-edge);border-radius:12px;padding:10px 14px}
+.bign{display:flex;justify-content:center;flex-wrap:nowrap;gap:2px;font:800 clamp(1.4rem,6.4vw,2.4rem) var(--display);direction:ltr;overflow-x:auto;padding:4px 0}
+.bign .dg{display:inline-grid;place-items:center;min-width:1.05ch;border-radius:8px;padding:0 2px;font:inherit;color:inherit;background:none;border:0;line-height:1.35}
+.bign button.dg{cursor:pointer;background:var(--a-soft);min-width:1.3ch;margin:0 1px}
+.bign button.dg:hover{background:var(--b-soft)}
+.bign .dg.hl{color:var(--b);text-decoration:underline;text-decoration-thickness:4px;text-underline-offset:9px;background:var(--b-soft)}
+.bign .dg.bad{background:var(--bad-soft);color:var(--bad)}
+.bign .cm{opacity:.55;margin:0 1px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{font:600 .95rem var(--body);border-radius:10px;padding:8px 16px;cursor:pointer;border:1.5px solid var(--line);background:var(--paper);color:var(--ink)}
+.btn.primary{background:var(--a);border-color:var(--a);color:#fff}
+.nxt{justify-self:start}
+button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--b);outline-offset:2px}
+.fb{margin:0;min-height:1.2em;font-size:.97rem}.fb.ok{color:var(--ok)}.fb.bad{color:var(--bad)}
+.fb .n{color:inherit}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts.col{display:grid}
+.opt{font:500 1rem var(--body);border:1.5px solid var(--line);background:var(--paper);color:var(--ink);border-radius:10px;padding:8px 14px;cursor:pointer;text-align:start;min-width:0}
+.opt:disabled{cursor:default}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft);opacity:.8}
+.opts.col .opt .n,.big .n{white-space:normal}
+.opt .n{font-size:1.05rem}
+.ans{font:700 1.3rem var(--display);padding:6px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);width:min(100%,320px);text-align:center}
+.live{margin:0;color:var(--muted);font-size:.9rem;min-height:1.2em}
+/* place-value chart */
+.scroll{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+table.pv{border-collapse:separate;border-spacing:0;margin:0 auto;font-size:.8rem}
+table.pv th{font-weight:700;padding:3px 2px;text-align:center;border-bottom:1px solid var(--line);white-space:nowrap}
+table.pv th.per{color:#fff;border-radius:8px 8px 0 0;font-size:.82rem}
+table.pv th.per.p3{background:var(--p3)}table.pv th.per.p2{background:var(--p2)}table.pv th.per.p1{background:var(--p1)}table.pv th.per.p0{background:var(--p0)}
+table.pv .pe{border-right:2px solid var(--ink)}
+table.pv td{text-align:center;padding:2px;min-width:44px}
+table.pv td button{display:block;margin:0 auto;width:36px;height:30px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;cursor:pointer;font-size:.8rem}
+table.pv td output{display:block;font:800 1.6rem var(--display);line-height:1.5}
+table.pv td output.dim{opacity:.4}
+table.pv.mini td{min-width:30px;font:800 1.15rem var(--display);border-bottom:1px solid var(--line)}
+table.pv.mini td.hl{background:var(--b-soft);color:var(--ink)}
+table.pv.mini th{font-size:.72rem;color:var(--muted)}
+table.pv.mini thead tr:first-child th{color:var(--ink);font-size:.78rem}
+.forms{display:grid;gap:6px;background:var(--bg);border-radius:12px;padding:10px 14px}
+.forms p{margin:0;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline;min-width:0}
+.forms .fl{font-size:.82rem;font-weight:700;color:#fff;background:var(--a);border-radius:6px;padding:0 8px;flex:none}
+.forms .n{white-space:normal}
+/* number line */
+.fig{display:flex;justify-content:center}
+svg.nl{direction:ltr;width:100%;max-width:640px;height:auto;overflow:visible}
+svg.nl .ax,svg.nl .tk{stroke:var(--ink);stroke-width:2.5}
+svg.nl .axh{fill:var(--ink)}
+svg.nl .lb{fill:var(--ink);font:700 22px var(--display)}
+svg.nl .lb.md{fill:var(--b)}
+svg.nl .lb.dt{fill:var(--a);font-size:18px}
+svg.nl .hit{fill:var(--a-soft);stroke:var(--a);stroke-width:2;cursor:pointer}
+svg.nl .hit:hover{fill:var(--b-soft)}
+svg.nl .hit.ok{fill:var(--ok);stroke:var(--ok)}
+svg.nl .hit.no{fill:var(--bad-soft);stroke:var(--bad)}
+svg.nl .mk{fill:var(--b)}
+svg.nl .q{fill:var(--b);font:800 22px var(--display)}
+svg.nl .dot{fill:var(--a)}
+/* compare */
+.cmp{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;font-size:clamp(1.25rem,5vw,1.9rem)}
+.cmp .slot{display:inline-grid;place-items:center;width:52px;height:52px;border:2.5px dashed var(--line);border-radius:12px;font:800 1.8rem var(--display);color:var(--muted)}
+.cmp .slot.ok{border-style:solid;border-color:var(--ok);color:var(--ok)}
+.opts.sym{justify-content:center}.opts.sym .s{font:800 1.4rem var(--display);margin-inline-end:4px}
+/* order */
+.slots{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px}
+.sl{display:flex;align-items:center;gap:8px;border:1.5px dashed var(--line);border-radius:10px;padding:6px 10px;min-height:46px}
+.sl i{font-style:normal;display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--line);font-weight:800;flex:none}
+.sl.ok{border-style:solid;border-color:var(--ok);background:var(--ok-soft)}
+.sl.ok i{background:var(--ok);color:#fff}
+.opt.ocard{font-size:1.1rem}.opt.used{opacity:.35}
+.shake{animation:sh .35s}@keyframes sh{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+/* quiz */
+.qbar{display:flex;gap:5px;flex-wrap:wrap}.qbar i{width:26px;height:8px;border-radius:99px;background:var(--line)}
+.qbar i.cur{background:var(--a)}.qbar i.ok{background:var(--ok)}.qbar i.no{background:var(--bad)}
+.score{font-family:var(--display);font-size:1.5rem;margin:0}
+table.rep{border-collapse:collapse;width:100%;font-size:.93rem}
+table.rep th,table.rep td{border:1px solid var(--line);padding:6px 8px;text-align:start;vertical-align:top}
+table.rep th{background:var(--bg)}
+table.rep .sc{font:800 1.1rem var(--display);text-align:center;white-space:nowrap}
+table.rep .sc.ok{color:var(--ok)}table.rep .sc.mid{color:var(--b)}table.rep .sc.no{color:var(--bad)}
+.lnk{background:none;border:0;color:var(--a);font:700 .93rem var(--body);text-decoration:underline;cursor:pointer;padding:0}
+.rule{background:var(--rule);border:1.5px solid var(--rule-edge);border-radius:14px;padding:12px 16px}
+.rule p{margin:0}.rule h3{margin:0 0 4px;font-family:var(--display);font-size:1.1rem}
+
+.items{display:grid;gap:14px;grid-template-columns:minmax(0,1fr)}
+.card.done{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.card.ext{border-style:dashed;border-color:var(--a)}
+.qhead{display:flex;gap:10px;align-items:flex-start}
+.qhead>div{display:grid;gap:0}
+.qn{flex:none;display:inline-grid;place-items:center;min-width:30px;height:30px;border-radius:50%;background:var(--a);color:#fff;font:800 .95rem var(--display)}
+.card.done .qn{background:var(--ok)}
+.tag{font-size:.8rem;color:var(--b);font-weight:700}
+.tt{font-family:var(--display);font-size:1.12rem}
+.qt.sm{font-size:.95rem;color:var(--muted)}
+.sub{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;border-top:1px dashed var(--line);padding-top:10px}
+.bign .gp{margin-left:0}
+.bign .dg.ul{text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:6px;background:var(--a-soft)}
+.eb{display:grid;gap:8px}
+.ebr{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.ebr small{color:var(--muted)}
+.ebr input,.lr input{font:700 1.15rem var(--display);padding:4px 10px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);width:min(100%,200px);text-align:center}
+.lr{display:flex;flex-wrap:wrap;gap:10px 18px}.lr input{width:80px}
+input.okb{border-color:var(--ok);background:var(--ok-soft)}input.badb{border-color:var(--bad);background:var(--bad-soft)}
+.exp{margin:0;font-weight:600}
+svg.nl .lb.sm{font-size:17px}
+svg.nl .co{stroke:var(--a);stroke-width:2}
+svg.nl .cb{fill:var(--paper);stroke:var(--a);stroke-width:2}
+svg.nl .ct{fill:var(--ink);font:800 17px var(--display)}
+.pool .dgt{font:800 1.4rem var(--display);min-width:48px;text-align:center}
+.part>.count{margin:0}
+table.an{border-collapse:collapse;width:100%;font-size:.9rem;min-width:640px}
+table.an th,table.an td{border:1px solid var(--line);padding:6px 8px;text-align:start;vertical-align:top}
+table.an th{background:var(--bg)}
+.an-note{margin:0;color:var(--muted);font-size:.9rem}
+footer{margin-top:26px;color:var(--muted);font-size:.9rem;display:grid;gap:10px}
+footer details{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+footer summary{cursor:pointer;font-weight:600;color:var(--ink)}
+footer ol{margin:6px 0;padding-inline-start:22px}
+@media (max-width:520px){table.pv td{min-width:24px;padding:1px 0}table.pv td button{width:22px;height:28px;font-size:.7rem}table.pv td output{font-size:1.25rem}table.pv th{font-size:.6rem;padding:2px 0}table.pv th.per{font-size:.66rem}.opt{font-size:.95rem}svg.nl .lb{font-size:28px}svg.nl .lb.dt{font-size:24px}}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+
+/* fractions */
+.fr{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1.08;font-family:var(--display);font-weight:800;margin:0 .12em;direction:ltr;unicode-bidi:isolate}
+.fr>span{padding:0 .18em;text-align:center;min-width:.9em}.fr>span:first-child{border-bottom:2px solid currentColor}
+.mx{display:inline-flex;align-items:center;gap:.1em;direction:rtl;vertical-align:middle}.mx .w{font-family:var(--display);font-weight:800;font-size:1.25em}
+.big .fr,.cmp .fr{font-size:1em}.eq{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.fin{display:inline-flex;align-items:center;gap:6px}.fst{display:inline-flex;flex-direction:column;align-items:center;gap:3px}
+.fst i{display:block;width:74px;height:3px;border-radius:2px;background:var(--ink)}
+.fin input,.sq{font:800 1.25rem var(--display);width:74px;padding:3px 6px;border:1.5px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink);text-align:center}
+.fin input.fw{width:62px;font-size:1.5rem;padding:10px 6px}.fin input::placeholder{font:500 .7rem var(--body);color:var(--muted)}
+.fin.okb input{border-color:var(--ok);background:var(--ok-soft)}.fin.badb input{border-color:var(--bad);background:var(--bad-soft)}
+.sq{width:64px}.frow{align-items:center}.eqs{font:800 1.5rem var(--display)}
+svg.mdl{width:100%;height:auto;max-width:560px;overflow:visible}svg.mdl.circ{max-width:190px}svg.mdl.set{max-width:300px}
+svg.mdl .pt{fill:var(--paper);stroke:var(--ink);stroke-width:2}svg.mdl .pt.on{fill:#6FA8E8}svg.mdl.set .pt.on{fill:#F2B33D}
+svg.mdl .frm{fill:none;stroke:var(--ink);stroke-width:3}svg.mdl .tp{cursor:pointer}svg.mdl .tp:hover{fill:var(--b-soft)}svg.mdl .tp.on:hover{fill:#5591D6}
+.fig{flex-wrap:wrap;gap:10px}
+svg.nl{overflow:visible}svg.nl .lbs{fill:var(--muted);font:700 15px var(--display)}svg.nl .fl{stroke:var(--muted);stroke-width:1.5}
+.dlab{display:flex;justify-content:center;align-items:flex-end;height:100%;font-size:22px;color:var(--a);background:transparent}
+.dlab .fr{background:var(--paper);border:1.5px solid var(--a);border-radius:8px;padding:1px 2px}.dlab .mx{background:var(--paper);border:1.5px solid var(--a);border-radius:8px;padding:1px 4px}
+.cls{display:grid;gap:8px}.clr{display:flex;flex-wrap:wrap;align-items:center;gap:8px;border-bottom:1px dashed var(--line);padding-bottom:6px}
+.clr .cv{min-width:70px;font-size:1.3rem;text-align:center}.opt.sm{padding:4px 10px;font-size:.9rem}
+.opts.col .opt .fr{font-size:1rem}.ocard small{color:var(--muted);font-weight:600}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) svg.mdl .pt.on{fill:#3E7CC8}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <span class="badge">الرياضيات · ناتج التعلم <bdi>2-1-1-4-6</bdi></span>
+  <h1>الكسور الاعتيادية والأعداد الكسرية</h1>
+  <p class="idea"><b>الناتج:</b> تمييز الكسور الاعتيادية، والأعداد الكسرية، والكسور غير الفعلية، وتمثيلها، وقراءتها، وكتابتها، والمقارنة بينها، وترتيبها، وتقريبها.</p>
+  <div class="vocab"><span>الكسر الاعتيادي</span><span>البسط</span><span>المقام</span><span>الكسور المتكافئة</span><span>أبسط صورة</span><span>الكسر الفعلي</span><span>الكسر غير الفعلي</span><span>العدد الكسري</span><span>المقام المشترك الأصغر</span><span>التقريب</span></div>
+  <div class="progress"><span id="pg-t"></span><div class="bar"><i id="pg-b"></i></div><span class="rst" id="rstw"></span></div>
+  <nav class="steps" aria-label="الدروس">
+    <button type="button" data-go="t1" data-n="الكسر الاعتيادي">١ الكسر الاعتيادي</button>
+    <button type="button" data-go="t2" data-n="الكسور المتكافئة وأبسط صورة">٢ الكسور المتكافئة وأبسط صورة</button>
+    <button type="button" data-go="t3" data-n="تقريب الكسور">٣ تقريب الكسور</button>
+    <button type="button" data-go="t4" data-n="الأعداد الكسرية والكسور غير الفعلية">٤ الأعداد الكسرية والكسور غير الفعلية</button>
+    <button type="button" data-go="t5" data-n="المقارنة والترتيب">٥ المقارنة والترتيب</button>
+    <button type="button" data-go="t6" data-n="التحدي الختامي">التحدي الختامي</button>
+    <button type="button" data-go="t7" data-n="للمعلم">للمعلم: تحليل المحتوى</button>
+  </nav>
+</header>
+<section class="part" id="t1" hidden>
+  <div class="part-head"><span class="ind">المؤشر ١</span><h2>الكسر الاعتيادي: تمثيله وقراءته وكتابته</h2><p>رابع ف٢: ١٠-١ الكسور الاعتيادية، ١٠-٣ تمثيل الكسور على خط الأعداد · خامس ف١: ٦-١ القسمة والكسور الاعتيادية.</p></div>
+  <div class="rule"><h3>تذكّر</h3><p>الكسر قد يمثّل جزءًا من الكل، أو جزءًا من مجموعة. يدلّ <b>البسط</b> (العدد العلوي) على عدد الأجزاء، ويدلّ <b>المقام</b> (العدد السفلي) على عدد أجزاء الكل. نقرأ <span class="fr"><span>٣</span><span>٤</span></span>: ثلاثة أرباع، أو ثلاثة على أربعة.</p></div>
+  <p class="count"></p><div class="items"></div>
+</section>
+<section class="part" id="t2" hidden>
+  <div class="part-head"><span class="ind">المؤشر ٢</span><h2>الكسور المتكافئة وأبسط صورة</h2><p>خامس ف٢: ٨-٣ الكسور المتكافئة، ٨-٤ تبسيط الكسور · سادس ف١: ٤-٢ تبسيط الكسور الاعتيادية.</p></div>
+  <div class="rule"><h3>تذكّر</h3><p><b>الكسور المتكافئة</b> كسور لها القيمة نفسها. لإيجاد كسر مكافئ اضرب البسط والمقام (أو اقسمهما) في العدد نفسه. يكون الكسر في <b>أبسط صورة</b> عندما يكون القاسم المشترك الأكبر (ق.م.أ) لبسطه ومقامه هو ١.</p></div>
+  <p class="count"></p><div class="items"></div>
+</section>
+<section class="part" id="t3" hidden>
+  <div class="part-head"><span class="ind">المؤشر ٢</span><h2>تقريب الكسور إلى صفر أو نصف أو واحد</h2><p>خامس ف١: ٦-٦ تقريب الكسور.</p></div>
+  <div class="rule"><h3>مفهوم أساسي: تقريب الكسور</h3><p><b>إلى الصفر:</b> إذا كان البسط أصغر من المقام بكثير. <b>إلى <span class="fr"><span>١</span><span>٢</span></span>:</b> إذا كان البسط يساوي نصف المقام تقريبًا. <b>إلى الواحد:</b> إذا كان البسط قريبًا من المقام. ويمكنك استعمال خط الأعداد.</p></div>
+  <p class="count"></p><div class="items"></div>
+</section>
+<section class="part" id="t4" hidden>
+  <div class="part-head"><span class="ind">المؤشران ٣ و٤</span><h2>الأعداد الكسرية والكسور غير الفعلية</h2><p>خامس ف١: استكشاف ٦-٢، ٦-٢ الكسور غير الفعلية، ٦-٤ الأعداد الكسرية · سادس ف١: ٤-٣ الأعداد الكسرية والكسور غير الفعلية.</p></div>
+  <div class="rule"><h3>تذكّر</h3><p><b>العدد الكسري</b> يتكوّن من عدد كلي وكسر. <b>الكسر غير الفعلي</b> بسطه أكبر من مقامه أو يساويه، و<b>الكسر الفعلي</b> بسطه أصغر من مقامه. لكتابة كسر غير فعلي على صورة عدد كسري: اقسم البسط على المقام، واكتب الباقي كسرًا مقامه المقسوم عليه. ولكتابة عدد كسري على صورة كسر غير فعلي: اضرب العدد الكلي في المقام، وأضف البسط، واكتب الناتج على المقام الأصلي.</p></div>
+  <p class="count"></p><div class="items"></div>
+</section>
+<section class="part" id="t5" hidden>
+  <div class="part-head"><span class="ind">المؤشر ٥</span><h2>مقارنة الكسور والأعداد الكسرية وترتيبها</h2><p>خامس ف١: ٦-٥ مقارنة الكسور الاعتيادية والأعداد الكسرية · خامس ف٢: ٨-٧ مقارنة الكسور الاعتيادية · سادس ف١: ٤-٦ مقارنة الكسور الاعتيادية وترتيبها.</p></div>
+  <div class="rule"><h3>مفهوم أساسي: مقارنة كسرين</h3><p>١) أوجد المقام المشترك الأصغر للكسرين (المضاعف المشترك الأصغر لمقاميهما). ٢) اكتب كسرًا مكافئًا لكل من الكسرين باستعمال المقام المشترك الأصغر. ٣) قارن بين البسطين. ويمكنك استعمال خط الأعداد: كل عدد أكبر من جميع الأعداد التي تقع عن يساره.</p></div>
+  <p class="count"></p><div class="items"></div>
+</section>
+<section class="part" id="t6" hidden>
+  <div class="part-head"><span class="ind">المؤشرات ١–٥</span><h2>التحدي الختامي</h2><p>عشرة أسئلة تتجدد في كل مرة، سؤالان لكل مؤشر. لكل سؤال محاولة واحدة، وفي النهاية تقرير لكل مؤشر.</p></div>
+  <div class="card"><div class="qbar"></div><div class="qbox"></div></div><p class="credit">إعداد وتصميم: أ. خالد رفيع الحمدي</p>
+</section>
+<section class="part" id="t7" hidden>
+  <div class="part-head"><span class="ind">للمعلم</span><h2>تحليل المحتوى وربطه بالناتج</h2><p><b>ناتج التعلم <bdi>2-1-1-4-6</bdi></b> (الصف السادس، وثيقة نواتج التعلم للاختبارات الوطنية ٢٠٢٦م): تمييز الكسور الاعتيادية، والأعداد الكسرية، والكسور غير الفعلية، وتمثيلها، وقراءتها، وكتابتها، والمقارنة بينها، وترتيبها، وتقريبها.</p></div>
+  <div class="card">
+<div class="scroll"><table class="an"><thead><tr><th>المؤشر</th><th>دروس الكتاب التي حُوِّلت إلى أنشطة</th><th>أنواع النشاط التفاعلي</th></tr></thead><tbody>
+<tr><td>١. يميز الكسر الاعتيادي، ويمثله بالنماذج والرسوم وخط الأعداد، ويقرؤه ويكتبه.</td><td>رابع ف٢: ١٠-١ (الفطيرة ٤/٦، مثال ٢، الحديقة ١/٣، تأكد، الترشيد ١/٥، التهيئة)، ١٠-٣ (الشوط ١/٢، النقطة ٣/٤، تأكد ٢) · خامس ف١: التهيئة (النجوم)، ٦-١ (الفطيرتان، الصلصال)</td><td>قراءة نموذج (أشرطة، دائرة، مجموعة) وكتابة الكسر، تظليل الأجزاء بالضغط، القراءة اللفظية، الكتابة بالأرقام، الكسر والقسمة، تحديد الكسر على خط الأعداد</td></tr>
+<tr><td>٢. يوجد الكسور المكافئة، ويكتب الكسر في أبسط صورة، ويقربه إلى صفر أو نصف أو واحد.</td><td>خامس ف٢: ٨-٣ (حديقة يوسف، أمثلة ١–٣، تأكد ٨، اكتشف الخطأ: نوف وهدى)، ٨-٤ (السرعوف، ١٨/٣٠ بطريقتين، تأكد، برج المملكة) · سادس ف١: ٤-٢ (الطيور، ١٨/٢٤) · خامس ف١: ٦-٦ (الضفدع، أمثلة ٢–٣، تأكد، خديجة، الحفرة)</td><td>إكمال العدد المجهول، إيجاد كسرين مكافئين، (ق.م.أ) ثم التبسيط، زر «في أبسط صورة»، التقريب مع التحقق بخط الأعداد</td></tr>
+<tr><td>٣. يميز العدد الكسري، ويمثله بالنماذج والرسوم وخط الأعداد، ويقرؤه ويكتبه.</td><td>خامس ف١: استكشاف ٦-٢ (٢ ١/٣ بالنموذج، ٧/٤)، ٦-٥ مثال ٣ · سادس ف١: ٤-٣ (خط الأعداد ١ ١/٤، ستة وثلاثة أخماس)</td><td>كتابة النموذج بالصورتين، تظليل نموذج عدد كسري، قراءة عدد كسري على خط الأعداد، القراءة والكتابة</td></tr>
+<tr><td>٤. يميز الكسر غير الفعلي، ويحوله إلى عدد كسري والعكس.</td><td>خامس ف١: ٦-٢ (٥/٣، ٢٠/١٠، القطار ٥٥/٢٤، تأكد ٤، اكتشف الخطأ: راشد وأحمد)، ٦-٤ (الحوت، ٢ ٧/٨، الجمل) · سادس ف١: ٤-٣ (التصنيف، مقام إبراهيم، ٢٣/٦، السفينة)</td><td>تصنيف (فعلي/غير فعلي/كسري)، التحويل في الاتجاهين بالخطوات ونموذج يظهر بعد الحل</td></tr>
+<tr><td>٥. يقارن بين الكسور والأعداد الكسرية، ويرتبها تصاعديًّا وتنازليًّا.</td><td>خامس ف١: ٦-٥ (القماش، ٢ ٣/٥ و٧/٥، تأكد) · خامس ف٢: ٨-٧ (أمثلة ١–٣، تأكد ١) · سادس ف١: ٤-٦ (أمثلة ١–٤، تأكد ٤، الصحارى)</td><td>اختيار الإشارة مع خطوات (م.م.أ) وخط أعداد بعد الإجابة، ترتيب بالضغط على البطاقات</td></tr>
+</tbody></table></div>
+<p class="an-note"><b>التغذية الراجعة</b> تشخّص الخطأ نفسه: تبديل البسط والمقام، أو كتابة كسر الجزء غير المظلّل، أو عدّ العلامات بدل الأجزاء على خط الأعداد، أو الجمع بدل الضرب في الكسور المتكافئة (خطأ نوف)، أو تبسيط غير مكتمل، أو تبديل ناتج القسمة والباقي، أو نسيان إضافة البسط، أو مقارنة المقامين وحدهما.</p>
+<p class="an-note"><b>بطاقات «توسّع»</b> في نهاية كل درس تولّد أسئلة جديدة بالأسلوب نفسه، و<b>التحدي الختامي</b> يقيس المؤشرات الخمسة بسؤالين لكل مؤشر. زر «مسح التقدم» في أعلى الصفحة يمسح ما حُفظ على هذا الجهاز فقط.</p>
+  </div><p class="credit">إعداد وتصميم: أ. خالد رفيع الحمدي</p>
+</section>
+<footer><p>المحتوى مأخوذ من كتب الطالب للرياضيات (١٤٤٨هـ): الرابع ف٢ (الفصل العاشر)، والخامس ف١ (الفصل السادس) وف٢ (الفصل الثامن)، والسادس ف١ (الفصل الرابع). الحقول تقبل الأرقام العربية (٣) والإنجليزية (3)، ويُحفظ تقدّم الطالب على جهازه.</p></footer>
+</div>
+<script>
+/* ===== أدوات الأعداد ===== */
+const AR='٠١٢٣٤٥٦٧٨٩';
+const ar=s=>String(s).replace(/\d/g,d=>AR[d]);
+const toEn=s=>String(s).replace(/[٠-٩]/g,c=>AR.indexOf(c)).replace(/[۰-۹]/g,c=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(c));
+const fmt=n=>ar(String(Math.round(n)));
+const P10=k=>Math.pow(10,k);
+const digitAt=(n,k)=>Math.floor(n/P10(k))%10;
+const nDig=n=>n===0?1:String(Math.floor(n)).length;
+const PN=['الآحاد','العشرات','المئات','الألوف','عشرات الألوف','مئات الألوف','الملايين','عشرات الملايين','مئات الملايين','البلايين','عشرات البلايين','مئات البلايين'];
+const PNs=['آحاد','عشرات','مئات','آحاد','عشرات','مئات','آحاد','عشرات','مئات','آحاد','عشرات','مئات'];
+const PER=['الواحدات','الألوف','الملايين','البلايين'];
+const PERL=['الواحدات','الألوف','الملايين','البلايين (المليارات)'];
+const RND=['أقرب واحد','أقرب عشرة','أقرب مئة','أقرب ألف','أقرب عشرة آلاف','أقرب مئة ألف','أقرب مليون','أقرب عشرة ملايين','أقرب مئة مليون','أقرب بليون','أقرب عشرة بلايين','أقرب مئة بليون'];
+/* الصيغة اللفظية */
+const ONES=['','واحد','اثنان','ثلاثة','أربعة','خمسة','ستة','سبعة','ثمانية','تسعة'];
+const TENS=['','','عشرون','ثلاثون','أربعون','خمسون','ستون','سبعون','ثمانون','تسعون'];
+const HUN=['','مئة','مئتان','ثلاث مئة','أربع مئة','خمس مئة','ست مئة','سبع مئة','ثماني مئة','تسع مئة'];
+const SC={sing:['','ألف','مليون','بليون'],dual:['','ألفان','مليونان','بليونان'],pl:['','آلاف','ملايين','بلايين'],acc:['','ألفًا','مليونًا','بليونًا']};
+function u100(n){if(n<10)return ONES[n];if(n===10)return 'عشرة';if(n===11)return 'أحد عشر';if(n===12)return 'اثنا عشر';if(n<20)return ONES[n-10]+' عشر';const o=n%10,t=Math.floor(n/10);return (o?ONES[o]+' و':'')+TENS[t];}
+function u1000(n){const h=Math.floor(n/100),r=n%100;if(!h)return u100(r);if(!r)return HUN[h];return HUN[h]+' و'+u100(r);}
+function grp(g,s){if(!s)return u1000(g);if(g===1)return SC.sing[s];if(g===2)return SC.dual[s];
+  const h=Math.floor(g/100),r=g%100;const hw=h===2?'مئتا':HUN[h];
+  if(r===0)return hw+' '+SC.sing[s];
+  if(h&&r<=2)return HUN[h]+' و'+ONES[r]+' '+SC.sing[s];
+  const pre=h?HUN[h]+' و':'';
+  return pre+u100(r)+' '+(r<=10?SC.pl[s]:SC.acc[s]);}
+function words(n){n=Math.round(n);if(n===0)return 'صفر';const out=[];for(let s=3;s>=0;s--){const g=Math.floor(n/P10(3*s))%1000;if(g)out.push(grp(g,s));}return out.join(' و');}
+/* الصيغة التحليلية */
+const expTerms=n=>{const t=[];for(let k=nDig(n)-1;k>=0;k--){const d=digitAt(n,k);if(d)t.push(d*P10(k));}return t;};
+const expanded=(terms)=>terms.map(t=>`<bdi class="n" dir="ltr">${fmt(t)}</bdi>`).join(' + ');
+/* الصيغة المختلطة كما في الكتاب: ١٢ مليونًا و٣٢٤ ألفًا و٥٠٠ */
+function mixed(n){const out=[];for(let s=3;s>=0;s--){const g=Math.floor(n/P10(3*s))%1000;if(!g)continue;if(!s){out.push(ar(g));continue;}
+  if(g===1){out.push(SC.sing[s]);continue;}if(g===2){out.push(SC.dual[s]);continue;}const r=g%100;
+  out.push(ar(g)+' '+(r===0?SC.sing[s]:r>=3&&r<=10?SC.pl[s]:SC.acc[s]));}return out.join(' و');}
+/* عشوائية */
+let SEED=Date.now()%2147483647;
+const rnd=()=>{SEED=(SEED*16807)%2147483647;return (SEED-1)/2147483646;};
+const ri=(a,b)=>a+Math.floor(rnd()*(b-a+1));
+const pick=a=>a[ri(0,a.length-1)];
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=ri(0,i);[a[i],a[j]]=[a[j],a[i]];}return a;};
+/* عدد عشوائي بعدد أرقام معين، مع احتمال أصفار في المنتصف */
+function rnum(digits,zeroP=.25){let s=String(ri(1,9));for(let i=1;i<digits;i++)s+=rnd()<zeroP?'0':String(ri(0,9));return +s;}
+if(typeof module!=='undefined')module.exports={mixed,words,fmt,expTerms,expanded,rnum,digitAt,nDig,ar};
+
+</script>
+<script>
+(function(){
+'use strict';
+const $=s=>document.querySelector(s);
+const E=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e;};
+const store={get(k){try{return localStorage.getItem(k);}catch(e){return null;}},set(k,v){try{localStorage.setItem(k,v);}catch(e){}}};
+const PFX='fr6-';
+const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b];}return a||1;};
+const lcm=(a,b)=>a/gcd(a,b)*b;
+const num=v=>{const t=toEn(v||'').replace(/[^0-9]/g,'');return t===''?NaN:+t;};
+function fbBox(){const f=E('p','fb');f.setAttribute('aria-live','polite');return f;}
+const ok=(f,m)=>{f.className='fb ok';f.innerHTML='✓ '+m;};
+const bad=(f,m)=>{f.className='fb bad';f.innerHTML=m;};
+
+/* ---------- عرض الكسور ---------- */
+const F=(n,d)=>`<span class="fr" role="math" aria-label="${n} على ${d}"><span>${ar(n)}</span><span>${ar(d)}</span></span>`;
+const X=(x)=>{if(x.w&&x.n)return `<span class="mx"><span class="w">${ar(x.w)}</span>${F(x.n,x.d)}</span>`;if(x.w)return `<span class="mx"><span class="w">${ar(x.w)}</span></span>`;return F(x.n,x.d);};
+const fx=(n,d)=>({w:0,n,d});const mx=(w,n,d)=>({w,n,d});
+const imp=x=>(x.w||0)*x.d+x.n; /* البسط في صورة كسر غير فعلي */
+const V=x=>imp(x)/x.d;
+/* القراءة اللفظية */
+const D1={2:'نصف',3:'ثلث',4:'ربع',5:'خمس',6:'سدس',7:'سبع',8:'ثمن',9:'تسع',10:'عشر'};
+const D2={2:'نصفان',3:'ثلثان',4:'ربعان',5:'خمسان',6:'سدسان',7:'سبعان',8:'ثمنان',9:'تسعان',10:'عشران'};
+const DP={2:'أنصاف',3:'أثلاث',4:'أرباع',5:'أخماس',6:'أسداس',7:'أسباع',8:'أثمان',9:'أتساع',10:'أعشار'};
+function fw(n,d){if(d<=10&&n<=10){if(n===1)return D1[d];if(n===2)return D2[d];return u100(n)+' '+DP[d];}return u100(n)+' على '+u100(d);}
+const fwAlt=(n,d)=>u100(n)+' على '+u100(d);
+const xw=x=>x.w?(u100(x.w)+(x.n?' و'+fw(x.n,x.d):'')):fw(x.n,x.d);
+
+/* ---------- إدخال كسر ---------- */
+function fracIn(mixed,lab){const s=E('span','fin'+(mixed?' mix':''));
+  s.innerHTML=(mixed?`<input class="fw" inputmode="numeric" aria-label="${lab||''} العدد الكلي" placeholder="كلي">`:'')+`<span class="fst"><input class="fn" inputmode="numeric" aria-label="${lab||''} البسط" placeholder="البسط"><i></i><input class="fd" inputmode="numeric" aria-label="${lab||''} المقام" placeholder="المقام"></span>`;
+  s.get=()=>({w:mixed?num(s.querySelector('.fw').value):0,n:num(s.querySelector('.fn').value),d:num(s.querySelector('.fd').value)});
+  s.lock=()=>s.querySelectorAll('input').forEach(i=>i.disabled=true);
+  s.mark=c=>{s.classList.remove('okb','badb');if(c)s.classList.add(c);};return s;}
+
+/* ---------- النماذج ---------- */
+/* أشرطة: count شريط، كل شريط d أجزاء، تُظلَّل shaded أجزاء من اليمين */
+function bars({count=1,d,shaded=0,tap=false,label=true}){const bw=count>2?190:260,h=50,g=22,W=count*bw+(count-1)*g+8;let s=`<svg viewBox="0 0 ${W} ${h+8}" class="mdl bars" role="img" aria-label="نموذج أشرطة">`;
+  let k=0;for(let b=0;b<count;b++){const x0=W-4-(b+1)*bw-b*g;for(let i=0;i<d;i++){const x=x0+bw-(i+1)*bw/d;const on=k<shaded;s+=`<rect x="${x}" y="4" width="${bw/d}" height="${h}" class="pt${on?' on':''}${tap?' tp':''}" data-i="${k}"${tap?` tabindex="0" role="button" aria-label="جزء ${k+1}"`:''}/>`;k++;}
+    s+=`<rect x="${x0}" y="4" width="${bw}" height="${h}" class="frm"/>`;}
+  return s+'</svg>';}
+function circle({d,shaded=0,tap=false}){const r=70,c=80;let s=`<svg viewBox="0 0 160 160" class="mdl circ" role="img" aria-label="دائرة مقسمة إلى ${d} أجزاء">`;
+  if(d===1)return s+`<circle cx="${c}" cy="${c}" r="${r}" class="pt${shaded?' on':''}" data-i="0"/></svg>`;
+  for(let i=0;i<d;i++){const a0=-Math.PI/2+i*2*Math.PI/d,a1=a0+2*Math.PI/d;const p=(a)=>`${c+r*Math.cos(a)} ${c+r*Math.sin(a)}`;
+    s+=`<path d="M${c} ${c}L${p(a0)}A${r} ${r} 0 ${a1-a0>Math.PI?1:0} 1 ${p(a1)}Z" class="pt${i<shaded?' on':''}${tap?' tp':''}" data-i="${i}"${tap?` tabindex="0" role="button" aria-label="جزء ${i+1}"`:''}/>`;}
+  return s+'</svg>';}
+function setModel({m,shaded}){const per=Math.min(m,6),rows=Math.ceil(m/per),W=per*46+8,H=rows*46+8;let s=`<svg viewBox="0 0 ${W} ${H}" class="mdl set" role="img" aria-label="مجموعة من ${m} نجوم">`;
+  const star=(cx,cy,r)=>{let p='';for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr=i%2?r*.45:r;p+=(i?'L':'M')+(cx+rr*Math.cos(a)).toFixed(1)+' '+(cy+rr*Math.sin(a)).toFixed(1);}return p+'Z';};
+  for(let i=0;i<m;i++){const col=i%per,row=Math.floor(i/per);s+=`<path d="${star(W-27-col*46,27+row*46,19)}" class="pt${i<shaded?' on':''}"/>`;}return s+'</svg>';}
+function tapShade(svg,onChange){svg.querySelectorAll('.tp').forEach(p=>{const t=()=>{p.classList.toggle('on');onChange&&onChange();};p.addEventListener('click',t);p.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();t();}});});}
+
+/* خط الأعداد: من 0 إلى max، كل وحدة مقسمة إلى d أجزاء */
+function nline({max=1,d,labels='int',marks=[],tap=false,dots=[]}){const W=680,x0=40,x1=640,y=70,n=max*d,X=k=>x0+(x1-x0)*k/n;
+  let s=`<svg viewBox="0 -56 ${W} 206" class="nl" direction="ltr" role="img" aria-label="خط الأعداد"><line x1="12" y1="${y}" x2="${W-12}" y2="${y}" class="ax"/><path d="M${W-12} ${y}l-11 -6v12z" class="axh"/><path d="M12 ${y}l11 -6v12z" class="axh"/>`;
+  for(let k=0;k<=n;k++){const x=X(k),big=k%d===0;s+=`<line x1="${x}" y1="${y-(big?14:9)}" x2="${x}" y2="${y+(big?14:9)}" class="tk"/>`;
+    if(big)s+=`<text x="${x}" y="${y+(labels==='frac'?62:40)}" text-anchor="middle" class="lb">${ar(k/d)}</text>`;
+    if(labels==='frac')s+=`<text x="${x}" y="${y+30}" text-anchor="middle" class="lbs">${ar(k)}</text><line x1="${x-7}" y1="${y+35}" x2="${x+7}" y2="${y+35}" class="fl"/><text x="${x}" y="${y+50}" text-anchor="middle" class="lbs">${ar(d)}</text>`;
+    if(tap&&k>0&&k<n&&!big||tap&&k>0&&k<n&&max>1)s+=`<circle cx="${x}" cy="${y}" r="15" class="hit" data-k="${k}" tabindex="0" role="button" aria-label="العلامة ${k}"/>`;}
+  marks.forEach(m=>{const x=X(m.k);s+=`<circle cx="${x}" cy="${y}" r="8" class="mk"/><text x="${x}" y="${y-22}" text-anchor="middle" class="q">${m.t}</text>`;});
+  dots.forEach((m,i)=>{const x=X(m.k);s+=`<circle cx="${x}" cy="${y}" r="7" class="dot"/><foreignObject x="${x-45}" y="${y-(i%2?122:72)}" width="90" height="58"><div xmlns="http://www.w3.org/1999/xhtml" class="dlab">${m.h}</div></foreignObject>`;});
+  return s+'</svg>';}
+
+/* ---------- اختيار من متعدد ---------- */
+function optQ(box,ctx,{stem,opts,lay,keep,after}){if(stem)box.insertAdjacentHTML('beforeend',stem);const wrap=E('div','opts'+(lay?' '+lay:'')),fb=fbBox();let first=true,fin=false;
+  (keep?opts:shuffle(opts)).forEach(o=>{const b=E('button','opt',o.html);b.type='button';b._ok=!!o.ok;
+    b.onclick=()=>{if(fin)return;if(o.ok){b.classList.add('right');fin=true;wrap.querySelectorAll('button').forEach(x=>x.disabled=true);ok(fb,o.fb||'إجابة صحيحة.');after&&after(true);ctx.done(first);}
+      else{b.classList.add('wrong');b.disabled=true;bad(fb,o.fb);if(ctx.quiz){fin=true;wrap.querySelectorAll('button').forEach(x=>{x.disabled=true;if(x._ok)x.classList.add('right');});after&&after(false);ctx.done(false);}first=false;}};wrap.appendChild(b);});
+  box.append(wrap,fb);return wrap;}
+const uniq=(arr,key=x=>x.v)=>{const s=new Set();return arr.filter(x=>{const k=key(x);if(s.has(k))return false;s.add(k);return true;});};
+/* سؤال بإدخال وتحقّق */
+function inputQ(box,ctx,{stem,fields,check,reveal}){if(stem)box.insertAdjacentHTML('beforeend',stem);const row=E('div','row frow');fields.forEach(f=>row.appendChild(f));
+  const b=E('button','btn primary','تحقّق');b.type='button';row.appendChild(b);const fb=fbBox();box.append(row,fb);let first=true,fin=false;
+  const go=()=>{if(fin)return;const r=check();if(r===true||(r&&r.ok)){fin=true;fields.forEach(f=>f.lock&&f.lock());ok(fb,(r&&r.msg)||'صحيح.');ctx.done(first);return;}
+    bad(fb,r);if(ctx.quiz){fin=true;fields.forEach(f=>f.lock&&f.lock());if(reveal)fb.innerHTML+=`<br>الإجابة الصحيحة: ${reveal}`;ctx.done(false);}first=false;};
+  b.onclick=go;row.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.tagName==='INPUT')go();});}
+const need=v=>isNaN(v);
+
+/* =====================================================
+   قوالب الأسئلة
+   ===================================================== */
+const Q={};
+/* ١) اكتب الكسر الذي يمثّل الجزء المظلّل */
+Q.readModel=({kind,n,d,count,stem,words})=>(box,ctx)=>{const m=kind==='circle'?circle({d,shaded:n}):kind==='set'?setModel({m:d,shaded:n}):bars({count:count||1,d:count?d/count:d,shaded:n});
+  const fi=fracIn(false);
+  inputQ(box,ctx,{stem:(stem||`<p class="qt">اكتب الكسر الذي يمثّل الجزء المظلّل${kind==='set'?' من المجموعة':''}:</p>`)+`<div class="fig">${m}</div>`,fields:[fi],reveal:F(n,d),
+    check:()=>{const v=fi.get();if(need(v.n)||need(v.d))return 'اكتب البسط والمقام.';
+      if(v.n===n&&v.d===d)return {ok:true,msg:`${F(n,d)} — البسط ${ar(n)} عدد الأجزاء المظلّلة، والمقام ${ar(d)} عدد الأجزاء ${kind==='set'?'في المجموعة':'كلها'}. ونقرؤه: ${fw(n,d)}${d<=10?'، أو '+fwAlt(n,d):''}.`};
+      if(v.n===d&&v.d===n)return 'بدّلت بين البسط والمقام: البسط (فوق الخط) عدد الأجزاء المظلّلة، والمقام (تحت الخط) عدد الأجزاء كلها.';
+      if(v.n===d-n&&v.d===d)return 'هذا كسر الأجزاء <b>غير</b> المظلّلة. البسط هو عدد الأجزاء المظلّلة.';
+      if(v.n===n&&v.d===d-n)return 'المقام هو عدد الأجزاء <b>كلها</b> (المظلّلة وغير المظلّلة)، وليس عدد غير المظلّلة فقط.';
+      if(v.d!==d)return `عُدّ الأجزاء كلها مرة أخرى؛ هذا هو المقام. ${kind==='circle'||kind==='bars'||!kind?'تأكد أن الأجزاء متطابقة.':''}`;
+      return 'عُدّ الأجزاء المظلّلة مرة أخرى؛ هذا هو البسط.';}});};
+/* ٢) مثّل الكسر بالرسم: اضغط على الأجزاء لتظليلها */
+Q.shade=({kind,n,d,count,stem})=>(box,ctx)=>{const per=count?d:d;const tot=count?count*d:d;
+  box.insertAdjacentHTML('beforeend',(stem||`<p class="qt">مثّل الكسر ${count?X(mx(Math.floor(n/d),n%d,d)):F(n,d)} بالرسم: اضغط على الأجزاء لتظليلها.</p>`)+`<div class="fig">${kind==='circle'?circle({d,tap:true}):bars({count:count||1,d:per,tap:true})}</div><p class="live"></p>`);
+  const svg=box.querySelector('svg'),lv=box.querySelector('.live'),cnt=()=>svg.querySelectorAll('.pt.on').length;tapShade(svg,()=>{lv.textContent='ظلّلت '+ar(cnt())+(count?'':' من '+ar(d));});
+  const fake=E('span','');fake.lock=()=>svg.querySelectorAll('.tp').forEach(p=>{p.classList.remove('tp');p.replaceWith(p.cloneNode());});
+  inputQ(box,ctx,{fields:[fake],check:()=>{const c=cnt();if(c===n)return {ok:true,msg:`ظلّلت ${ar(n)} ${count?'أجزاء':'من '+ar(d)+' أجزاء متطابقة'}${count?`: كل شريط ${ar(d)} أجزاء، فهذا ${X(mx(Math.floor(n/d),n%d,d))} أو ${F(n,d)}`:''}.`};
+    if(!c)return 'اضغط على الأجزاء لتظليلها.';return c>n?`ظلّلت ${ar(c)} أجزاء، وهذا أكثر من اللازم. البسط ${ar(count?n:n)} يدل على عدد الأجزاء التي نظلّلها.`:`ظلّلت ${ar(c)} أجزاء فقط. ${count?`العدد ${X(mx(Math.floor(n/d),n%d,d))} يعني ${ar(Math.floor(n/d))} ${Math.floor(n/d)>1?'أشرطة كاملة':'شريطًا كاملًا'} و${ar(n%d)} من ${ar(d)} أجزاء.`:`البسط ${ar(n)} يدل على عدد الأجزاء التي نظلّلها.`}`;}});};
+/* ٣) القراءة: من الرموز إلى الكلمات */
+Q.wordsMC=(x,stem)=>(box,ctx)=>{const o=[{v:'a',html:xw(x),ok:true,fb:x.w?`نقرأ العدد الكلي، ثم «و»، ثم الكسر.`:`البسط ${ar(x.n)}، والمقام ${ar(x.d)}${x.d<=10?' ('+DP[x.d]+')':''}.`}];
+  if(x.n!==x.d&&x.n>=2&&x.n<=10&&x.d<=10)o.push({v:'b',html:xw({w:x.w,n:x.d,d:x.n}),fb:'بدّلت بين البسط والمقام: نقرأ البسط أولًا (عدد الأجزاء)، ثم اسم المقام.'});
+  const dd=x.d+(x.d<10?1:-1);o.push({v:'c',html:xw({w:x.w,n:x.n,d:dd}),fb:`انظر إلى المقام: ${ar(x.d)}، لا ${ar(dd)}.`});
+  if(x.w)o.push({v:'d',html:xw({w:0,n:imp(x),d:x.d}),fb:'هذه قراءة كسر غير فعلي، والعدد المكتوب عدد كسري: نقرأ العدد الكلي أولًا.'});
+  optQ(box,ctx,{stem:stem||`<p class="qt">كيف نقرأ ${X(x)}؟</p>`,opts:uniq(o).slice(0,3),lay:'col'});};
+/* ٤) من الكلمات إلى الرموز */
+Q.fromWords=(x,text)=>(box,ctx)=>{const fi=fracIn(!!x.w);
+  inputQ(box,ctx,{stem:`<p class="qt">اكتب بالأرقام:</p><p class="words">${text||xw(x)}</p>`,fields:[fi],reveal:X(x),check:()=>{const v=fi.get();if(need(v.n)||need(v.d)||(x.w&&need(v.w)))return 'أكمل الحقول.';
+    if((v.w||0)===x.w&&v.n===x.n&&v.d===x.d)return {ok:true,msg:X(x)};if(v.n===x.d&&v.d===x.n)return 'بدّلت بين البسط والمقام: العدد الأول في القراءة هو البسط، واسم الكسر (أرباع، أخماس…) هو المقام.';
+    if(x.w&&v.w!==x.w)return 'العدد الكلي هو العدد الذي يُقرأ أولًا قبل «و».';if(v.d!==x.d)return `انتبه لاسم الكسر: «${x.d<=10?DP[x.d]:u100(x.d)}» تعني أن المقام ${ar(x.d)}.`;return 'راجع البسط: هو عدد الأجزاء المذكور أولًا.';}});};
+/* ٥) الكسر والقسمة */
+Q.division=(a,b,stem)=>(box,ctx)=>{const fi=fracIn(false);inputQ(box,ctx,{stem,fields:[fi],reveal:F(a,b),check:()=>{const v=fi.get();if(need(v.n)||need(v.d))return 'اكتب البسط والمقام.';
+  if(v.n===a&&v.d===b)return {ok:true,msg:`${ar(a)} ÷ ${ar(b)} = ${F(a,b)}: البسط هو المقسوم، والمقام هو المقسوم عليه.`};if(v.n===b&&v.d===a)return 'بدّلت بين البسط والمقام: البسط هو ما نقسمه، والمقام هو عدد الأجزاء أو الأشخاص.';return `اكتب القسمة ${ar(a)} ÷ ${ar(b)} في صورة كسر.`;}});};
+/* ٦) خط الأعداد: اضغط على موقع الكسر */
+Q.lineTap=(x,max)=>(box,ctx)=>{const K=imp(x);box.insertAdjacentHTML('beforeend',`<p class="qt">اضغط على النقطة التي تمثّل ${X(x)} على خط الأعداد.</p><div class="fig">${nline({max,d:x.d,tap:true})}</div>`);
+  const fb=fbBox();box.appendChild(fb);let first=true,fin=false;
+  box.querySelectorAll('.hit').forEach(c=>{const go=()=>{if(fin)return;const k=+c.dataset.k;if(k===K){c.classList.add('ok');fin=true;ok(fb,`المسافة بين كل عددين كليين مقسمة إلى ${ar(x.d)} أجزاء متساوية، و${X(x)} بعد ${ar(K)} ${K>10||K<3?'جزءًا':'أجزاء'} من الصفر.`);ctx.done(first);return;}
+    c.classList.add('no');bad(fb,`هذه النقطة تمثّل ${X(k%x.d===0?mx(k/x.d,0,x.d):(Math.floor(k/x.d)?mx(Math.floor(k/x.d),k%x.d,x.d):fx(k,x.d)))}. ${k===K+1||k===K-1?'عُدّ الأجزاء من الصفر، لا العلامات: العلامة الأولى بعد الصفر تمثّل جزءًا واحدًا.':`المسافة بين ٠ و١ مقسمة إلى ${ar(x.d)} أجزاء متساوية؛ عُدّ ${ar(K)} منها بدءًا من الصفر.`}`);
+    if(ctx.quiz){fin=true;box.querySelector(`.hit[data-k="${K}"]`).classList.add('ok');ctx.done(false);}first=false;};c.onclick=go;c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}};});};
+/* ٧) خط الأعداد: ما الكسر الذي تمثّله النقطة؟ */
+Q.linePoint=(x,max,mixedAns)=>(box,ctx)=>{const K=imp(x),fi=fracIn(!!mixedAns);
+  inputQ(box,ctx,{stem:`<p class="qt">ما ${mixedAns?'العدد الكسري':'الكسر'} الذي تمثّله النقطة <b>أ</b>؟</p><div class="fig">${nline({max,d:x.d,marks:[{k:K,t:'أ'}]})}</div>`,fields:[fi],reveal:X(x),
+    check:()=>{const v=fi.get();if(need(v.n)||need(v.d))return 'أكمل الحقول.';const vv={w:mixedAns?v.w||0:0,n:v.n,d:v.d};
+      if(imp(vv)*x.d===K*vv.d&&vv.d===x.d&&(!mixedAns||vv.n<vv.d))return {ok:true,msg:`النقطة أ تمثّل ${X(x)}${x.w?' أو '+F(K,x.d):''}.`};
+      if(vv.d===x.d+1)return `المقام هو عدد الأجزاء المتساوية بين ٠ و١ (${ar(x.d)})، لا عدد العلامات.`;
+      if(vv.d!==x.d)return 'عُدّ الأجزاء المتساوية بين ٠ و١؛ هذا هو المقام.';
+      if(Math.abs(imp(vv)-K)===1)return 'عُدّ الأجزاء من الصفر حتى النقطة أ مرة أخرى؛ ينقصك أو يزيد جزء واحد.';
+      if(mixedAns&&vv.n>=vv.d)return 'اكتب الجزء الكسري كسرًا فعليًّا: بسطه أصغر من مقامه.';return 'عُدّ الأجزاء من الصفر حتى النقطة أ.';}});};
+/* ٨) اختيار نقطة بحرف (كتاب الرابع) */
+Q.linePick=(x,max,pts,stem)=>(box,ctx)=>{const K=imp(x);optQ(box,ctx,{stem:(stem||`<p class="qt">ما النقطة التي تمثّل ${X(x)} على خط الأعداد؟</p>`)+`<div class="fig">${nline({max,d:x.d,marks:pts.map(([t,k])=>({t,k}))})}</div>`,
+  opts:pts.map(([t,k])=>({v:t,html:'النقطة '+t,ok:k===K,fb:k===K?`${X(x)}: ${K===x.d/2?'في منتصف المسافة بين ٠ و١':`${ar(K)} من ${ar(x.d)} أجزاء متساوية`}.`:`النقطة ${t} تمثّل ${F(k,x.d)}. عُدّ ${ar(K)} أجزاء من الصفر.`})),keep:true});};
+/* ٩) الكسور المتكافئة: أوجد العدد المجهول */
+Q.missing=(a,b,c,where,stem)=>(box,ctx)=>{/* a/b = ■/c  أو a/b = c/■ */const k=where==='n'?c/b:c/a,ans=where==='n'?a*k:b*k;
+  const inp=E('input','sq');inp.inputMode='numeric';inp.setAttribute('aria-label','العدد المجهول');inp.lock=()=>inp.disabled=true;
+  box.insertAdjacentHTML('beforeend',(stem||'<p class="qt">أوجد العدد المناسب لملء ■ بحيث يصبح الكسران متكافئين:</p>'));
+  const eq=E('div','big eq',`${F(a,b)} = <span class="fr"><span>${where==='n'?'<b class="ph"></b>':ar(c)}</span><span>${where==='d'?'<b class="ph"></b>':ar(c)}</span></span>`);box.appendChild(eq);eq.querySelector('.ph').replaceWith(inp);
+  const base=where==='n'?b:a;
+  const fk=E('span','');fk.lock=()=>inp.disabled=true;
+  inputQ(box,ctx,{fields:[fk],reveal:ar(ans),check:()=>{const v=num(inp.value);if(need(v))return 'اكتب العدد في المربع.';
+    if(v===ans)return {ok:true,msg:`فكّر: ما العدد الذي حاصل ضربه في ${ar(base)} يساوي ${ar(c)}؟ ${ar(base)} × ${ar(k)} = ${ar(c)}، إذن نضرب ${where==='n'?'البسط':'المقام'} في ${ar(k)} أيضًا: ${ar(where==='n'?a:b)} × ${ar(k)} = ${ar(ans)}.`};
+    if(v===(where==='n'?a+(c-b):b+(c-a)))return `أضفت العدد نفسه، والكسور المتكافئة نحصل عليها بالضرب لا بالجمع. فكّر: ما العدد الذي حاصل ضربه في ${ar(base)} يساوي ${ar(c)}؟`;
+    return `فكّر: ما العدد الذي حاصل ضربه في ${ar(base)} يساوي ${ar(c)}؟ ثم اضرب ${where==='n'?'البسط':'المقام'} في العدد نفسه.`;}});
+};
+/* ١٠) أوجد كسرين مكافئين */
+Q.equivTwo=(a,b,stem)=>(box,ctx)=>{const f1=fracIn(false,'الكسر الأول'),f2=fracIn(false,'الكسر الثاني');
+  inputQ(box,ctx,{stem:(stem||`<p class="qt">أوجد كسرين يكافئان ${F(a,b)}:</p>`)+`<p class="hint">اضرب البسط والمقام في العدد نفسه (أو اقسمهما على العدد نفسه).</p>`,fields:[f1,f2],reveal:`${F(a*2,b*2)} ، ${F(a*3,b*3)}`,
+    check:()=>{const v=[f1.get(),f2.get()];for(let i=0;i<2;i++){const x=v[i],f=[f1,f2][i];f.mark();if(need(x.n)||need(x.d))return 'اكتب الكسرين.';
+        if(x.n*b!==x.d*a){f.mark('badb');if(x.n-a===x.d-b&&x.n!==a)return `في الكسر ${i?'الثاني':'الأول'} أضفت ${ar(x.n-a)} إلى البسط والمقام، والإضافة لا تعطي كسرًا مكافئًا (مثل خطأ نوف في الكتاب). اضرب البسط والمقام في العدد نفسه.`;
+          if(x.n%a===0&&x.n/a!==x.d/b)return `في الكسر ${i?'الثاني':'الأول'} ضربت البسط في ${ar(x.n/a)}؛ اضرب المقام في العدد نفسه.`;return `الكسر ${i?'الثاني':'الأول'} ${F(x.n,x.d)} لا يكافئ ${F(a,b)}: اضرب البسط والمقام في العدد نفسه.`;}
+        if(x.n===a&&x.d===b){f.mark('badb');return 'اكتب كسرًا مختلفًا في صورته عن الكسر المعطى.';}f.mark('okb');}
+      if(v[0].n===v[1].n&&v[0].d===v[1].d)return 'كتبت الكسر نفسه مرتين؛ اكتب كسرين مختلفين.';
+      return {ok:true,msg:`${F(v[0].n,v[0].d)} و${F(v[1].n,v[1].d)} يكافئان ${F(a,b)}.`};}});};
+/* ١١) أبسط صورة */
+Q.simplest=(n,d,stem,steps)=>(box,ctx)=>{const g=gcd(n,d),sn=n/g,sd=d/g,fi=fracIn(false);
+  box.insertAdjacentHTML('beforeend',(stem||`<p class="qt">اكتب الكسر ${F(n,d)} في أبسط صورة، وإذا كان في أبسط صورة فاضغط «في أبسط صورة».</p>`));
+  if(steps){const sub=E('div','sub');box.appendChild(sub);sub.insertAdjacentHTML('beforeend',`<p class="qt sm">الخطوة ١: ما القاسم المشترك الأكبر (ق.م.أ) للعددين ${ar(n)}، ${ar(d)}؟</p>`);
+    const divs=[...new Set([g,...[1,2,3,4,5,6,7,8,9,10,11,12].filter(x=>n%x===0&&d%x===0&&x!==g),...[2,3,4,5,6].filter(x=>(n%x===0)!==(d%x===0))])].slice(0,4);
+    optQ(sub,{quiz:ctx.quiz,done:()=>{}},{opts:divs.map(x=>({v:x,html:ar(x),ok:x===g,fb:x===g?`قواسم ${ar(n)}: ${divisors(n).map(ar).join('، ')}. قواسم ${ar(d)}: ${divisors(d).map(ar).join('، ')}. (ق.م.أ) = ${ar(g)}.`:(n%x||d%x)?`${ar(x)} ليس قاسمًا ${n%x?'للعدد '+ar(n):'للعدد '+ar(d)}.`:`${ar(x)} قاسم مشترك، لكنه ليس الأكبر. اكتب قواسم كل عدد وابحث عن أكبر قاسم مشترك.`}))});
+    sub.insertAdjacentHTML('beforeend','<p class="qt sm">الخطوة ٢: اقسم البسط والمقام على (ق.م.أ):</p>');}
+  const already=E('button','btn','في أبسط صورة');already.type='button';let pressed=false;already.onclick=()=>{pressed=true;box.querySelector('.frow .btn.primary').click();};already.lock=()=>already.disabled=true;
+  inputQ(box,ctx,{fields:[fi,already],reveal:g===1?'الكسر في أبسط صورة':F(sn,sd),check:()=>{const p=pressed;pressed=false;
+    if(p){if(g===1)return {ok:true,msg:`(ق.م.أ) للعددين ${ar(n)}، ${ar(d)} هو ١، فالكسر في أبسط صورة.`};return `ليس في أبسط صورة: للعددين ${ar(n)}، ${ar(d)} قاسم مشترك غير الواحد هو ${ar(g)}.`;}
+    const v=fi.get();if(need(v.n)||need(v.d))return 'اكتب البسط والمقام.';
+    if(g===1&&v.n===n&&v.d===d)return {ok:true,msg:'الكسر في أبسط صورة.'};
+    if(v.n*d!==v.d*n){if(n-v.n===d-v.d)return 'طرحت العدد نفسه من البسط والمقام، فتغيّرت قيمة الكسر. اقسم البسط والمقام على القاسم المشترك.';return `${F(v.n,v.d)} لا يكافئ ${F(n,d)}: اقسم البسط والمقام على العدد نفسه.`;}
+    const gg=gcd(v.n,v.d);if(gg>1)return v.n===n?'هذا هو الكسر نفسه. اقسم البسط والمقام على (ق.م.أ).':`${F(v.n,v.d)} يكافئ ${F(n,d)}، لكنه ليس في أبسط صورة: ما زال للعددين ${ar(v.n)}، ${ar(v.d)} قاسم مشترك هو ${ar(gg)}. اقسم مرة أخرى.`;
+    return {ok:true,msg:`(ق.م.أ) للعددين ${ar(n)}، ${ar(d)} هو ${ar(g)}: ${F(n,d)} = ${F(sn,sd)}.`};}});};
+const divisors=n=>{const r=[];for(let i=1;i<=n;i++)if(n%i===0)r.push(i);return r;};
+/* ١٢) التقريب إلى صفر أو نصف أو واحد */
+const near=(n,d)=>{const v=n/d;const c=[[0,'0'],[.5,'h'],[1,'1']].map(([b,k])=>[Math.abs(v-b),k]).sort((a,b)=>a[0]-b[0]);return c[0][1];};
+Q.round=(n,d,stem,line=true)=>(box,ctx)=>{const r=near(n,d);const RULE={'0':`البسط ${ar(n)} أصغر من المقام ${ar(d)} بكثير، فنقرّب الكسر إلى الصفر.`,'h':`البسط ${ar(n)} يساوي نصف المقام (${ar(d)} ÷ ٢ = ${ar(+(d/2).toFixed(1))}) تقريبًا، فنقرّب الكسر إلى ${F(1,2)}.`,'1':`البسط ${ar(n)} قريب من المقام ${ar(d)}، فنقرّب الكسر إلى الواحد.`};
+  const fig=E('div','fig');const L=d<=20?d:10;
+  optQ(box,ctx,{stem:(stem||`<p class="qt">قرّب ${F(n,d)} إلى صفر أو ${F(1,2)} أو ١:</p>`),keep:true,opts:[['0','صفر'],['h',F(1,2)],['1','١']].map(([k,h])=>({v:k,html:h,ok:k===r,fb:k===r?RULE[r]:RULE[r].replace('فنقرّب','لذا نقرّب')+(k==='h'?'':'')})),
+    after:()=>{if(d<=20)fig.innerHTML=nline({max:1,d,dots:[{k:n,h:F(n,d)}]})+'<p class="hint">تحقّق بخط الأعداد.</p>';}});
+  if(line&&d<=20){fig.innerHTML=nline({max:1,d});}box.appendChild(fig);};
+/* ١٣) صنّف: كسر فعلي، كسر غير فعلي، عدد كسري */
+Q.classify=(items)=>(box,ctx)=>{box.insertAdjacentHTML('beforeend','<p class="qt">صنّف كل عدد: كسر فعلي، أو كسر غير فعلي، أو عدد كسري.</p><p class="hint">الكسر الفعلي: بسطه أصغر من مقامه. الكسر غير الفعلي: بسطه أكبر من مقامه أو يساويه. العدد الكسري: يتكوّن من عدد كلي وكسر.</p>');
+  const T=x=>x.w?'m':x.n<x.d?'p':'i';const NM={p:'كسر فعلي',i:'كسر غير فعلي',m:'عدد كسري'};const fb=fbBox();let left=items.length,allFirst=true;const tb=E('div','cls');box.append(tb,fb);
+  items.forEach(x=>{const row=E('div','clr',`<span class="cv">${X(x)}</span>`);let first=true,fin=false;['p','i','m'].forEach(k=>{const b=E('button','opt sm',NM[k]);b.type='button';
+    b.onclick=()=>{if(fin)return;if(k===T(x)){fin=true;b.classList.add('right');row.querySelectorAll('button').forEach(z=>z.disabled=true);ok(fb,T(x)==='m'?'عدد كلي وكسر: عدد كسري.':T(x)==='p'?`بسطه ${ar(x.n)} أصغر من مقامه ${ar(x.d)}: كسر فعلي.`:`بسطه ${ar(x.n)} ${x.n===x.d?'يساوي':'أكبر من'} مقامه ${ar(x.d)}: كسر غير فعلي.`);allFirst=allFirst&&first;if(--left===0)ctx.done(allFirst);}
+      else{b.classList.add('wrong');b.disabled=true;bad(fb,T(x)==='m'?`${X(x)} فيه عدد كلي (${ar(x.w)}) وكسر، فهو عدد كسري.`:k==='m'?'العدد الكسري يتكوّن من عدد كلي وكسر، وهذا كسر فقط. قارن بسطه بمقامه.':`قارن البسط ${ar(x.n)} بالمقام ${ar(x.d)}: ${x.n<x.d?'البسط أصغر':'البسط '+(x.n===x.d?'يساوي المقام':'أكبر')}.`);first=false;
+        if(ctx.quiz){fin=true;row.querySelectorAll('button').forEach(z=>{z.disabled=true;});[...row.querySelectorAll('button')][['p','i','m'].indexOf(T(x))].classList.add('right');allFirst=false;if(--left===0)ctx.done(false);}}};row.appendChild(b);});tb.appendChild(row);});};
+/* ١٤) كسر غير فعلي ← عدد كسري */
+Q.toMixed=(n,d,stem)=>(box,ctx)=>{const q=Math.floor(n/d),r=n%d,fi=fracIn(true);
+  box.insertAdjacentHTML('beforeend',(stem||`<p class="qt">اكتب ${F(n,d)} في صورة عدد كسري${r?'':' أو عدد كلي'}:</p>`)+`<p class="hint">اقسم البسط على المقام، واكتب الباقي في صورة كسر مقامه هو المقسوم عليه.${r?'':' إذا لم يوجد باقٍ فاترك البسط والمقام فارغين.'}</p>`);
+  const fig=E('div','fig');
+  inputQ(box,ctx,{fields:[fi],reveal:X(mx(q,r,d)),check:()=>{const v=fi.get();if(need(v.w))return 'اكتب العدد الكلي.';
+    const done=(m)=>{fig.innerHTML=d<=12&&q<=4?bars({count:Math.ceil(n/d),d,shaded:n}):'';return {ok:true,msg:m};};
+    if(!r){if(v.w===q&&(need(v.n)||v.n===0))return done(`${ar(d)} يقسم ${ar(n)} من دون باقٍ: ${F(n,d)} = ${ar(q)}.`);if(v.w===q)return 'لا يوجد باقٍ، فالناتج عدد كلي فقط.';}
+    if(r&&(need(v.n)||need(v.d)))return 'أكمل الجزء الكسري: البسط والمقام.';
+    if(v.w===q&&v.n===r&&v.d===d)return done(`${ar(n)} ÷ ${ar(d)} = ${ar(q)} والباقي ${ar(r)}، إذن ${F(n,d)} = ${X(mx(q,r,d))}.`);
+    if(v.w===r&&v.n===q)return 'بدّلت بين ناتج القسمة والباقي: ناتج القسمة هو العدد الكلي، والباقي هو بسط الكسر.';
+    if(v.d!==d)return `مقام الجزء الكسري هو المقسوم عليه نفسه (${ar(d)}).`;
+    if(v.n>=v.d)return 'الجزء الكسري يجب أن يكون كسرًا فعليًّا (بسطه أصغر من مقامه)؛ هذا يعني أن العدد الكلي يمكن أن يزيد.';
+    if(v.w!==q)return `اقسم ${ar(n)} على ${ar(d)}: ${ar(d)} × ${ar(v.w)} = ${ar(d*v.w)}، ${d*v.w>n?'وهذا أكبر من '+ar(n):'والباقي ما زال أكبر من المقام أو يساويه'}.`;
+    return `البسط هو باقي القسمة: ${ar(n)} − ${ar(d*q)} = ؟`;}});box.appendChild(fig);};
+/* ١٥) عدد كسري ← كسر غير فعلي */
+Q.toImproper=(w,n,d,stem)=>(box,ctx)=>{const N=w*d+n,fi=fracIn(false);
+  box.insertAdjacentHTML('beforeend',(stem||`<p class="qt">اكتب ${X(mx(w,n,d))} في صورة كسر غير فعلي:</p>`));const fig=E('div','fig');
+  inputQ(box,ctx,{fields:[fi],reveal:F(N,d),check:()=>{const v=fi.get();if(need(v.n)||need(v.d))return 'اكتب البسط والمقام.';
+    if(v.n===N&&v.d===d){if(d<=10&&w<=3)fig.innerHTML=bars({count:w+1,d,shaded:N});return {ok:true,msg:`الخطوة ١: ${ar(w)} × ${ar(d)} = ${ar(w*d)}. الخطوة ٢: ${ar(w*d)} + ${ar(n)} = ${ar(N)}. الخطوة ٣: نكتب المجموع على المقام الأصلي: ${F(N,d)}.`};}
+    if(v.d!==d)return 'المقام يبقى كما هو (المقام الأصلي).';
+    if(v.n===w*d)return `ضربت العدد الكلي في المقام (${ar(w*d)})، لكن نسيت أن تضيف البسط ${ar(n)}.`;
+    if(v.n===w+n)return `جمعت العدد الكلي والبسط مباشرة. اضرب العدد الكلي ${ar(w)} في المقام ${ar(d)} أولًا، ثم أضف البسط.`;
+    if(v.n===w*n)return 'ضربت العدد الكلي في البسط، والصحيح أن تضربه في المقام ثم تضيف البسط.';
+    return `اضرب العدد الكلي ${ar(w)} في المقام ${ar(d)}، ثم أضف البسط ${ar(n)}.`;}});box.appendChild(fig);};
+/* ١٦) نموذج عدد كسري: اكتبه بالصورتين */
+Q.mixedModel=(w,n,d,stem)=>(box,ctx)=>{const N=w*d+n,f1=fracIn(true,'العدد الكسري'),f2=fracIn(false,'الكسر غير الفعلي');
+  inputQ(box,ctx,{stem:(stem||`<p class="qt">اكتب العدد الذي يمثّله النموذج في صورة عدد كسري، وفي صورة كسر غير فعلي:</p>`)+`<div class="fig">${bars({count:w+1,d,shaded:N})}</div><p class="hint">كل شريط يمثّل واحدًا صحيحًا.</p>`,fields:[f1,E('span','eqs','='),f2],reveal:`${X(mx(w,n,d))} = ${F(N,d)}`,
+    check:()=>{const a=f1.get(),b=f2.get();if([a.w,a.n,a.d,b.n,b.d].some(need))return 'أكمل الحقول كلها.';f1.mark();f2.mark();
+      if(!(a.w===w&&a.n===n&&a.d===d)){f1.mark('badb');return a.w!==w?`عُدّ الأشرطة المظلّلة بالكامل: هذا هو العدد الكلي.`:a.d!==d?'المقام هو عدد الأجزاء في الشريط الواحد.':'البسط في الجزء الكسري هو عدد الأجزاء المظلّلة في الشريط غير المكتمل.';}
+      f1.mark('okb');if(!(b.n===N&&b.d===d)){f2.mark('badb');return b.d!==d?'مقام الكسر غير الفعلي هو عدد الأجزاء في الشريط الواحد أيضًا.':`عُدّ كل الأجزاء المظلّلة في الأشرطة كلها: هذا هو البسط.`;}
+      f2.mark('okb');return {ok:true,msg:`${X(mx(w,n,d))} = ${F(N,d)}: ${ar(w)} ${w>2?'أشرطة':'شريط'} × ${ar(d)} أجزاء + ${ar(n)} = ${ar(N)} جزءًا.`};}});};
+/* ١٧) المقارنة */
+const SYM={gt:'&gt;',lt:'&lt;',eq:'='},SYN={gt:'أكبر من',lt:'أصغر من',eq:'يساوي'};
+function why(a,b){const va=V(a),vb=V(b);if(va===vb&&a.d===b.d&&imp(a)===imp(b))return 'العددان متساويان.';
+  const big=va>vb?a:b,sm=va>vb?b:a;
+  if((a.w||b.w)&&Math.floor(va)!==Math.floor(vb)&&a.n<a.d&&b.n<b.d)return `قارن العددين الكليين أولًا: ${ar(Math.floor(V(big)))} &gt; ${ar(Math.floor(V(sm)))}؛ إذن ${X(big)} &gt; ${X(sm)}.`;
+  if(a.w&&b.w&&a.w===b.w&&a.n<a.d&&b.n<b.d)return `العددان الكليان متساويان، فنقارن الكسرين ${F(a.n,a.d)} و${F(b.n,b.d)}: `+why(fx(a.n,a.d),fx(b.n,b.d));
+  const A=fx(imp(a),a.d),B=fx(imp(b),b.d);
+  if(A.d===B.d)return (a.w||b.w?`نكتب العددين في صورة كسرين غير فعليين: ${F(A.n,A.d)}، ${F(B.n,B.d)}. `:'')+`المقامان متساويان، فنقارن البسطين: ${ar(Math.max(A.n,B.n))} &gt; ${ar(Math.min(A.n,B.n))}؛ إذن ${X(big)} &gt; ${X(sm)}.`+(va===vb?'':'');
+  const L=lcm(A.d,B.d),an=A.n*L/A.d,bn=B.n*L/B.d;
+  if(an===bn)return `(م.م.أ) للمقامين ${ar(A.d)}، ${ar(B.d)} هو ${ar(L)}: ${F(A.n,A.d)} = ${F(an,L)}، ${F(B.n,B.d)} = ${F(bn,L)}؛ إذن العددان متساويان.`;
+  return `الخطوة ١: (م.م.أ) للمقامين ${ar(A.d)}، ${ar(B.d)} هو ${ar(L)}. الخطوة ٢: ${X(a)} = ${F(an,L)}، ${X(b)} = ${F(bn,L)}. الخطوة ٣: بما أن ${ar(Math.max(an,bn))} &gt; ${ar(Math.min(an,bn))} فإن ${X(big)} &gt; ${X(sm)}.`;}
+function trap(a,b,r){/* تشخيص اختيار خاطئ */const A=fx(imp(a),a.d),B=fx(imp(b),b.d);
+  if(A.n===B.n&&A.d!==B.d)return 'البسطان متساويان؛ والمقام الأكبر يعني أجزاء أصغر. ';
+  if(A.d!==B.d){const byD=A.d>B.d?'gt':'lt',byN=A.n>B.n?'gt':A.n<B.n?'lt':'eq';if(r===byD)return 'لا تقارن المقامين وحدهما. ';if(r===byN)return 'لا يكفي مقارنة البسطين لأن المقامين مختلفان. ';}
+  return '';}
+Q.cmp=(a,b,stem,lineMax)=>(box,ctx)=>{const va=V(a),vb=V(b),rel=Math.abs(va-vb)<1e-9?'eq':va>vb?'gt':'lt';const fig=E('div','fig');
+  box.insertAdjacentHTML('beforeend',(stem||'<p class="qt">قارن بين العددين مستعملًا (&gt; ، &lt; ، =):</p>')+`<div class="cmp"><span class="cn">${X(a)}</span><span class="slot">؟</span><span class="cn">${X(b)}</span></div>`);
+  const wrap=E('div','opts sym'),fb=fbBox();let first=true,fin=false;
+  const showLine=()=>{const D=lcm(a.d,b.d);const mx_=Math.max(1,Math.ceil(Math.max(va,vb)-1e-9));if(lineMax!==false&&D<=24&&mx_<=4&&D*mx_<=40)fig.innerHTML=nline({max:mx_,d:D,dots:[{k:Math.round(va*D),h:X(a)},{k:Math.round(vb*D),h:X(b)}]})+'<p class="hint">كل عدد على خط الأعداد أكبر من الأعداد التي تقع عن يساره.</p>';};
+  ['gt','lt','eq'].forEach(r=>{const btn=E('button','opt',`<b class="s">${SYM[r]}</b> ${SYN[r]}`);btn.type='button';
+    btn.onclick=()=>{if(fin)return;const slot=box.querySelector('.slot');
+      if(r===rel){btn.classList.add('right');fin=true;slot.innerHTML=SYM[r];slot.classList.add('ok');ok(fb,why(a,b));showLine();ctx.done(first);}
+      else{btn.classList.add('wrong');btn.disabled=true;bad(fb,(r==='eq'?'العددان غير متساويين. ':'')+trap(a,b,r)+why(a,b)+(rel!=='eq'&&r!=='eq'?' انتبه لاتجاه الإشارة: فتحتها جهة العدد الأكبر.':''));showLine();
+        if(ctx.quiz){fin=true;wrap.querySelectorAll('button').forEach(x=>x.disabled=true);slot.innerHTML=SYM[rel];ctx.done(false);}first=false;}};wrap.appendChild(btn);});
+  box.append(wrap,fb,fig);};
+/* ١٨) الترتيب */
+Q.order=(list,up,stem,labels)=>(box,ctx)=>{const goal=list.map((x,i)=>({x,i})).sort((p,q)=>up?V(p.x)-V(q.x):V(q.x)-V(p.x));const ord=shuffle(goal);
+  const L=list.reduce((m,x)=>lcm(m,x.d),1);
+  box.insertAdjacentHTML('beforeend',(stem||'')+`<p class="qt">رتّب ${labels?'':'الأعداد '}<b>${up?'تصاعديًّا (من الأصغر إلى الأكبر)':'تنازليًّا (من الأكبر إلى الأصغر)'}</b>: اضغط عليها بالترتيب.</p><div class="slots">${goal.map((_,i)=>`<span class="sl"><i>${ar(i+1)}</i><b></b></span>`).join('')}</div>`);
+  const cards=E('div','opts cards'),fb=fbBox(),hint=E('p','hint');box.append(cards,fb,hint);const sl=box.querySelectorAll('.sl b');let pos=0,first=true,fin=false;
+  const lab=g=>(labels?`<small>${labels[g.i]}</small> `:'')+X(g.x);
+  ord.forEach(g=>{const b=E('button','opt ocard',lab(g));b.type='button';b.onclick=()=>{if(fin)return;const want=goal[pos];
+    if(g===want||Math.abs(V(g.x)-V(want.x))<1e-9){const idx=goal.indexOf(g);if(idx!==pos){[goal[idx],goal[pos]]=[goal[pos],goal[idx]];}sl[pos].innerHTML=lab(g);sl[pos].parentNode.classList.add('ok');b.disabled=true;b.classList.add('used');pos++;fb.className='fb';fb.textContent='';
+      if(pos===goal.length){fin=true;ok(fb,'ترتيب صحيح.');if(L<=60)hint.innerHTML=`بالمقام المشترك الأصغر ${ar(L)}: `+goal.map(q=>F(imp(q.x)*L/q.x.d,L)).join(up?' &lt; ':' &gt; ');ctx.done(first);}}
+    else{b.classList.add('shake');setTimeout(()=>b.classList.remove('shake'),400);bad(fb,`${X(g.x)} ليس ${up?'الأصغر':'الأكبر'} بين الأعداد الباقية. قارنه بـ ${X(want.x)}: `+why(g.x,want.x));
+      if(ctx.quiz){fin=true;goal.forEach((q,i)=>{sl[i].innerHTML=lab(q);});cards.querySelectorAll('button').forEach(x=>x.disabled=true);ctx.done(false);}first=false;}};cards.appendChild(b);});};
+Q.mcq=(stem,opts,lay)=>(box,ctx)=>optQ(box,ctx,{stem,opts,lay:lay||'col'});
+
+/* =====================================================
+   مولّدات «توسّع» والتحدي
+   ===================================================== */
+const rd=()=>pick([2,3,4,5,6,8,10,12]);
+const G={
+  model(){const d=pick([3,4,5,6,8]),n=ri(1,d-1),k=pick(['bars','circle','circle']);return {ind:1,r:Q.readModel({kind:k,n,d})};},
+  shade(){const d=pick([3,4,5,6,8]),n=ri(1,d-1);return {ind:1,r:Q.shade({kind:pick(['bars','circle']),n,d})};},
+  words(){const d=pick([3,4,5,6,7,8,9,10]),n=ri(1,d-1);return {ind:1,r:ri(0,1)?Q.wordsMC(fx(n,d)):Q.fromWords(fx(n,d))};},
+  line(){const d=pick([3,4,5,6,8]),n=ri(1,d-1);return {ind:1,r:ri(0,1)?Q.lineTap(fx(n,d),1):Q.linePoint(fx(n,d),1)};},
+  missing(){const b=pick([2,3,4,5,6,7,8]);let a=ri(1,b-1);while(gcd(a,b)>1)a=ri(1,b-1);const k=ri(2,5),w=ri(0,1)?'n':'d';return {ind:2,r:Q.missing(a,b,(w==='n'?b:a)*k,w)};},
+  equiv(){const b=pick([3,4,5,6,7,8]);let a=ri(1,b-1);while(gcd(a,b)>1)a=ri(1,b-1);return {ind:2,r:Q.equivTwo(a,b)};},
+  simplest(){const b=pick([3,4,5,6,7,8,9]);let a=ri(1,b-1);while(gcd(a,b)>1)a=ri(1,b-1);const k=ri(2,6);return {ind:2,r:Q.simplest(a*k,b*k)};},
+  round(){let n,d;do{d=pick([5,6,7,8,9,10,11,12,15,16,20]);n=ri(1,d-1);const v=n/d,ds=[v,Math.abs(v-.5),1-v].sort((x,y)=>x-y);if(ds[1]-ds[0]>=.12)break;}while(true);return {ind:2,r:Q.round(n,d)};},
+  toMixed(){const d=pick([2,3,4,5,6,8,10]),q=ri(1,6),r=ri(1,d-1);return {ind:4,r:Q.toMixed(q*d+r,d)};},
+  toImproper(){const d=pick([2,3,4,5,6,8,9]),w=ri(1,9),n=ri(1,d-1);return {ind:4,r:Q.toImproper(w,n,d)};},
+  mixedLine(){const d=pick([2,3,4,5]),w=ri(1,2),n=ri(1,d-1);return {ind:3,r:Q.linePoint(mx(w,n,d),3,true)};},
+  mixedModel(){const d=pick([3,4,5,6]),w=ri(1,2),n=ri(1,d-1);return {ind:3,r:Q.mixedModel(w,n,d)};},
+  mixedWords(){const d=pick([2,3,4,5,8]),w=ri(1,9),n=ri(1,d-1);return {ind:3,r:ri(0,1)?Q.wordsMC(mx(w,n,d)):Q.fromWords(mx(w,n,d))};},
+  classify(){const it=[];const p=()=>{const d=rd();return fx(ri(1,d-1),d);},i=()=>{const d=rd();return fx(ri(d,3*d),d);},m=()=>{const d=rd();return mx(ri(1,6),ri(1,d-1),d);};
+    const s=shuffle([p(),i(),m(),pick([p,i,m])()]);return {ind:4,r:Q.classify(s)};},
+  cmp(){const t=ri(0,4);let a,b;
+    if(t===0){const d=rd();a=fx(ri(1,d-1),d);b=fx(ri(1,d-1),d);}
+    else if(t===1){const n=ri(1,4);a=fx(n,ri(n+1,12));b=fx(n,ri(n+1,12));}
+    else if(t===2){const d1=pick([3,4,5,6,8]),d2=pick([2,3,4,6,9,10,12]);a=fx(ri(1,d1-1),d1);b=fx(ri(1,d2-1),d2);}
+    else if(t===3){const d=pick([3,4,5,6]),w=ri(1,3);a=mx(w,ri(1,d-1),d);b=fx(ri(d,4*d),d);}
+    else{const w=ri(1,5);a=mx(w,1,pick([2,3,4]));b=mx(w,ri(1,3),pick([4,5,6,8]));if(b.n>=b.d)b.n=1;}
+    return {ind:5,r:Q.cmp(a,b)};},
+  order(){const up=ri(0,1)===0;const ds=shuffle([2,3,4,5,6,8,10,12]).slice(0,4);const L=[];ds.forEach(d=>{let x,t=0;do{x=ri(0,3)?fx(ri(1,d-1),d):mx(ri(1,2),ri(1,d-1),d);t++;}while(L.some(y=>Math.abs(V(y)-V(x))<1e-9)&&t<30);if(t<30)L.push(x);});while(L.length<3){const x=mx(L.length+2,1,3);L.push(x);}return {ind:5,r:Q.order(L,up)};}};
+
+/* =====================================================
+   محتوى الدروس (كتب الطالب: الرابع ف٢، الخامس ف١ وف٢، السادس ف١)
+   ===================================================== */
+const LESSONS={
+ t1:[
+  {tag:'رابع ف٢ · ١٠-١ مثال ١ · ص١٣٥',t:'كتابة الكسور وقراءتها',r:Q.readModel({kind:'circle',n:4,d:6,stem:'<p class="qt">طعام: أعدّت والدة مها الفطيرة المجاورة، وظلّلنا القطع التي تحتوي على اللحم. ما الكسر الذي يمثّل هذا الجزء؟</p>'})},
+  {tag:'رابع ف٢ · ١٠-١ مثال ١ · ص١٣٥',t:'قراءة الكسر',r:Q.wordsMC(fx(4,6),`<p class="qt">كيف نقرأ ${F(4,6)}؟</p>`)},
+  {tag:'رابع ف٢ · ١٠-١ مثال ٢ · ص١٣٦',t:'كتابة الكسور وقراءتها',r:Q.readModel({kind:'bars',n:1,d:4})},
+  {tag:'رابع ف٢ · ١٠-١ مثال ٣ · ص١٣٦',t:'تمثيل الكسور',r:Q.shade({kind:'bars',n:1,d:3,stem:`<p class="qt">زراعة: يقوم طلاب المدرسة بزراعة حديقة المدرسة، على أن يزرعوا ${F(1,3)} الحديقة أزهارًا. مثّل هذا الكسر: قسّمنا المستطيل ٣ أجزاء متطابقة، ظلّل جزءًا واحدًا.</p>`})},
+  {tag:'رابع ف٢ · ١٠-١ تأكد ٦ · ص١٣٦',t:'مثّل بالرسم',r:Q.shade({kind:'circle',n:5,d:8})},
+  {tag:'رابع ف٢ · ١٠-١ تدرّب ٢٠ · ص١٣٧',t:'ترشيد',r:Q.shade({kind:'bars',n:1,d:5,stem:`<p class="qt">ترشيد: تعدّ تسريبات المياه في المنازل أحد أهم أسباب هدر المياه، حيث يصل الاستهلاك اليومي للمياه التي تسببها التسريبات إلى ${F(1,5)} من إجمالي استهلاك المنازل. مثّل هذا الكسر بالرسم.</p>`})},
+  {tag:'خامس ف١ · التهيئة ٣ · ص١٨٢',t:'جزء من مجموعة',r:Q.readModel({kind:'set',n:3,d:9})},
+  {tag:'رابع ف٢ · التهيئة ٥–٧ · ص١٣٤',t:'اكتب الكسر بالأرقام',r:Q.fromWords(fx(4,7),'أربعة أسباع')},
+  {tag:'رابع ف٢ · التهيئة ٧ · ص١٣٤',t:'اكتب الكسر بالأرقام',r:Q.fromWords(fx(3,5),'ثلاثة من خمسة')},
+  {tag:'خامس ف١ · ٦-١ مثال ١ · ص١٨٣',t:'القسمة والكسور الاعتيادية',r:Q.division(2,3,'<p class="qt">طعام: يريد تركي وسعود وفهد أن يتقاسموا فطيرتين بالتساوي، فكم سيكون نصيب كلٍّ منهم؟ (فطيرتان تقسمان على ٣ أشخاص)</p>')},
+  {tag:'خامس ف١ · ٦-١ تأكد ٢ · ص١٨٤',t:'القسمة والكسور الاعتيادية',r:Q.division(3,4,'<p class="qt">وزّع مدرس التربية الفنية ٣ كيلوجرامات من الصلصال على أربعة طلاب بالتساوي. ما نصيب كلٍّ منهم؟</p>')},
+  {tag:'رابع ف٢ · ١٠-٣ مثال ١ · ص١٤٠',t:'تمثيل الكسور على خط الأعداد',r:Q.linePick(fx(1,2),1,[['أ',0],['ب',1],['جـ',2]],`<p class="qt">رياضة: يمثّل الشوط الواحد نصف (${F(1,2)}) مباراة كرة القدم. ما النقطة التي تمثّل الكسر ${F(1,2)} على خط الأعداد؟</p>`)},
+  {tag:'رابع ف٢ · ١٠-٣ مثال ٢ · ص١٤١',t:'الكسر الذي تمثّله نقطة',r:Q.linePoint(fx(3,4),1)},
+  {tag:'رابع ف٢ · ١٠-٣ تأكد ٢ · ص١٤١',t:'تمثيل الكسور على خط الأعداد',r:Q.lineTap(fx(4,5),1)}],
+ g1:{goal:6,make:()=>pick([G.model,G.shade,G.words,G.line])()},
+ t2:[
+  {tag:'خامس ف٢ · ٨-٣ استعد · ص٦١',t:'الكسور المتكافئة',r:Q.missing(1,3,9,'n',`<p class="qt">قسّم يوسف حديقة منزله إلى أثلاث، وخصّص ثلثًا لزراعة الطماطم. ${F(1,3)} و الكسر الذي مقامه ٩ يمثّلان الجزء نفسه من الكل. أكمل:</p><div class="fig">${bars({d:3,shaded:1})}${bars({d:9,shaded:3})}</div>`)},
+  {tag:'خامس ف٢ · ٨-٣ مثال ١ · ص٦١',t:'إيجاد كسور مكافئة بالضرب',r:Q.equivTwo(1,4)},
+  {tag:'خامس ف٢ · ٨-٣ مثال ٢ · ص٦٢',t:'قياس',r:Q.equivTwo(3,5,`<p class="qt">قياس: قاست بتول طول وسادتها فوجدته ${F(3,5)} م. أوجد كسرين مكافئين لطول الوسادة بالمتر.</p>`)},
+  {tag:'خامس ف٢ · ٨-٣ مثال ٣ · ص٦٢',t:'إيجاد عدد مجهول',r:Q.missing(2,7,21,'n')},
+  {tag:'خامس ف٢ · ٨-٣ تأكد ٨ · ص٦٢',t:'إيجاد عدد مجهول',r:Q.missing(2,5,10,'d')},
+  {tag:'خامس ف٢ · ٨-٣ اكتشف الخطأ ٢٨ · ص٦٣',t:'مهارات التفكير العليا',r:Q.mcq(`<p class="qt">تريد نوف وهدى أن تجدا كسرًا مكافئًا للكسر ${F(3,7)}. أيّهما وجدت الكسر الصحيح؟</p><p class="big">نوف: ${F('٣+٢','٧+٢')} = ${F(5,9)} &nbsp;&nbsp; هدى: ${F('٣×٢','٧×٢')} = ${F(6,14)}</p>`,[{v:1,html:'هدى',ok:true,fb:'ضربت هدى البسط والمقام في العدد نفسه (٢)، فحصلت على كسر مكافئ.'},{v:2,html:'نوف',fb:`أضافت نوف ٢ إلى البسط والمقام، والإضافة لا تعطي كسرًا مكافئًا: ${F(5,9)} لا يساوي ${F(3,7)}.`},{v:3,html:'كلتاهما',fb:'الجمع والضرب لا يعطيان النتيجة نفسها. أيّهما ضربت البسط والمقام في العدد نفسه؟'}])},
+  {tag:'سادس ف١ · ٤-٢ استعد · ص١٤٧',t:'طيور',r:Q.simplest(4,12,`<p class="qt">طيور: في محل لبيع طيور الزينة ١٢ طائرًا، منها ٤ طيور كناري. الكسر ${F(4,12)} يمثّل طيور الكناري. اكتبه في أبسط صورة.</p>`)},
+  {tag:'خامس ف٢ · ٨-٤ مثال ١ · ص٦٧',t:'تبسيط الكسور',r:Q.simplest(12,22,`<p class="qt">القياس: يبلغ طول حشرة السرعوف ١٢ سم، وطول الحشرة العصوية ٢٢ سم. اكتب الكسر ${F(12,22)} في أبسط صورة.</p>`,true)},
+  {tag:'خامس ف٢ · ٨-٤ مثال ٢ · ص٦٨',t:'أبسط صورة لكسر',r:Q.simplest(18,30,null,true)},
+  {tag:'خامس ف٢ · ٨-٤ تأكد ١ · ص٦٨',t:'أبسط صورة',r:Q.simplest(4,6)},
+  {tag:'خامس ف٢ · ٨-٤ تأكد ٢ · ص٦٨',t:'أبسط صورة',r:Q.simplest(2,12)},
+  {tag:'خامس ف٢ · ٨-٤ تأكد ٤ · ص٦٨',t:'أبسط صورة',r:Q.simplest(8,9)},
+  {tag:'سادس ف١ · ٤-٢ مثال ٣ · ص١٤٨',t:'كتابة الكسور في أبسط صورة',r:Q.simplest(18,24)},
+  {tag:'خامس ف٢ · ٨-٤ ملف البيانات ٢٦ · ص٦٩',t:'برج المملكة',r:Q.simplest(18,306,`<p class="qt">يقع برج المملكة في مدينة الرياض، ويرتفع ٣٠٦ م، وبالقرب منه عمارة ارتفاعها ١٨ م. الكسر الدال على ارتفاع العمارة إلى ارتفاع البرج ${F(18,306)}. اكتبه في أبسط صورة.</p>`)}],
+ g2:{goal:6,make:()=>pick([G.missing,G.equiv,G.simplest])()},
+ t3:[
+  {tag:'خامس ف١ · ٦-٦ مثال ١ · ص٢٠١',t:'حيوانات',r:Q.round(1,20,`<p class="qt">حيوانات: يبلغ طول الضفدع السام حوالي ${F(1,20)} متر. هل طول الضفدع أقرب إلى الصفر أم ${F(1,2)} أم ١ متر؟</p>`)},
+  {tag:'خامس ف١ · ٦-٦ مثال ٢ · ص٢٠٢',t:'تقريب الكسور ذهنيًّا',r:Q.round(4,9)},
+  {tag:'خامس ف١ · ٦-٦ مثال ٣ · ص٢٠٢',t:'تقريب الكسور ذهنيًّا',r:Q.round(10,11)},
+  {tag:'خامس ف١ · ٦-٦ تأكد ١ · ص٢٠٢',t:'بيّن بخط الأعداد',r:Q.round(5,6)},
+  {tag:'خامس ف١ · ٦-٦ تأكد ٢ · ص٢٠٢',t:'بيّن بخط الأعداد',r:Q.round(5,8)},
+  {tag:'خامس ف١ · ٦-٦ تأكد ٣ · ص٢٠٢',t:'قرّب',r:Q.round(1,8,null,false)},
+  {tag:'خامس ف١ · ٦-٦ تأكد ٥ · ص٢٠٢',t:'قرّب',r:Q.round(7,8,null,false)},
+  {tag:'خامس ف١ · ٦-٦ تأكد ٩ · ص٢٠٢',t:'قرّب',r:Q.round(8,16,null,false)},
+  {tag:'خامس ف١ · ٦-٦ تدرّب ٢٩ · ص٢٠٣',t:'فطيرة',r:Q.mcq(`<p class="qt">أكلت خديجة ${F(5,12)} من فطيرة. أيّ مما يأتي يعدّ تقديرًا أفضل للكمية التي أكلتها: نصف الفطيرة تقريبًا أم الفطيرة كلها تقريبًا؟</p>`,[{v:1,html:'نصف الفطيرة تقريبًا',ok:true,fb:`البسط ٥ قريب من نصف المقام (٦)، فنقرّب ${F(5,12)} إلى ${F(1,2)}.`},{v:2,html:'الفطيرة كلها تقريبًا',fb:`لكي نقرّب إلى الواحد يجب أن يكون البسط قريبًا من المقام ١٢، والبسط هنا ٥ فقط.`}])},
+  {tag:'خامس ف١ · ٦-٦ تدرّب ٣٠ · ص٢٠٣',t:'القياس',r:Q.round(15,16,`<p class="qt">القياس: حفر مزارع حفرة مربعة الشكل، طول ضلعها ${F(15,16)} متر. فهل طول ضلع الحفرة أقرب إلى ${F(1,2)} متر أم إلى ١ متر (أم إلى الصفر)؟</p>`)}],
+ g3:{goal:6,make:G.round},
+ t4:[
+  {tag:'سادس ف١ · ٤-٣ · ص١٥٢',t:'صنّف',r:Q.classify([fx(5,4),fx(3,4),mx(1,1,4),fx(4,4)])},
+  {tag:'خامس ف١ · استكشاف ٦-٢ نشاط ١ · ص١٨٦',t:'تمثيل الأعداد الكسرية بالنماذج',r:Q.mixedModel(2,1,3)},
+  {tag:'خامس ف١ · استكشاف ٦-٢ نشاط ٢ · ص١٨٧',t:'تمثيل الكسور غير الفعلية بالنماذج',r:Q.shade({kind:'bars',n:7,d:4,count:2,stem:`<p class="qt">استعمل النموذج لتمثيل ${F(7,4)}: كل شريط مقسم إلى ٤ أجزاء متساوية، ظلّل ٧ أجزاء.</p>`})},
+  {tag:'سادس ف١ · ٤-٣ · ص١٥٢',t:'العدد الكسري على خط الأعداد',r:Q.linePoint(mx(1,1,4),2,true)},
+  {tag:'خامس ف١ · ٦-٥ مثال ٣ · ص١٩٩',t:'العدد الكسري على خط الأعداد',r:Q.linePoint(mx(2,1,3),3,true)},
+  {tag:'خامس ف١ · ٦-٢ مثال ١ · ص١٨٨',t:'كتابة كسر غير فعلي على صورة عدد كسري',r:Q.toMixed(5,3)},
+  {tag:'خامس ف١ · ٦-٢ مثال ٢ · ص١٨٩',t:'كتابة كسر غير فعلي على صورة عدد كسري',r:Q.toMixed(20,10)},
+  {tag:'خامس ف١ · ٦-٢ مثال ٣ · ص١٨٩',t:'ألعاب',r:Q.toMixed(55,24,`<p class="qt">ألعاب: تتّسع كل عربة من عربات القطار المعلّق لـ ٢٤ راكبًا. إذا كان هناك ٥٥ شخصًا، فإن عدد العربات اللازمة لحملهم هو ${F(55,24)}. اكتبه على صورة عدد كسري.</p>`)},
+  {tag:'خامس ف١ · ٦-٢ تأكد ٤ · ص١٩٠',t:'كسر غير فعلي ← عدد كسري',r:Q.toMixed(29,8)},
+  {tag:'خامس ف١ · ٦-٢ اكتشف الخطأ ١٨ · ص١٩٠',t:'مهارات التفكير العليا',r:Q.mcq(`<p class="qt">كتب راشد وأحمد الكسر ${F(35,12)} على صورة عدد كسري. أيّهما كتبه في صورة صحيحة؟</p><p class="big">راشد: ${X(mx(2,11,12))} &nbsp;&nbsp; أحمد: ${X(mx(3,5,12))}</p>`,[{v:1,html:'راشد',ok:true,fb:'٣٥ ÷ ١٢ = ٢ والباقي ١١، إذن ٣٥/١٢ = ٢ و١١/١٢.'},{v:2,html:'أحمد',fb:'١٢ × ٣ = ٣٦، وهذا أكبر من ٣٥؛ إذن ناتج القسمة ٢ لا ٣.'}])},
+  {tag:'خامس ف١ · ٦-٤ مثال ١ · ص١٩٤',t:'القياس',r:Q.toImproper(5,1,3,`<p class="qt">القياس: يبلغ طول أحد أنواع الحيتان حوالي ${X(mx(5,1,3))} أمتار. اكتبه على صورة كسر غير فعلي.</p><div class="fig">${bars({count:6,d:3,shaded:16})}</div>`)},
+  {tag:'خامس ف١ · ٦-٤ مثال ٢ · ص١٩٥',t:'كتابة عدد كسري على صورة كسر غير فعلي',r:Q.toImproper(2,7,8)},
+  {tag:'خامس ف١ · ٦-٤ تأكد ٩ · ص١٩٥',t:'القياس',r:Q.toImproper(2,2,3,`<p class="qt">القياس: يبلغ طول الجمل في الصورة ${X(mx(2,2,3))} متر. اكتب طول الجمل على صورة كسر غير فعلي.</p>`)},
+  {tag:'سادس ف١ · ٤-٣ مثال ١ · ص١٥٣',t:'مقام إبراهيم',r:Q.toImproper(2,1,2,`<p class="qt">مقام إبراهيم: يُغطّى مقام إبراهيم بزجاج بلوري على شكل نصف كرة، يبلغ محيط دائرتها ${X(mx(2,1,2))} م تقريبًا. اكتب هذا العدد في صورة كسر غير فعلي.</p>`)},
+  {tag:'سادس ف١ · ٤-٣ مثال ٢ · ص١٥٣',t:'كتابة الكسور غير الفعلية في صورة أعداد كسرية',r:Q.toMixed(23,6)},
+  {tag:'سادس ف١ · ٤-٣ تحقق أ · ص١٥٣',t:'سفن',r:Q.toImproper(4,1,5,`<p class="qt">سفن: يبلغ طول أضخم سفينة في العالم ٤٥٨ مترًا، ويمكنها أن تحمل ${X(mx(4,1,5))} ملايين برميل من النفط. اكتب ${X(mx(4,1,5))} في صورة كسر غير فعلي.</p>`)},
+  {tag:'سادس ف١ · ٤-٣ تدرّب ٢٢ · ص١٥٤',t:'قراءة العدد الكسري وكتابته',r:Q.fromWords(mx(6,3,5),'ستة وثلاثة أخماس')},
+  {tag:'سادس ف١ · ٤-٣ تدرّب ٢٢ · ص١٥٤',t:'قراءة العدد الكسري وكتابته',r:Q.toImproper(6,3,5,'<p class="qt">اكتب العدد (ستة وثلاثة أخماس) في صورة كسر غير فعلي.</p>')}],
+ g4:{goal:6,make:()=>pick([G.toMixed,G.toImproper,G.mixedLine,G.mixedModel,G.mixedWords,G.classify])()},
+ t5:[
+  {tag:'خامس ف١ · ٦-٥ مثال ١ · ص١٩٨',t:'مقارنة الكسور الاعتيادية',r:Q.cmp(fx(5,8),fx(7,8),`<p class="qt">القياس: هل يكفي ${F(5,8)} متر من القماش لصنع قميص يحتاج إلى ${F(7,8)} متر؟ قارن بين الكسرين:</p>`)},
+  {tag:'خامس ف١ · ٦-٥ مثال ٢ · ص١٩٨',t:'مقارنة الكسور الاعتيادية والأعداد الكسرية',r:Q.cmp(mx(2,3,5),fx(7,5))},
+  {tag:'خامس ف١ · ٦-٥ تأكد ١–٣ · ص١٩٩',t:'استعمل خط الأعداد',r:Q.cmp(fx(3,4),fx(1,4))},
+  {tag:'خامس ف١ · ٦-٥ تأكد ٣ · ص١٩٩',t:'استعمل خط الأعداد',r:Q.cmp(mx(3,1,4),fx(9,4))},
+  {tag:'خامس ف٢ · ٨-٧ مثال ١ · ص٧٧',t:'المقام المشترك الأصغر',r:Q.cmp(fx(3,5),fx(1,2))},
+  {tag:'خامس ف٢ · ٨-٧ مثال ٢ · ص٧٨',t:'مقارنة الكسور باستعمال (م.م.أ)',r:Q.cmp(fx(5,6),fx(7,9))},
+  {tag:'خامس ف٢ · ٨-٧ مثال ٣ · ص٧٨',t:'رياضة',r:Q.cmp(fx(2,3),fx(5,6),`<p class="qt">رياضة: أحرز رياض هدفين من ثلاثة أحرزها فريقه (${F(2,3)})، وأحرز سعيد ٥ أهداف من ستة أحرزها فريقه (${F(5,6)}). قارن بين النسبتين:</p>`)},
+  {tag:'خامس ف٢ · ٨-٧ تأكد ١ · ص٧٩',t:'مقارنة الكسور',r:Q.cmp(fx(1,5),fx(1,3))},
+  {tag:'سادس ف١ · ٤-٦ مثال ١ · ص١٦٣',t:'مقارنة الكسور',r:Q.cmp(fx(5,8),fx(7,12))},
+  {tag:'سادس ف١ · ٤-٦ مثال ٢ · ص١٦٤',t:'مقارنة الأعداد الكسرية',r:Q.cmp(mx(3,1,2),mx(3,1,4))},
+  {tag:'سادس ف١ · ٤-٦ مثال ٣ · ص١٦٤',t:'ترتيب الكسور',r:Q.order([fx(1,2),fx(9,14),fx(3,4),fx(5,7)],true)},
+  {tag:'سادس ف١ · ٤-٦ تأكد ٤ · ص١٦٥',t:'ترتيب الكسور',r:Q.order([fx(4,5),fx(1,2),fx(9,10),fx(3,4)],true)},
+  {tag:'سادس ف١ · ٤-٦ مثال ٤ · ص١٦٥',t:'من اختبار',r:Q.mcq(`<p class="qt">يبيّن الجدول الكسر التقريبي الذي يغطيه كل محيط من الأرض: المتجمد الشمالي ${F(1,50)}، الأطلسي ${F(1,5)}، الهندي ${F(7,50)}، الهادي ${F(3,10)}. أيّ هذه المحيطات يغطي أصغر جزء من الأرض؟</p>`,[
+     {v:1,html:'المحيط المتجمد الشمالي',ok:true,fb:`(م.م.أ) للمقامات هو ٥٠: ${F(1,50)}، ${F(10,50)}، ${F(7,50)}، ${F(15,50)}؛ وأصغرها ${F(1,50)}.`},{v:2,html:'المحيط الأطلسي',fb:`${F(1,5)} = ${F(10,50)}، وهو أكبر من ${F(1,50)}. اكتب الكسور بمقام مشترك ٥٠.`},{v:3,html:'المحيط الهندي',fb:`${F(7,50)} أكبر من ${F(1,50)}: المقامان متساويان، فقارن البسطين.`},{v:4,html:'المحيط الهادي',fb:`${F(3,10)} = ${F(15,50)}، وهو الأكبر لا الأصغر.`}])},
+  {tag:'سادس ف١ · ٤-٦ تدرّب ٢٦ · ص١٦٦',t:'تحليل الجداول',r:Q.order([fx(91,10),fx(1,2),fx(13,10),mx(2,4,5),fx(64,100)],true,'<p class="qt">تحليل الجداول: المساحات التقريبية لأكبر خمس صحارى في العالم (مليون كلم²). رتّب مساحاتها.</p>',['الكبرى','كالاهاري','جوبي','الأسترالية','الربع الخالي'])}],
+ g5:{goal:6,make:()=>pick([G.cmp,G.cmp,G.order])()}};
+
+/* =====================================================
+   بناء الصفحة
+   ===================================================== */
+const SECS=[{id:'t1',g:'g1'},{id:'t2',g:'g2'},{id:'t3',g:'g3'},{id:'t4',g:'g4'},{id:'t5',g:'g5'}];
+const DONE=new Set((()=>{try{return JSON.parse(store.get(PFX+'done')||'[]');}catch(e){return [];}})());const GEN={};SECS.forEach(s=>{GEN[s.g]=Math.min(LESSONS[s.g].goal,+(store.get(PFX+s.g)||0));});
+const save=()=>{store.set(PFX+'done',JSON.stringify([...DONE]));for(const g in GEN)store.set(PFX+g,GEN[g]);};
+function updProg(){let t=0,g=0;SECS.forEach(s=>{const items=LESSONS[s.id];let st=items.length+LESSONS[s.g].goal,sg=items.filter((_,i)=>DONE.has(s.id+':'+i)).length+GEN[s.g];
+    t+=st;g+=sg;const c=$(`#${s.id} .count`);if(c)c.innerHTML=`أنجزت ${ar(sg)} من ${ar(st)}`+(sg>=st?' ✓':'');document.querySelector(`nav.steps [data-go="${s.id}"]`).classList.toggle('ok',sg>=st);
+    const gc=$(`#${s.id} .gcount`);if(gc)gc.textContent=`أنجزت ${ar(GEN[s.g])} من ${ar(LESSONS[s.g].goal)}`;});
+  $('#pg-t').textContent=`أنجزت ${ar(g)} من ${ar(t)}`;$('#pg-b').style.width=(g/t*100)+'%';}
+function build(sec){const host=$(`#${sec.id} .items`);LESSONS[sec.id].forEach((it,i)=>{const key=sec.id+':'+i;
+    const c=E('div','card'+(DONE.has(key)?' done':''));c.innerHTML=`<div class="qhead"><span class="qn">${ar(i+1)}</span><div><span class="tag">${it.tag}</span><b class="tt">${it.t}</b></div></div>`;const box=E('div','qbox');c.appendChild(box);host.appendChild(c);
+    try{it.r(box,{quiz:false,done:()=>{c.classList.add('done');if(!DONE.has(key)){DONE.add(key);save();updProg();}}});}catch(e){box.textContent='—';console.error(e);}});
+  const gc=E('div','card ext');gc.innerHTML=`<div class="qhead"><span class="qn">＋</span><div><span class="tag">توسّع</span><b class="tt">أسئلة جديدة في كل مرة</b></div></div><p class="gcount count"></p>`;
+  const box=E('div','qbox'),nx=E('button','btn primary nxt','سؤال جديد ←');nx.type='button';gc.append(box,nx);host.appendChild(gc);
+  const go=()=>{box.innerHTML='';nx.hidden=true;const q=LESSONS[sec.g].make();q.r(box,{quiz:false,done:()=>{if(GEN[sec.g]<LESSONS[sec.g].goal){GEN[sec.g]++;save();updProg();}nx.hidden=false;}});};nx.onclick=go;go();
+  host.insertAdjacentHTML('beforeend','<p class="credit">إعداد وتصميم: أ. خالد رفيع الحمدي</p>');}
+
+/* --- التحدي الختامي --- */
+function quiz(){const host=$('#t6 .qbox'),bar=$('#t6 .qbar');let QS=[],i=0,res=[];
+  const IND=['','يميز الكسر الاعتيادي، ويمثله باستخدام النماذج، والرسوم، وخط الأعداد، ويقرؤه ويكتبه.','يوجد الكسور المكافئة لكسر، ويكتب كسرًا في أبسط صورة، ويقربه إلى الصفر أو النصف أو الواحد.','يميز العدد الكسري، ويمثله باستخدام النماذج والرسوم، وخط الأعداد، ويقرؤه، ويكتبه.','يميز الكسر غير الفعلي، ويحوله إلى عدد كسري والعكس.','يقارن بين الكسور والأعداد الكسرية، ويرتبها تصاعديًّا وتنازليًّا.'];
+  const SEC={1:['t1'],2:['t2','t3'],3:['t4'],4:['t4'],5:['t5']};
+  function start(){QS=[G.model(),G.line(),G.simplest(),G.round(),G.mixedLine(),G.mixedWords(),G.toMixed(),G.toImproper(),G.cmp(),G.order()];i=0;res=[];show();}
+  function show(){if(i>=QS.length)return report();bar.innerHTML=QS.map((_,j)=>`<i class="${j<i?(res[j]?'ok':'no'):j===i?'cur':''}"></i>`).join('');
+    host.innerHTML=`<p class="qn2">السؤال ${ar(i+1)} من ${ar(QS.length)} · المؤشر ${ar(QS[i].ind)}</p>`;const b=E('div','qbox');host.appendChild(b);
+    const nx=E('button','btn primary',i===QS.length-1?'اعرض النتيجة ←':'السؤال التالي ←');nx.type='button';nx.hidden=true;nx.onclick=()=>{i++;show();};
+    QS[i].r(b,{quiz:true,done:o=>{res[i]=o;nx.hidden=false;}});host.appendChild(nx);}
+  function report(){bar.innerHTML=QS.map((_,j)=>`<i class="${res[j]?'ok':'no'}"></i>`).join('');const tot=res.filter(Boolean).length;
+    let h=`<h3 class="score">نتيجتك: ${ar(tot)} من ${ar(QS.length)}</h3><div class="scroll"><table class="rep"><thead><tr><th>المؤشر</th><th>الدرجة</th><th>التوصية</th></tr></thead><tbody>`;
+    [1,2,3,4,5].forEach(k=>{const js=QS.map((q,j)=>q.ind===k?j:-1).filter(j=>j>=0),okc=js.filter(j=>res[j]).length,full=okc===js.length;
+      h+=`<tr><td>${ar(k)}. ${IND[k]}</td><td class="sc ${full?'ok':okc/js.length>=.5?'mid':'no'}">${ar(okc)} / ${ar(js.length)}</td><td>${full?'متقن ✓':'راجع: '+SEC[k].map(id=>`<button type="button" class="lnk" data-go="${id}">${document.querySelector(`nav.steps [data-go="${id}"]`).dataset.n}</button>`).join('، ')}</td></tr>`;});
+    h+='</tbody></table></div><button type="button" class="btn primary again">أعد التحدي بأسئلة جديدة ↺</button>';host.innerHTML=h;
+    host.querySelector('.again').onclick=start;host.querySelectorAll('.lnk').forEach(b=>b.onclick=()=>goto(b.dataset.go));}
+  start();}
+
+/* --- التنقل --- */
+const started={};
+function goto(id){document.querySelectorAll('section.part').forEach(s=>s.hidden=s.id!==id);document.querySelectorAll('nav.steps button').forEach(b=>b.setAttribute('aria-current',b.dataset.go===id?'true':'false'));
+  if(!started[id]){started[id]=1;if(id==='t6')quiz();else{const s=SECS.find(x=>x.id===id);if(s)build(s);}updProg();}
+  store.set(PFX+'tab',id);window.scrollTo({top:0,behavior:'smooth'});}
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>goto(b.dataset.go));
+/* --- مسح التقدم --- */
+function resetUI(){const w=$('#rstw');if(!w)return;const idle=()=>{w.innerHTML='<button type="button" class="btn sm" id="rst">↺ مسح التقدم</button>';$('#rst').onclick=ask;};
+  const ask=()=>{w.innerHTML='<span class="rq">مسح كل التقدم المحفوظ على هذا الجهاز؟</span><button type="button" class="btn sm danger" id="rsty">نعم، امسح</button><button type="button" class="btn sm" id="rstn">إلغاء</button>';
+    $('#rstn').onclick=idle;$('#rsty').onclick=()=>{try{Object.keys(localStorage).filter(k=>k.startsWith(PFX)).forEach(k=>localStorage.removeItem(k));}catch(e){}location.reload();};$('#rstn').focus();};
+  idle();}
+resetUI();
+updProg();goto(store.get(PFX+'tab')||'t1');
+if(location.search.includes('test'))window.__T={G,Q,goto,LESSONS,setSeed:s=>{SEED=s;}};
+})();
+
+</script>
+</body>
+</html>

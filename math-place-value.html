@@ -1,0 +1,644 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>القيمة المنزلية ضمن ١٢ منزلة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@500;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: a math-notebook page; tabs on top split the outcome into seven practice activities and a final challenge; one activity shows at a time. */
+:root{
+  --bg:#EAF0F6;--grid:rgba(30,58,100,.07);--paper:#FFFFFF;--ink:#15233A;--muted:#566880;--line:#C7D3E3;
+  --a:#2E6BD6;--a-soft:rgba(46,107,214,.14);--b:#E08A1E;--b-soft:rgba(224,138,30,.16);
+  --ok:#17845A;--ok-soft:rgba(23,132,90,.12);--bad:#C2412B;--bad-soft:rgba(194,65,43,.11);
+  --rule:#FFF7E3;--rule-edge:#E9C878;
+  --p3:#7A4FD0;--p2:#2E6BD6;--p1:#17845A;--p0:#E08A1E;
+  --display:"Baloo Bhaijaan 2","IBM Plex Sans Arabic",system-ui,sans-serif;
+  --body:"IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1626;--grid:rgba(150,180,230,.06);--paper:#16213A;--ink:#E4ECF7;--muted:#9BACC4;--line:#2C3C5A;
+  --a:#6EA2FF;--a-soft:rgba(110,162,255,.16);--b:#F3AE52;--b-soft:rgba(243,174,82,.16);
+  --ok:#4CC48C;--ok-soft:rgba(76,196,140,.14);--bad:#F2806C;--bad-soft:rgba(242,128,108,.14);
+  --rule:#2A2716;--rule-edge:#7C6A2E;--p3:#B49BFF;--p2:#6EA2FF;--p1:#4CC48C;--p0:#F3AE52;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1626;--grid:rgba(150,180,230,.06);--paper:#16213A;--ink:#E4ECF7;--muted:#9BACC4;--line:#2C3C5A;
+  --a:#6EA2FF;--a-soft:rgba(110,162,255,.16);--b:#F3AE52;--b-soft:rgba(243,174,82,.16);
+  --ok:#4CC48C;--ok-soft:rgba(76,196,140,.14);--bad:#F2806C;--bad-soft:rgba(242,128,108,.14);
+  --rule:#2A2716;--rule-edge:#7C6A2E;--p3:#B49BFF;--p2:#6EA2FF;--p1:#4CC48C;--p0:#F3AE52;color-scheme:dark}
+*{box-sizing:border-box}[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px}
+.wrap{max-width:920px;margin:0 auto;padding:20px max(16px,env(safe-area-inset-right,0px)) 48px max(16px,env(safe-area-inset-left,0px))}
+header{display:grid;gap:12px;margin-bottom:18px}
+.badge{display:inline-flex;align-items:center;gap:8px;font:800 .95rem var(--display);color:#fff;background:var(--a);border-radius:999px;padding:2px 14px;justify-self:start}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(1.8rem,5vw,2.5rem);line-height:1.2;margin:0}
+.idea{margin:0;color:var(--muted)}.idea b{color:var(--ink)}
+.vocab{display:flex;flex-wrap:wrap;gap:6px}.vocab span{background:var(--b-soft);border-radius:8px;padding:0 10px;font-weight:600;font-size:.9rem}
+.progress{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:.92rem;color:var(--muted)}
+.rst{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px}.rst .rq{color:var(--bad);font-weight:600}
+.btn.sm{padding:3px 12px;font-size:.85rem}.btn.danger{background:var(--bad);border-color:var(--bad);color:#fff}
+.bar{flex:1;height:10px;border-radius:999px;background:var(--paper);border:1px solid var(--line);overflow:hidden;max-width:320px}
+.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+nav.steps{display:flex;flex-wrap:wrap;gap:8px}
+nav.steps button{font:600 .92rem var(--body);border:1.5px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:5px 14px;cursor:pointer}
+nav.steps button.ok::after{content:" ✓";color:var(--ok)}
+nav.steps button[aria-current="true"]{border-color:var(--a);background:var(--a);color:#fff}
+nav.steps button[aria-current="true"].ok::after{color:#fff}
+section.part{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
+.part-head h2{font-family:var(--display);font-weight:800;font-size:1.6rem;margin:0;line-height:1.3}
+.part-head p{margin:2px 0 0;color:var(--muted)}
+.ind{display:inline-block;font-size:.85rem;font-weight:700;color:var(--a);background:var(--a-soft);border-radius:8px;padding:1px 10px;margin-bottom:4px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;grid-template-columns:minmax(0,1fr);gap:12px;min-width:0}
+.count{margin:0;font-size:.9rem;color:var(--muted);font-weight:600}
+.qbox{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;min-width:0}
+.qbox.done{animation:pop .35s ease}
+@keyframes pop{50%{transform:scale(1.01)}}
+.qt{margin:0;font-weight:600;font-size:1.05rem}
+.qn2{margin:0;color:var(--muted);font-size:.88rem;font-weight:600}
+.hint{margin:0;color:var(--muted);font-size:.92rem}
+.muted{color:var(--muted);font-weight:500}
+.credit{margin:6px 0 0;padding-top:10px;border-top:1px dashed var(--line);color:var(--muted);font-size:.82rem;text-align:center}
+.n{direction:ltr;unicode-bidi:isolate;font-family:var(--display);font-weight:700;white-space:nowrap}
+.big{margin:0;font-size:clamp(1.5rem,6vw,2.2rem);text-align:center}
+.words{margin:0;font-size:1.15rem;font-weight:700;background:var(--rule);border:1.5px solid var(--rule-edge);border-radius:12px;padding:10px 14px}
+.bign{display:flex;justify-content:center;flex-wrap:nowrap;gap:2px;font:800 clamp(1.4rem,6.4vw,2.4rem) var(--display);direction:ltr;overflow-x:auto;padding:4px 0}
+.bign .dg{display:inline-grid;place-items:center;min-width:1.05ch;border-radius:8px;padding:0 2px;font:inherit;color:inherit;background:none;border:0;line-height:1.35}
+.bign button.dg{cursor:pointer;background:var(--a-soft);min-width:1.3ch;margin:0 1px}
+.bign button.dg:hover{background:var(--b-soft)}
+.bign .dg.hl{color:var(--b);text-decoration:underline;text-decoration-thickness:4px;text-underline-offset:9px;background:var(--b-soft)}
+.bign .dg.bad{background:var(--bad-soft);color:var(--bad)}
+.bign .cm{opacity:.55;margin:0 1px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{font:600 .95rem var(--body);border-radius:10px;padding:8px 16px;cursor:pointer;border:1.5px solid var(--line);background:var(--paper);color:var(--ink)}
+.btn.primary{background:var(--a);border-color:var(--a);color:#fff}
+.nxt{justify-self:start}
+button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--b);outline-offset:2px}
+.fb{margin:0;min-height:1.2em;font-size:.97rem}.fb.ok{color:var(--ok)}.fb.bad{color:var(--bad)}
+.fb .n{color:inherit}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts.col{display:grid}
+.opt{font:500 1rem var(--body);border:1.5px solid var(--line);background:var(--paper);color:var(--ink);border-radius:10px;padding:8px 14px;cursor:pointer;text-align:start;min-width:0}
+.opt:disabled{cursor:default}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft);opacity:.8}
+.opts.col .opt .n,.big .n{white-space:normal}
+.opt .n{font-size:1.05rem}
+.ans{font:700 1.3rem var(--display);padding:6px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);width:min(100%,320px);text-align:center}
+.live{margin:0;color:var(--muted);font-size:.9rem;min-height:1.2em}
+/* place-value chart */
+.scroll{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+table.pv{border-collapse:separate;border-spacing:0;margin:0 auto;font-size:.8rem}
+table.pv th{font-weight:700;padding:3px 2px;text-align:center;border-bottom:1px solid var(--line);white-space:nowrap}
+table.pv th.per{color:#fff;border-radius:8px 8px 0 0;font-size:.82rem}
+table.pv th.per.p3{background:var(--p3)}table.pv th.per.p2{background:var(--p2)}table.pv th.per.p1{background:var(--p1)}table.pv th.per.p0{background:var(--p0)}
+table.pv .pe{border-right:2px solid var(--ink)}
+table.pv td{text-align:center;padding:2px;min-width:44px}
+table.pv td button{display:block;margin:0 auto;width:36px;height:30px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;cursor:pointer;font-size:.8rem}
+table.pv td output{display:block;font:800 1.6rem var(--display);line-height:1.5}
+table.pv td output.dim{opacity:.4}
+table.pv.mini td{min-width:30px;font:800 1.15rem var(--display);border-bottom:1px solid var(--line)}
+table.pv.mini td.hl{background:var(--b-soft);color:var(--ink)}
+table.pv.mini th{font-size:.72rem;color:var(--muted)}
+table.pv.mini thead tr:first-child th{color:var(--ink);font-size:.78rem}
+.forms{display:grid;gap:6px;background:var(--bg);border-radius:12px;padding:10px 14px}
+.forms p{margin:0;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline;min-width:0}
+.forms .fl{font-size:.82rem;font-weight:700;color:#fff;background:var(--a);border-radius:6px;padding:0 8px;flex:none}
+.forms .n{white-space:normal}
+/* number line */
+.fig{display:flex;justify-content:center}
+svg.nl{direction:ltr;width:100%;max-width:640px;height:auto;overflow:visible}
+svg.nl .ax,svg.nl .tk{stroke:var(--ink);stroke-width:2.5}
+svg.nl .axh{fill:var(--ink)}
+svg.nl .lb{fill:var(--ink);font:700 22px var(--display)}
+svg.nl .lb.md{fill:var(--b)}
+svg.nl .lb.dt{fill:var(--a);font-size:18px}
+svg.nl .hit{fill:var(--a-soft);stroke:var(--a);stroke-width:2;cursor:pointer}
+svg.nl .hit:hover{fill:var(--b-soft)}
+svg.nl .hit.ok{fill:var(--ok);stroke:var(--ok)}
+svg.nl .hit.no{fill:var(--bad-soft);stroke:var(--bad)}
+svg.nl .mk{fill:var(--b)}
+svg.nl .q{fill:var(--b);font:800 22px var(--display)}
+svg.nl .dot{fill:var(--a)}
+/* compare */
+.cmp{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;font-size:clamp(1.25rem,5vw,1.9rem)}
+.cmp .slot{display:inline-grid;place-items:center;width:52px;height:52px;border:2.5px dashed var(--line);border-radius:12px;font:800 1.8rem var(--display);color:var(--muted)}
+.cmp .slot.ok{border-style:solid;border-color:var(--ok);color:var(--ok)}
+.opts.sym{justify-content:center}.opts.sym .s{font:800 1.4rem var(--display);margin-inline-end:4px}
+/* order */
+.slots{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px}
+.sl{display:flex;align-items:center;gap:8px;border:1.5px dashed var(--line);border-radius:10px;padding:6px 10px;min-height:46px}
+.sl i{font-style:normal;display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--line);font-weight:800;flex:none}
+.sl.ok{border-style:solid;border-color:var(--ok);background:var(--ok-soft)}
+.sl.ok i{background:var(--ok);color:#fff}
+.opt.ocard{font-size:1.1rem}.opt.used{opacity:.35}
+.shake{animation:sh .35s}@keyframes sh{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+/* quiz */
+.qbar{display:flex;gap:5px;flex-wrap:wrap}.qbar i{width:26px;height:8px;border-radius:99px;background:var(--line)}
+.qbar i.cur{background:var(--a)}.qbar i.ok{background:var(--ok)}.qbar i.no{background:var(--bad)}
+.score{font-family:var(--display);font-size:1.5rem;margin:0}
+table.rep{border-collapse:collapse;width:100%;font-size:.93rem}
+table.rep th,table.rep td{border:1px solid var(--line);padding:6px 8px;text-align:start;vertical-align:top}
+table.rep th{background:var(--bg)}
+table.rep .sc{font:800 1.1rem var(--display);text-align:center;white-space:nowrap}
+table.rep .sc.ok{color:var(--ok)}table.rep .sc.mid{color:var(--b)}table.rep .sc.no{color:var(--bad)}
+.lnk{background:none;border:0;color:var(--a);font:700 .93rem var(--body);text-decoration:underline;cursor:pointer;padding:0}
+.rule{background:var(--rule);border:1.5px solid var(--rule-edge);border-radius:14px;padding:12px 16px}
+.rule p{margin:0}.rule h3{margin:0 0 4px;font-family:var(--display);font-size:1.1rem}
+
+.items{display:grid;gap:14px;grid-template-columns:minmax(0,1fr)}
+.card.done{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.card.ext{border-style:dashed;border-color:var(--a)}
+.qhead{display:flex;gap:10px;align-items:flex-start}
+.qhead>div{display:grid;gap:0}
+.qn{flex:none;display:inline-grid;place-items:center;min-width:30px;height:30px;border-radius:50%;background:var(--a);color:#fff;font:800 .95rem var(--display)}
+.card.done .qn{background:var(--ok)}
+.tag{font-size:.8rem;color:var(--b);font-weight:700}
+.tt{font-family:var(--display);font-size:1.12rem}
+.qt.sm{font-size:.95rem;color:var(--muted)}
+.sub{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;border-top:1px dashed var(--line);padding-top:10px}
+.bign .gp{margin-left:0}
+.bign .dg.ul{text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:6px;background:var(--a-soft)}
+.eb{display:grid;gap:8px}
+.ebr{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.ebr small{color:var(--muted)}
+.ebr input,.lr input{font:700 1.15rem var(--display);padding:4px 10px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);width:min(100%,200px);text-align:center}
+.lr{display:flex;flex-wrap:wrap;gap:10px 18px}.lr input{width:80px}
+input.okb{border-color:var(--ok);background:var(--ok-soft)}input.badb{border-color:var(--bad);background:var(--bad-soft)}
+.exp{margin:0;font-weight:600}
+svg.nl .lb.sm{font-size:17px}
+svg.nl .co{stroke:var(--a);stroke-width:2}
+svg.nl .cb{fill:var(--paper);stroke:var(--a);stroke-width:2}
+svg.nl .ct{fill:var(--ink);font:800 17px var(--display)}
+.pool .dgt{font:800 1.4rem var(--display);min-width:48px;text-align:center}
+.part>.count{margin:0}
+table.an{border-collapse:collapse;width:100%;font-size:.9rem;min-width:640px}
+table.an th,table.an td{border:1px solid var(--line);padding:6px 8px;text-align:start;vertical-align:top}
+table.an th{background:var(--bg)}
+.an-note{margin:0;color:var(--muted);font-size:.9rem}
+footer{margin-top:26px;color:var(--muted);font-size:.9rem;display:grid;gap:10px}
+footer details{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+footer summary{cursor:pointer;font-weight:600;color:var(--ink)}
+footer ol{margin:6px 0;padding-inline-start:22px}
+@media (max-width:520px){table.pv td{min-width:24px;padding:1px 0}table.pv td button{width:22px;height:28px;font-size:.7rem}table.pv td output{font-size:1.25rem}table.pv th{font-size:.6rem;padding:2px 0}table.pv th.per{font-size:.66rem}.opt{font-size:.95rem}svg.nl .lb{font-size:28px}svg.nl .lb.dt{font-size:24px}}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <span class="badge">الرياضيات · ناتج التعلم <bdi>1-1-1-4-6</bdi></span>
+  <h1>القيمة المنزلية ضمن ١٢ منزلة</h1>
+  <p class="idea"><b>الناتج:</b> فهم القيمة المنزلية للأعداد ضمن ١٢ منزلة، وتمثيلها، وقراءتها وكتابتها، والمقارنة بينها، وترتيبها، وتقريبها.</p>
+  <div class="vocab"><span>جدول المنازل</span><span>دورة الأعداد</span><span>القيمة المنزلية</span><span>الصيغة القياسية</span><span>الصيغة التحليلية</span><span>الصيغة اللفظية</span><span>معادلة</span><span>متباينة</span><span>التقريب</span></div>
+  <div class="progress"><span id="pg-t"></span><div class="bar"><i id="pg-b"></i></div><span class="rst" id="rstw"><button type="button" class="btn sm" id="rst">↺ مسح التقدم</button></span></div>
+  <nav class="steps" aria-label="الدروس">
+    <button type="button" data-go="t0" data-n="التهيئة">التهيئة</button>
+    <button type="button" data-go="t1" data-n="١-١ القيمة المنزلية ضمن البلايين">١-١ القيمة المنزلية ضمن البلايين</button>
+    <button type="button" data-go="t2" data-n="١-٢ المقارنة بين الأعداد">١-٢ المقارنة بين الأعداد</button>
+    <button type="button" data-go="t3" data-n="١-٦ ترتيب الأعداد">١-٦ ترتيب الأعداد</button>
+    <button type="button" data-go="t4" data-n="٢-١ تقريب الأعداد">٢-١ تقريب الأعداد</button>
+    <button type="button" data-go="t5" data-n="التحدي الختامي">التحدي الختامي</button>
+    <button type="button" data-go="t6" data-n="للمعلم">للمعلم: تحليل المحتوى</button>
+  </nav>
+</header>
+<section class="part" id="t0" hidden>
+  <div class="part-head"><span class="ind">مهارات سابقة</span><h2>التهيئة</h2><p>أجب عن الأسئلة الآتية قبل أن تبدأ الفصل (كتاب الطالب ص١٢).</p></div>
+  <p class="count"></p><div class="items"></div>
+</section>
+<section class="part" id="t1" hidden>
+  <div class="part-head"><span class="ind">المؤشران ١ و٢</span><h2>١-١ القيمة المنزلية ضمن البلايين</h2><p>فكرة الدرس: أقرأ الأعداد ضمن البلايين (المليارات)، وأكتبها بالصيغ: القياسية، والتحليلية، واللفظية (ص١٣–١٥).</p></div><div class="rule"><h3>تذكّر</h3><p><b>الصيغة القياسية</b>: الطريقة المألوفة لكتابة العدد باستعمال أرقامه. <b>الصيغة التحليلية</b>: كتابة العدد في صورة مجموع قيم أرقامه. <b>الصيغة اللفظية</b>: كتابة العدد باستعمال الكلمات. لقراءة عدد، اقرأ العدد داخل جدول المنازل، ثم اذكر اسم الدورة.</p></div>
+  <p class="count"></p><div class="items"></div>
+</section>
+<section class="part" id="t2" hidden>
+  <div class="part-head"><span class="ind">المؤشران ١ و٣</span><h2>١-٢ المقارنة بين الأعداد</h2><p>فكرة الدرس: أقارن بين الأعداد ضمن البلايين (ص١٦–١٩).</p></div><div class="rule"><h3>تذكّر</h3><p>يمكنك استعمال خط الأعداد أو القيمة المنزلية للمقارنة: اكتب العددين رأسيًّا بحيث يكون آحاد أحدهما تحت آحاد الآخر، وابدأ المقارنة من اليسار. إذا اختلف عدد أرقام عددين، فإن العدد الذي عدد أرقامه أكثر يكون هو الأكبر.</p></div>
+  <p class="count"></p><div class="items"></div>
+</section>
+<section class="part" id="t3" hidden>
+  <div class="part-head"><span class="ind">المؤشران ١ و٣</span><h2>١-٦ ترتيب الأعداد</h2><p>فكرة الدرس: أرتّب أعدادًا (ص٣٣–٣٥). الطريقة ١: القيمة المنزلية. الطريقة ٢: خط الأعداد.</p></div><div class="rule"><h3>خطوات الترتيب</h3><p>الخطوة ١: اكتب الأعداد عموديًّا. الخطوة ٢: قارن بين الأرقام في المنزلة الكبرى. الخطوة ٣: قارن بين الأرقام في المنزلة التالية.</p></div>
+  <p class="count"></p><div class="items"></div>
+</section>
+<section class="part" id="t4" hidden>
+  <div class="part-head"><span class="ind">المؤشر ١</span><h2>٢-١ تقريب الأعداد</h2><p>فكرة الدرس: أقرّب الأعداد (ص٤٧–٤٩). المقصود بتقريب العدد هو إيجاد قيمة قريبة منه.</p></div><div class="rule"><h3>خطوات التقريب</h3><p>١) ضع خطًّا تحت الرقم في المنزلة التي يُراد التقريب إليها. ٢) انظر إلى الرقم الواقع عن يمينه. ٣) إذا كان ٥ أو أكبر فأضف ١ إلى الرقم الذي تحته خطّ، وإذا كان أقل من ٥ فلا تغيّره. ٤) بدّل كل الأرقام الواقعة عن يمينه بأصفار. ويمكنك استعمال خط الأعداد للتحقق من صحة حلّك.</p></div>
+  <p class="count"></p><div class="items"></div>
+</section>
+<section class="part" id="t5" hidden>
+  <div class="part-head"><span class="ind">المؤشرات ١ و٢ و٣</span><h2>التحدي الختامي</h2><p>عشرة أسئلة بأعداد ضمن ١٢ منزلة، تتجدد في كل مرة. لكل سؤال محاولة واحدة، وفي النهاية تقرير لكل مؤشر.</p></div>
+  <div class="card"><div class="qbar"></div><div class="qbox"></div></div><p class="credit">إعداد وتصميم: أ. خالد رفيع الحمدي</p>
+</section>
+<section class="part" id="t6" hidden>
+  <div class="part-head"><span class="ind">للمعلم</span><h2>تحليل المحتوى وربطه بالناتج</h2><p><b>ناتج التعلم <bdi>1-1-1-4-6</bdi></b> (الصف السادس، وثيقة نواتج التعلم للاختبارات الوطنية ٢٠٢٦م): فهم القيمة المنزلية للأعداد ضمن ١٢ منزلة، وتمثيلها، وقراءتها وكتابتها، والمقارنة بينها، وترتيبها، وتقريبها.</p></div>
+  <div class="card"><p class="an-note">مؤشرات الناتج: <b>١</b> يحدد القيمة المنزلية لأرقام الأعداد ضمن ١٢ منزلة، ويمثلها على خط الأعداد، ويقربها إلى أقرب منزلة معطاة. <b>٢</b> يقرأ الأعداد ضمن ١٢ منزلة، ويكتبها في الصور القياسية واللفظية والتحليلية. <b>٣</b> يقارن بين الأعداد ضمن ١٢ منزلة باستخدام الرموز (&gt;، &lt;، =)، ويرتبها تصاعديًّا وتنازليًّا.</p>
+<div class="scroll"><table class="an"><thead><tr><th>الدرس في الكتاب (الصف الخامس، ف١)</th><th>المحتوى الذي حُوِّل إلى نشاط</th><th>المؤشر</th><th>نوع النشاط التفاعلي</th></tr></thead><tbody>
+<tr><td>التهيئة · ص١٢</td><td>الصيغة اللفظية (٣٧١)، قراءة نقاط على خط الأعداد (٠–١٦)، كتابة الجمل بالإشارات (١٦، ١٧)</td><td>٢، ١، ٣</td><td>اختيار، إدخال قيم النقاط، اختيار الإشارة</td></tr>
+<tr><td>١-١ القيمة المنزلية ضمن البلايين · ص١٣–١٥</td><td>استعد (مساحة حائل ١٢٥٠٠٠)، مثال ١ (٣٦٥٢٠٠)، مثال ٢ (الربع الخالي ٦٤٧٠٠٠)، مثال ٣ (١٦٥٠٠٧٢٩٠٠)، تأكد ١–٨، تدرّب ١١–٢٠، كاسيني ٢١–٢٢، مسألة مفتوحة ٢٤، تدريب على اختبار ٢٩ (ص١٩)</td><td>١، ٢</td><td>جدول منازل تفاعلي بالدورات الأربع يعرض الصيغ الثلاث مباشرة، تحديد المنزلة ثم القيمة، بناء الصيغة التحليلية بكتابة قيمة كل رقم، كتابة الصيغة القياسية من اللفظية والتحليلية، اختيار الصيغة اللفظية</td></tr>
+<tr><td>١-٢ المقارنة بين الأعداد · ص١٦–١٩</td><td>مثال ١ (خط الأعداد ٢١٤، ٢٠٩)، مثال ٢ (بيت محمد ومسعود)، تأكد ١–٤ و٧–٨ (النيل والفرات)، تدرّب ١٧–١٩، تحدٍّ ٢٥ (أكبر عدد وأصغر عدد)</td><td>٣، ١</td><td>مقارنة بخط الأعداد كما في الكتاب، اختيار الإشارة مع جدول منازل يظلّل منزلة الاختلاف، تكوين أكبر عدد وأصغر عدد من بطاقات الأرقام، توسّع لتمثيل أعداد ضمن ١٢ منزلة على خط الأعداد</td></tr>
+<tr><td>١-٦ ترتيب الأعداد والكسور العشرية · ص٣٣–٣٥ (الأعداد الكلية فقط)</td><td>مثال ١ (سعة الملاعب)، تأكد ١، تدرّب ٨ و٩ و١٤ (إنتاج الإسمنت)</td><td>٣</td><td>ترتيب بالضغط على البطاقات، وبعد الحل جدول منازل للأعداد عموديًّا</td></tr>
+<tr><td>٢-١ تقريب الأعداد والكسور العشرية · ص٤٧–٤٩ (الأعداد الكلية فقط)</td><td>مثال ١ (مساحة الكويت ١٧٨١٨) بالخطوات الأربع، تأكد ٢ و٤، تدرّب ١٤ و١٧ و٢٤</td><td>١</td><td>تقريب موجَّه بالخطوات الأربع، اختيار الناتج ثم التحقق بخط الأعداد</td></tr>
+</tbody></table></div>
+<p class="an-note"><b>سدّ الفجوة بين الكتاب والناتج:</b> أمثلة الكتاب في المقارنة والترتيب والتقريب أعداد صغيرة في الغالب، والناتج يطلب ١٢ منزلة؛ لذلك يُختم كل درس ببطاقة «توسّع» تولّد أعدادًا من ١٠ إلى ١٢ رقمًا بالأسلوب نفسه، والتحدي الختامي كله ضمن ١٢ منزلة، ويعطي تقريرًا لكل مؤشر.</p>
+<p class="an-note"><b>التغذية الراجعة:</b> تشخّص الخطأ نفسه: منزلة مجاورة، أو دورة خطأ، أو الرقم بدل قيمته، أو صفر ناقص أو زائد، أو اسم دورة خطأ في الصيغة اللفظية، أو تقريب إلى منزلة غير المطلوبة، أو نسيان تبديل الأرقام بأصفار، أو اتجاه الإشارة.</p>
+<p class="an-note"><b>مصطلحات الكتاب المستعملة:</b> جدول المنازل، دورة الأعداد (الواحدات، الألوف، الملايين، البلايين/المليارات)، القيمة المنزلية، الصيغة القياسية والتحليلية واللفظية، معادلة، متباينة، التقريب. والأعداد مكتوبة دون فواصل كما في الكتاب، مع فراغ صغير بين الدورات في العرض الكبير فقط لتسهيل القراءة.</p></div><p class="credit">إعداد وتصميم: أ. خالد رفيع الحمدي</p>
+</section>
+<footer><p>المحتوى مأخوذ من كتاب الطالب للرياضيات، الصف الخامس، الفصل الدراسي الأول (١٤٤٨هـ): الفصل الأول «القيمة المنزلية» والدرس ٢-١. الحقول تقبل الأرقام العربية (٣) والإنجليزية (3)، ويُحفظ تقدّم الطالب على جهازه.</p></footer>
+</div>
+<script>
+/* ===== أدوات الأعداد ===== */
+const AR='٠١٢٣٤٥٦٧٨٩';
+const ar=s=>String(s).replace(/\d/g,d=>AR[d]);
+const toEn=s=>String(s).replace(/[٠-٩]/g,c=>AR.indexOf(c)).replace(/[۰-۹]/g,c=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(c));
+const fmt=n=>ar(String(Math.round(n)));
+const P10=k=>Math.pow(10,k);
+const digitAt=(n,k)=>Math.floor(n/P10(k))%10;
+const nDig=n=>n===0?1:String(Math.floor(n)).length;
+const PN=['الآحاد','العشرات','المئات','الألوف','عشرات الألوف','مئات الألوف','الملايين','عشرات الملايين','مئات الملايين','البلايين','عشرات البلايين','مئات البلايين'];
+const PNs=['آحاد','عشرات','مئات','آحاد','عشرات','مئات','آحاد','عشرات','مئات','آحاد','عشرات','مئات'];
+const PER=['الواحدات','الألوف','الملايين','البلايين'];
+const PERL=['الواحدات','الألوف','الملايين','البلايين (المليارات)'];
+const RND=['أقرب واحد','أقرب عشرة','أقرب مئة','أقرب ألف','أقرب عشرة آلاف','أقرب مئة ألف','أقرب مليون','أقرب عشرة ملايين','أقرب مئة مليون','أقرب بليون','أقرب عشرة بلايين','أقرب مئة بليون'];
+/* الصيغة اللفظية */
+const ONES=['','واحد','اثنان','ثلاثة','أربعة','خمسة','ستة','سبعة','ثمانية','تسعة'];
+const TENS=['','','عشرون','ثلاثون','أربعون','خمسون','ستون','سبعون','ثمانون','تسعون'];
+const HUN=['','مئة','مئتان','ثلاث مئة','أربع مئة','خمس مئة','ست مئة','سبع مئة','ثماني مئة','تسع مئة'];
+const SC={sing:['','ألف','مليون','بليون'],dual:['','ألفان','مليونان','بليونان'],pl:['','آلاف','ملايين','بلايين'],acc:['','ألفًا','مليونًا','بليونًا']};
+function u100(n){if(n<10)return ONES[n];if(n===10)return 'عشرة';if(n===11)return 'أحد عشر';if(n===12)return 'اثنا عشر';if(n<20)return ONES[n-10]+' عشر';const o=n%10,t=Math.floor(n/10);return (o?ONES[o]+' و':'')+TENS[t];}
+function u1000(n){const h=Math.floor(n/100),r=n%100;if(!h)return u100(r);if(!r)return HUN[h];return HUN[h]+' و'+u100(r);}
+function grp(g,s){if(!s)return u1000(g);if(g===1)return SC.sing[s];if(g===2)return SC.dual[s];
+  const h=Math.floor(g/100),r=g%100;const hw=h===2?'مئتا':HUN[h];
+  if(r===0)return hw+' '+SC.sing[s];
+  if(h&&r<=2)return HUN[h]+' و'+ONES[r]+' '+SC.sing[s];
+  const pre=h?HUN[h]+' و':'';
+  return pre+u100(r)+' '+(r<=10?SC.pl[s]:SC.acc[s]);}
+function words(n){n=Math.round(n);if(n===0)return 'صفر';const out=[];for(let s=3;s>=0;s--){const g=Math.floor(n/P10(3*s))%1000;if(g)out.push(grp(g,s));}return out.join(' و');}
+/* الصيغة التحليلية */
+const expTerms=n=>{const t=[];for(let k=nDig(n)-1;k>=0;k--){const d=digitAt(n,k);if(d)t.push(d*P10(k));}return t;};
+const expanded=(terms)=>terms.map(t=>`<bdi class="n" dir="ltr">${fmt(t)}</bdi>`).join(' + ');
+/* الصيغة المختلطة كما في الكتاب: ١٢ مليونًا و٣٢٤ ألفًا و٥٠٠ */
+function mixed(n){const out=[];for(let s=3;s>=0;s--){const g=Math.floor(n/P10(3*s))%1000;if(!g)continue;if(!s){out.push(ar(g));continue;}
+  if(g===1){out.push(SC.sing[s]);continue;}if(g===2){out.push(SC.dual[s]);continue;}const r=g%100;
+  out.push(ar(g)+' '+(r===0?SC.sing[s]:r>=3&&r<=10?SC.pl[s]:SC.acc[s]));}return out.join(' و');}
+/* عشوائية */
+let SEED=Date.now()%2147483647;
+const rnd=()=>{SEED=(SEED*16807)%2147483647;return (SEED-1)/2147483646;};
+const ri=(a,b)=>a+Math.floor(rnd()*(b-a+1));
+const pick=a=>a[ri(0,a.length-1)];
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=ri(0,i);[a[i],a[j]]=[a[j],a[i]];}return a;};
+/* عدد عشوائي بعدد أرقام معين، مع احتمال أصفار في المنتصف */
+function rnum(digits,zeroP=.25){let s=String(ri(1,9));for(let i=1;i<digits;i++)s+=rnd()<zeroP?'0':String(ri(0,9));return +s;}
+if(typeof module!=='undefined')module.exports={mixed,words,fmt,expTerms,expanded,rnum,digitAt,nDig,ar};
+
+</script>
+<script>
+(function(){
+'use strict';
+const $=s=>document.querySelector(s);
+const E=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e;};
+const N=n=>`<bdi class="n" dir="ltr">${fmt(n)}</bdi>`;
+const store={get(k){try{return localStorage.getItem(k);}catch(e){return null;}},set(k,v){try{localStorage.setItem(k,v);}catch(e){}}};
+const grpOf=(n,s)=>Math.floor(n/P10(3*s))%1000;
+const readGrp=(g,s)=>s?grp(g,s):u1000(g);
+const digitsOnly=v=>toEn(v).replace(/[^0-9]/g,'').replace(/^0+(?=\d)/,'');
+function fbBox(){const f=E('p','fb');f.setAttribute('aria-live','polite');return f;}
+const ok=(f,m)=>{f.className='fb ok';f.innerHTML='✓ '+m;};
+const bad=(f,m)=>{f.className='fb bad';f.innerHTML=m;};
+
+/* ---------- اختيار من متعدد ---------- */
+function optQ(box,ctx,{stem,opts,after,lay,keep}){
+  if(stem!=null)box.insertAdjacentHTML('beforeend',stem);const wrap=E('div','opts'+(lay?' '+lay:''));const fb=fbBox();
+  let first=true,fin=false;
+  (keep?opts:shuffle(opts)).forEach(o=>{const b=E('button','opt',o.html);b.type='button';b._ok=!!o.ok;
+    b.onclick=()=>{if(fin)return;
+      if(o.ok){b.classList.add('right');fin=true;wrap.querySelectorAll('button').forEach(x=>x.disabled=true);ok(fb,o.fb||'إجابة صحيحة.');after&&after(true);ctx.done(first);}
+      else{b.classList.add('wrong');b.disabled=true;bad(fb,o.fb);
+        if(ctx.quiz){fin=true;wrap.querySelectorAll('button').forEach(x=>{x.disabled=true;if(x._ok)x.classList.add('right');});after&&after(false);ctx.done(false);}
+        first=false;}};
+    wrap.appendChild(b);});
+  box.append(wrap,fb);return wrap;}
+const uniq=(arr,key=x=>x.v)=>{const s=new Set();return arr.filter(x=>{const k=key(x);if(s.has(k))return false;s.add(k);return true;});};
+
+/* ---------- عرض العدد مع فراغ بين الدورات ---------- */
+function numDigits(n,hk,tap){const s=String(n),L=s.length;let h='<span class="bign" dir="ltr">';
+  for(let i=0;i<L;i++){const k=L-1-i;const gap=i&&k%3===2?' gp':'';
+    h+=tap?`<button type="button" class="dg${gap}" data-k="${k}" aria-label="الرقم ${s[i]}">${ar(s[i])}</button>`:`<span class="dg${gap}${k===hk?' hl':''}">${ar(s[i])}</span>`;}
+  return h+'</span>';}
+function chartHead(cls){let h=`<div class="scroll"><table class="pv ${cls||''}" dir="ltr"><thead><tr>`;
+  for(let p=3;p>=0;p--)h+=`<th colspan="3" class="per p${p}">${p===3?'البلايين (المليارات)':PER[p]}</th>`;h+='</tr><tr>';
+  for(let k=11;k>=0;k--)h+=`<th class="${k%3===0&&k?'pe':''}">${PNs[k]}</th>`;return h+'</tr></thead><tbody>';}
+function miniChart(nums,hk){let h=chartHead('mini');
+  nums.forEach(n=>{const d=nDig(n);h+='<tr>';for(let k=11;k>=0;k--){const v=k<d?ar(digitAt(n,k)):'';h+=`<td class="${k===hk?'hl':''}${k%3===0&&k?' pe':''}">${v}</td>`;}h+='</tr>';});
+  return h+'</tbody></table></div>';}
+
+/* ---------- خط الأعداد العام ---------- */
+function nline({min,max,step,label=1,points=[],tap=false,mark=null,mid=null,dot=null,callout=true}){
+  const W=680,x0=50,x1=630,y=72,X=v=>x0+(x1-x0)*(v-min)/(max-min);const nT=Math.round((max-min)/step);
+  let s=`<svg viewBox="0 0 ${W} 140" class="nl" direction="ltr" role="img" aria-label="خط الأعداد"><line x1="18" y1="${y}" x2="${W-18}" y2="${y}" class="ax"/><path d="M${W-18} ${y}l-11 -6v12z" class="axh"/><path d="M18 ${y}l11 -6v12z" class="axh"/>`;
+  const fs=nT>12||String(max).length>7?'sm':'';
+  for(let j=0;j<=nT;j++){const v=min+j*step,x=X(v),lab=j%label===0;s+=`<line x1="${x}" y1="${y-(lab?12:8)}" x2="${x}" y2="${y+(lab?12:8)}" class="tk"/>`;
+    if(lab&&(nT<=12||j===0||j===nT))s+=`<text x="${x}" y="${y+38}" text-anchor="${j===0&&nT>12?'start':j===nT&&nT>12?'end':'middle'}" class="lb ${fs}">${fmt(v)}</text>`;
+    if(tap&&j>0&&j<nT)s+=`<circle cx="${x}" cy="${y}" r="17" class="hit" data-v="${v}" tabindex="0" role="button" aria-label="${v}"/>`;
+    if(mark===v)s+=`<circle cx="${x}" cy="${y}" r="9" class="mk"/><text x="${x}" y="${y-22}" class="q" text-anchor="middle">؟</text>`;}
+  if(mid!=null)s+=`<text x="${X(mid)}" y="${y+38}" text-anchor="middle" class="lb md ${fs}">${fmt(mid)}</text>`;
+  points.forEach((p,i)=>{const x=X(p.v),up=i%2?46:24;s+=`<circle cx="${x}" cy="${y}" r="6" class="dot"/>`;
+    if(callout){const t=p.t!=null?p.t:fmt(p.v);const w=Math.max(40,String(t).length*11+16);s+=`<line x1="${x}" y1="${y-6}" x2="${x}" y2="${y-up+6}" class="co"/><rect x="${x-w/2}" y="${y-up-22}" width="${w}" height="28" rx="7" class="cb"/><text x="${x}" y="${y-up-2}" text-anchor="middle" class="ct">${ar(t)}</text>`;}});
+  if(dot!=null){const x=X(dot);s+=`<circle cx="${x}" cy="${y}" r="8" class="dot"/><text x="${x}" y="${y-18}" text-anchor="middle" class="lb dt">${fmt(dot)}</text>`;}
+  return s+'</svg>';}
+
+/* ---------- لماذا: سبب المقارنة ---------- */
+function why(a,b){const da=nDig(a),db=nDig(b);
+  if(da!==db)return `${N(da>db?a:b)} فيه ${ar(Math.max(da,db))} أرقام، و${N(da>db?b:a)} فيه ${ar(Math.min(da,db))} أرقام. إذا اختلف عدد أرقام عددين فالعدد الذي عدد أرقامه أكثر هو الأكبر.`;
+  for(let k=da-1;k>=0;k--){const x=digitAt(a,k),y=digitAt(b,k);if(x!==y)return `اكتب العددين رأسيًّا، وابدأ المقارنة من اليسار: الأرقام متساوية حتى منزلة <b>${PN[k]}</b>، وفيها ${ar(Math.max(x,y))} &gt; ${ar(Math.min(x,y))}؛ إذن ${N(x>y?a:b)} هو الأكبر.`;}
+  return 'العددان متساويان: الأرقام نفسها في المنازل نفسها.';}
+const firstDiff=(a,b)=>{const d=Math.max(nDig(a),nDig(b));for(let k=d-1;k>=0;k--)if(digitAt(a,k)!==digitAt(b,k))return k;return -1;};
+
+/* =====================================================
+   قوالب الأسئلة (تقبل أعداد الكتاب أو أعدادًا مولّدة)
+   ===================================================== */
+const Q={};
+/* منزلة الرقم ثم قيمته */
+Q.placeOpts=(n,k)=>{const d=digitAt(n,k),o=[{v:k,html:PN[k],ok:true,fb:`الرقم ${ar(d)} في منزلة <b>${PN[k]}</b>.`}];
+  if(k+1<12)o.push({v:k+1,html:PN[k+1],fb:'اخترت منزلة أكبر بمنزلة واحدة. ابدأ العدّ من منزلة الآحاد (أول رقم من اليمين): آحاد، عشرات، مئات، ثم الدورة التالية.'});
+  if(k-1>=0)o.push({v:k-1,html:PN[k-1],fb:'اخترت منزلة أصغر بمنزلة واحدة. عُدّ المنازل من اليمين مرة أخرى بدءًا من الآحاد.'});
+  const alt=k+3<12?k+3:k-3;o.push({v:alt,html:PN[alt],fb:`عدد الأرقام عن يمين الرقم ${ar(d)} هو ${ar(k)}، فهو في دورة <b>${PER[Math.floor(k/3)]}</b>. كل ثلاثة أرقام تكوّن دورة.`});return uniq(o).slice(0,4);};
+Q.valueOpts=(n,k)=>{const d=digitAt(n,k),v=d*P10(k),o=[{v,html:N(v),ok:true,fb:`قيمته المنزلية: ${ar(d)} × ${N(P10(k))} = ${N(v)}`}];
+  if(k)o.push({v:d,html:N(d),fb:`هذا هو الرقم نفسه، لا قيمته. القيمة المنزلية = الرقم × قيمة منزلته: ${ar(d)} × ${N(P10(k))}.`});
+  if(k<11)o.push({v:v*10,html:N(v*10),fb:`عدد الأصفار أكثر من اللازم. عن يمين الرقم ${ar(d)} يوجد ${ar(k)} أرقام، فتُكتب قيمته ${ar(d)} وبعده ${ar(k)} أصفار.`});
+  if(k>=2)o.push({v:v/10,html:N(v/10),fb:`نقص صفر. عن يمين الرقم ${ar(d)} يوجد ${ar(k)} أرقام، فتُكتب قيمته ${ar(d)} وبعده ${ar(k)} أصفار.`});return uniq(o).slice(0,4);};
+Q.place=(n,k,note)=>(box,ctx)=>{box.insertAdjacentHTML('beforeend',`<p class="qt">سمِّ منزلة الرقم الذي تحته خطّ، ثم اكتب قيمته المنزلية.${note?` <small>${note}</small>`:''}</p>${numDigits(n,k)}`);
+  const step2=E('div','sub');let r1=true;
+  optQ(box,{quiz:ctx.quiz,done:f=>{r1=f;box.appendChild(step2);step2.insertAdjacentHTML('beforeend','<p class="qt">ما قيمته المنزلية؟</p>');optQ(step2,{quiz:ctx.quiz,done:f2=>ctx.done(r1&&f2)},{opts:Q.valueOpts(n,k)});}},{stem:'<p class="qt sm">المنزلة:</p>',opts:Q.placeOpts(n,k)});};
+/* اكتب بالصيغة القياسية */
+Q.std=(promptHTML,n,from)=>(box,ctx)=>{box.insertAdjacentHTML('beforeend',`<p class="qt">اكتب بالصيغة القياسية:</p><div class="${from==='w'?'words':'big'}">${promptHTML}</div>
+  <div class="row"><input class="ans" inputmode="numeric" dir="ltr" autocomplete="off" aria-label="العدد بالصيغة القياسية"><button type="button" class="btn primary ck">تحقّق</button></div><p class="live" aria-hidden="true"></p>`);
+  const inp=box.querySelector('.ans'),lv=box.querySelector('.live'),fb=fbBox();box.appendChild(fb);let first=true,fin=false;
+  inp.oninput=()=>{const t=digitsOnly(inp.value);lv.innerHTML=t?'تقرأ: '+words(+t):'';};
+  const check=()=>{if(fin)return;const t=digitsOnly(inp.value);if(!t){bad(fb,'اكتب العدد أولًا.');return;}const m=+t;
+    if(m===n){fin=true;inp.disabled=true;ok(fb,'صحيح: '+N(n));ctx.done(first);return;}
+    const dn=nDig(n),dm=t.length;let msg;
+    if(dm<dn)msg=`عددك فيه ${ar(dm)} أرقام، والعدد المطلوب فيه ${ar(dn)} أرقام. هل نسيت كتابة الأصفار في المنازل الخالية؟ كل دورة بعد الدورة الأولى تُكتب بثلاثة أرقام.`;
+    else if(dm>dn)msg=`عددك فيه ${ar(dm)} أرقام، والعدد المطلوب فيه ${ar(dn)} أرقام فقط. تأكّد أن كل دورة فيها ثلاثة أرقام، لا أكثر.`;
+    else{let s=3;while(s>=0&&grpOf(m,s)===grpOf(n,s))s--;const gm=grpOf(m,s),gn=grpOf(n,s);
+      msg=`راجع دورة <b>${PER[s]}</b>: كتبت فيها ${ar(String(gm).padStart(s<Math.floor((dn-1)/3)?3:0,'0'))}، وتُقرأ «${gm?u1000(gm):'صفر'}»، والمطلوب «${gn?u1000(gn):'أصفار'}».`;}
+    bad(fb,msg);if(ctx.quiz){fin=true;inp.disabled=true;fb.innerHTML+=`<br>الإجابة الصحيحة: ${N(n)}`;ctx.done(false);}first=false;};
+  box.querySelector('.ck').onclick=check;inp.onkeydown=e=>{if(e.key==='Enter')check();};};
+/* الصيغة اللفظية: اختيار */
+function wordsShift(n){const gs=[0,1,2,3].map(s=>grpOf(n,s));const nz=gs.map((g,i)=>g?i:-1).filter(i=>i>=0);
+  for(const s of shuffle(nz)){for(const t of [s+1,s-1]){if(t<0||t>3||gs[t])continue;const m=n-gs[s]*P10(3*s)+gs[s]*P10(3*t);if(m<P10(12)&&m!==n&&m>0)return {m,s,t};}}return null;}
+function digitSwap(n){const s=String(n).split('');const nz=s.map((c,i)=>c!=='0'&&i>0?i:-1).filter(i=>i>0);const i=nz.length?pick(nz):s.length-1;let d;do{d=String(ri(1,9));}while(d===s[i]);s[i]=d;return +s.join('');}
+Q.words=(n,stem)=>(box,ctx)=>{const opts=[{v:n,html:words(n),ok:true,fb:'نقرأ الأرقام في كل دورة، ثم نذكر اسم الدورة.'}];const sh=wordsShift(n);
+  if(sh)opts.push({v:sh.m,html:words(sh.m),fb:`انتبه لاسم الدورة: الرقم ${N(grpOf(n,sh.s))} يقع في دورة <b>${PER[sh.s]}</b>، لا في دورة ${PER[sh.t]}. اقرأ العدد داخل جدول المنازل، ثم اذكر اسم الدورة.`});
+  for(let i=0;i<6&&opts.length<3;i++){const m=digitSwap(n);opts.push({v:m,html:words(m),fb:'قارن الأرقام في كل دورة: هذه الصيغة تقرأ رقمًا مختلفًا عن الرقم المكتوب في العدد.'});}
+  optQ(box,ctx,{stem:stem||`<p class="qt">اقرأ العدد، واختر صيغته اللفظية:</p><p class="big">${N(n)}</p>`,opts:uniq(opts),lay:'col'});};
+/* الصيغة التحليلية: اختيار */
+Q.expanded=(n,stem)=>(box,ctx)=>{const t=expTerms(n);const opts=[{v:'a',html:`<bdi class="n" dir="ltr">${expanded(t)}</bdi>`,ok:true,fb:'الصيغة التحليلية: كتابة العدد في صورة مجموع قيم أرقامه.'}];
+  if(t.length>1){const i=ri(0,t.length-2),t2=t.slice();t2[i]=t2[i]/10;opts.push({v:'b',html:`<bdi class="n" dir="ltr">${expanded(t2)}</bdi>`,fb:`في الحدّ ${N(t[i]/10)} نقص صفر: الرقم ${ar(String(t[i])[0])} في منزلة ${PN[nDig(t[i])-1]}، فقيمته ${N(t[i])}.`});}
+  opts.push({v:'c',html:`<bdi class="n" dir="ltr">${t.map(x=>ar(String(x)[0])).join(' ‎+‎ ')}</bdi>`,fb:'هذه أرقام العدد فقط، والصيغة التحليلية تكتب <b>قيمة</b> كل رقم حسب منزلته.'});
+  optQ(box,ctx,{stem:stem||`<p class="qt">اختر الصيغة التحليلية للعدد:</p><p class="big">${N(n)}</p>`,opts,lay:'col'});};
+/* الصيغة التحليلية: بناء (قيمة كل رقم) — مثل مثال ٢ */
+Q.expBuild=(n,stem)=>(box,ctx)=>{const ks=[];for(let k=nDig(n)-1;k>=0;k--)if(digitAt(n,k))ks.push(k);
+  box.insertAdjacentHTML('beforeend',(stem||'')+`<p class="big">${N(n)}</p><div class="eb">${ks.map(k=>`<label class="ebr"><span>قيمة الرقم ${ar(digitAt(n,k))} <small>(${PN[k]})</small></span><span class="arw">←</span><input inputmode="numeric" dir="ltr" data-k="${k}" aria-label="قيمة الرقم ${digitAt(n,k)}"></label>`).join('')}</div><button type="button" class="btn primary ck">تحقّق</button><p class="exp"></p>`);
+  const fb=fbBox();box.appendChild(fb);let first=true,fin=false;
+  box.querySelector('.ck').onclick=()=>{if(fin)return;let msg='';box.querySelectorAll('.eb input').forEach(inp=>{const k=+inp.dataset.k,d=digitAt(n,k),t=digitsOnly(inp.value),want=d*P10(k);inp.classList.remove('okb','badb');
+      if(+t===want&&t){inp.classList.add('okb');return;}inp.classList.add('badb');
+      if(!msg){if(!t)msg=`اكتب قيمة الرقم ${ar(d)}.`;else if(t[0]!==String(d))msg=`قيمة الرقم ${ar(d)} تبدأ بالرقم ${ar(d)} نفسه.`;else{const z=t.length-1;msg=z<k?`قيمة الرقم ${ar(d)} ينقصها ${ar(k-z)} ${k-z>1?'أصفار':'صفر'}: الرقم في منزلة ${PN[k]}، وعن يمينه ${ar(k)} أرقام.`:`في قيمة الرقم ${ar(d)} أصفار زائدة: الرقم في منزلة ${PN[k]}، وعن يمينه ${ar(k)} أرقام فقط.`;}}});
+    if(!msg){fin=true;box.querySelector('.exp').innerHTML=`إذن الصيغة التحليلية هي: <bdi class="n" dir="ltr">${expanded(expTerms(n))}</bdi>`;ok(fb,'صحيح.');ctx.done(first);}else{bad(fb,msg);first=false;}};};
+/* جدول المنازل: تمثيل عدد أو شرط */
+Q.chart=({target,cond,prompt,hint})=>(box,ctx)=>{let D=Array(12).fill(0);const host=E('div','chart');
+  box.insertAdjacentHTML('beforeend',prompt);if(hint)box.insertAdjacentHTML('beforeend',`<p class="hint">${hint}</p>`);box.appendChild(host);
+  const row=E('div','row','<button type="button" class="btn primary ck">تحقّق</button><button type="button" class="btn clr">امسح الجدول</button>');const fb=fbBox();box.append(row,fb);
+  const val=()=>D.reduce((s,d,k)=>s+d*P10(k),0);let first=true,fin=false;
+  function draw(){const n=val(),lead=nDig(n);let h=chartHead();h+='<tr>';
+    for(let k=11;k>=0;k--)h+=`<td class="${k%3===0&&k?'pe':''}"><button type="button" class="up" data-k="${k}" aria-label="زد رقم ${PN[k]}" ${fin?'disabled':''}>▲</button><output class="${n&&k<lead||k===0?'':'dim'}">${ar(D[k])}</output><button type="button" class="dn" data-k="${k}" aria-label="أنقص رقم ${PN[k]}" ${fin?'disabled':''}>▼</button></td>`;
+    h+='</tr></tbody></table></div>';
+    h+=`<div class="forms"><p><span class="fl">الصيغة القياسية</span>${N(n)}</p><p><span class="fl">الصيغة اللفظية</span>${words(n)}</p><p><span class="fl">الصيغة التحليلية</span>${n?`<bdi class="n" dir="ltr">${expanded(expTerms(n))}</bdi>`:N(0)}</p></div>`;
+    host.innerHTML=h;host.querySelectorAll('.up,.dn').forEach(b=>b.onclick=()=>{const k=+b.dataset.k;D[k]=(D[k]+(b.classList.contains('up')?1:9))%10;draw();});}
+  row.querySelector('.clr').onclick=()=>{if(fin)return;D=Array(12).fill(0);draw();};
+  row.querySelector('.ck').onclick=()=>{if(fin)return;const n=val();
+    if(target!=null){if(n===target){fin=true;ok(fb,'أحسنت! '+N(target));draw();ctx.done(first);return;}
+      let s=3;while(s>=0&&grpOf(n,s)===grpOf(target,s))s--;const gm=grpOf(n,s),gn=grpOf(target,s);
+      bad(fb,gn?`راجع دورة <b>${PER[s]}</b>: العدد فيه «${readGrp(gn,s)}»، وما مثّلته فيها ${gm?'يُقرأ «'+readGrp(gm,s)+'»':'أصفار'}.`:`دورة <b>${PER[s]}</b> لا يُذكر منها شيء في العدد، فمنازلها أصفار.`);first=false;}
+    else{const r=cond(n,D);if(r===true){fin=true;ok(fb,`عددك ${N(n)} يحقق الشرط، ويُقرأ: ${words(n)}.`);draw();ctx.done(first);}else{bad(fb,r);first=false;}}};
+  draw();};
+/* المقارنة */
+const SYM={gt:'&gt;',lt:'&lt;',eq:'='},SYN={gt:'أكبر من',lt:'أصغر من',eq:'يساوي'};
+Q.cmp=(a,b,stem)=>(box,ctx)=>{const rel=a>b?'gt':a<b?'lt':'eq';const chart=E('div','');
+  box.insertAdjacentHTML('beforeend',(stem||'<p class="qt">قارن بين العددين مستعملًا (&gt; ، &lt; ، =):</p>')+`<div class="cmp"><span class="cn">${N(a)}</span><span class="slot">؟</span><span class="cn">${N(b)}</span></div>`);
+  const wrap=E('div','opts sym'),fb=fbBox();let first=true,fin=false;
+  ['gt','lt','eq'].forEach(r=>{const btn=E('button','opt',`<b class="s">${SYM[r]}</b> ${SYN[r]}`);btn.type='button';
+    btn.onclick=()=>{if(fin)return;const slot=box.querySelector('.slot');chart.innerHTML=miniChart([a,b],firstDiff(a,b));
+      if(r===rel){btn.classList.add('right');fin=true;slot.innerHTML=SYM[r];slot.classList.add('ok');ok(fb,why(a,b));ctx.done(first);}
+      else{btn.classList.add('wrong');btn.disabled=true;bad(fb,(r==='eq'?'العددان غير متساويين. ':'')+why(a,b)+(rel!=='eq'&&r!=='eq'?' انتبه لاتجاه الإشارة: فتحتها تكون جهة العدد الأكبر.':''));
+        if(ctx.quiz){fin=true;wrap.querySelectorAll('button').forEach(x=>x.disabled=true);slot.innerHTML=SYM[rel];ctx.done(false);}first=false;}};
+    wrap.appendChild(btn);});
+  box.append(wrap,fb,chart);};
+/* الترتيب */
+Q.order=(nums,up,stem)=>(box,ctx)=>{const goal=nums.slice().sort((x,y)=>up?x-y:y-x),order=shuffle(nums);
+  box.insertAdjacentHTML('beforeend',(stem||'')+`<p class="qt">رتّب الأعداد <b>${up?'من الأصغر إلى الأكبر (تصاعديًّا)':'من الأكبر إلى الأصغر (تنازليًّا)'}</b>: اضغط عليها بالترتيب.</p><div class="slots">${goal.map((_,i)=>`<span class="sl"><i>${ar(i+1)}</i><b></b></span>`).join('')}</div>`);
+  const cards=E('div','opts cards'),fb=fbBox(),chart=E('div','');box.append(cards,fb,chart);const sl=box.querySelectorAll('.sl b');let pos=0,first=true,fin=false;
+  order.forEach(v=>{const b=E('button','opt ocard',N(v));b.type='button';b.onclick=()=>{if(fin)return;const want=goal[pos];
+    if(v===want){sl[pos].innerHTML=N(v);sl[pos].parentNode.classList.add('ok');b.disabled=true;b.classList.add('used');pos++;fb.className='fb';fb.textContent='';
+      if(pos===goal.length){fin=true;ok(fb,'ترتيب صحيح.');chart.innerHTML=miniChart(goal,-1);ctx.done(first);}}
+    else{b.classList.add('shake');setTimeout(()=>b.classList.remove('shake'),400);bad(fb,`${N(v)} ليس ${up?'الأصغر':'الأكبر'} بين الأعداد الباقية. قارنه بـ ${N(want)}: `+why(v,want));chart.innerHTML=miniChart([v,want],firstDiff(v,want));
+      if(ctx.quiz){fin=true;goal.forEach((g,i)=>{sl[i].innerHTML=N(g);});cards.querySelectorAll('button').forEach(x=>x.disabled=true);ctx.done(false);}first=false;}};cards.appendChild(b);});};
+/* التقريب */
+const roundH=(n,p)=>{const lo=Math.floor(n/P10(p))*P10(p);return digitAt(n,p-1)>=5?lo+P10(p):lo;};
+function roundLine(n,p,showDot){const lo=Math.floor(n/P10(p))*P10(p);return nline({min:lo,max:lo+P10(p),step:P10(p)/10,label:10,mid:lo+P10(p)/2,dot:showDot?n:null});}
+Q.round=(n,p,stem)=>(box,ctx)=>{const lo=Math.floor(n/P10(p))*P10(p),hi=lo+P10(p),c=roundH(n,p),r=digitAt(n,p-1);
+  const rule=r>=5?`الرقم الواقع عن يمين منزلة ${PN[p]} هو ${ar(r)}، وهو ٥ أو أكبر؛ لذا نضيف ١ إلى الرقم الذي تحته خطّ، ونبدّل الأرقام عن يمينه بأصفار.`:`الرقم الواقع عن يمين منزلة ${PN[p]} هو ${ar(r)}، وهو أقل من ٥؛ لذا لا يتغير الرقم الذي تحته خطّ، ونبدّل الأرقام عن يمينه بأصفار.`;
+  const opts=[{v:c,html:N(c),ok:true,fb:rule},{v:c===lo?hi:lo,html:N(c===lo?hi:lo),fb:'انتبه: '+rule.replace('لذا','إذن')}];
+  [p+1,p-1].forEach(q=>{if(q>=1&&q<=12){const w=roundH(n,q);opts.push({v:w,html:N(w),fb:`هذا تقريب إلى ${RND[q]}، والمطلوب ${RND[p]}. ضع خطًّا تحت الرقم في منزلة ${PN[p]} أولًا.`});}});
+  if(p>=2)opts.push({v:Math.floor(n/P10(p-1))*P10(p-1)+(r>=5?P10(p):0),html:N(Math.floor(n/P10(p-1))*P10(p-1)+(r>=5?P10(p):0)),fb:'بعد التقريب نبدّل <b>كل</b> الأرقام الواقعة عن يمين الرقم الذي تحته خطّ بأصفار.'});
+  const fig=E('div','fig');
+  optQ(box,ctx,{stem:(stem||`<p class="qt">قرّب العدد إلى <b>${RND[p]}</b>:</p>`)+numDigits(n,p),opts:uniq(opts).slice(0,4),after:()=>{fig.innerHTML=roundLine(n,p,true);fig.insertAdjacentHTML('afterbegin','<p class="hint">تحقّق بخط الأعداد:</p>');}});
+  box.appendChild(fig);};
+/* التقريب بالخطوات الأربع — مثال ١ ص٤٧ */
+Q.roundSteps=(n,p,stem)=>(box,ctx)=>{const r=digitAt(n,p-1),c=roundH(n,p);let first=true;
+  box.insertAdjacentHTML('beforeend',(stem||'')+`<p class="qt">الخطوة ١: اضغط على الرقم في المنزلة التي يُراد التقريب إليها (<b>${PN[p]}</b>).</p>${numDigits(n,-1,true)}`);
+  const fb=fbBox(),s2=E('div','sub');box.append(fb,s2);
+  box.querySelectorAll('.dg').forEach(b=>b.onclick=()=>{if(s2.childElementCount)return;const k=+b.dataset.k;
+    if(k!==p){b.classList.add('bad');bad(fb,`هذا الرقم في منزلة ${PN[k]}. المطلوب منزلة ${PN[p]}.`);first=false;return;}
+    b.classList.add('ul');box.querySelector(`.dg[data-k="${p-1}"]`).classList.add('hl');ok(fb,'وضعنا خطًّا تحت الرقم '+ar(digitAt(n,p))+'.');
+    s2.insertAdjacentHTML('beforeend',`<p class="qt">الخطوة ٢ و٣: انظر إلى الرقم الواقع عن يمينه (${ar(r)}). هل هو ٥ أو أكبر؟</p>`);
+    optQ(s2,{done:f=>{first=first&&f;const s3=E('div','sub');s2.appendChild(s3);s3.insertAdjacentHTML('beforeend','<p class="qt">الخطوة ٤: ما العدد بعد التقريب؟</p>');
+      Q.round(n,p,'<span></span>')(s3,{done:f3=>ctx.done(first&&f3)});s3.querySelector('.bign').remove();}},
+      {opts:[{v:1,html:'نعم، ٥ أو أكبر: أضيف ١ إلى الرقم الذي تحته خطّ',ok:r>=5,fb:r>=5?`صحيح، ${ar(r)} ≥ ٥.`:`${ar(r)} أقل من ٥، فلا يتغير الرقم الذي تحته خطّ.`},{v:0,html:'لا، أقل من ٥: لا يتغير الرقم الذي تحته خطّ',ok:r<5,fb:r<5?`صحيح، ${ar(r)} &lt; ٥.`:`${ar(r)} يساوي ٥ أو أكبر منه، فنضيف ١.`}],keep:true,lay:'col'});});};
+/* أكبر عدد وأصغر عدد من أرقام — مهارات التفكير ٢٥ ص١٩ */
+Q.digits=(digs)=>(box,ctx)=>{const big=+digs.slice().sort((a,b)=>b-a).join(''),small=+digs.slice().sort((a,b)=>a-b).join('');
+  box.insertAdjacentHTML('beforeend',`<p class="qt">استعمل الأرقام: ${digs.map(ar).join('، ')} لكتابة أكبر عدد وأصغر عدد بالصيغة القياسية، على ألّا يتكرر أيٌّ من الأرقام.</p>`);
+  let stage=0,cur=[],first=true;const out=E('p','big'),pool=E('div','opts pool'),fb=fbBox(),lab=E('p','qt');box.append(lab,out,pool,fb);
+  const reset=()=>{cur=[];out.innerHTML='&nbsp;';pool.innerHTML='';digs.forEach((d,i)=>{const b=E('button','opt dgt',ar(d));b.type='button';b.onclick=()=>{b.disabled=true;cur.push(d);out.innerHTML=`<bdi class="n" dir="ltr">${ar(cur.join(''))}</bdi>`;if(cur.length===digs.length)check();};pool.appendChild(b);});
+    const u=E('button','btn','↺ ابدأ من جديد');u.type='button';u.onclick=reset;pool.appendChild(u);lab.innerHTML=stage===0?'كوّن <b>أكبر</b> عدد: اضغط على الأرقام بالترتيب من اليسار.':'الآن كوّن <b>أصغر</b> عدد.';};
+  const check=()=>{const v=+cur.join(''),want=stage===0?big:small;
+    if(v===want){ok(fb,stage===0?`أكبر عدد: ${N(big)} — نضع الرقم الأكبر في المنزلة الكبرى.`:`أصغر عدد: ${N(small)} — نضع الرقم الأصغر في المنزلة الكبرى.`);if(stage===0){stage=1;setTimeout(reset,900);}else ctx.done(first);}
+    else{const k=firstDiff(v,want);bad(fb,`في منزلة ${PN[k]} وضعت ${ar(digitAt(v,k))}، ويمكن وضع رقم ${stage===0?'أكبر':'أصغر'} منه. ${stage===0?'ابدأ بالرقم الأكبر في المنزلة الكبرى.':'ابدأ بالرقم الأصغر في المنزلة الكبرى.'}`);first=false;setTimeout(reset,1600);}};
+  reset();};
+/* المقارنة بخط الأعداد (أمثلة الكتاب) */
+Q.cmpLine=(cfg,pairs,stem)=>(box,ctx)=>{box.insertAdjacentHTML('beforeend',(stem||'<p class="qt">استعمل خط الأعداد للمقارنة بين العددين في كلٍّ مما يأتي مستعملًا (&gt; ، &lt; ، =):</p>')+`<div class="fig">${nline(cfg)}</div><p class="hint">كل عدد على خط الأعداد أكبر من جميع الأعداد التي تقع عن يساره.</p>`);
+  let left=pairs.length,allFirst=true;pairs.forEach(([a,b])=>{const sub=E('div','sub');box.appendChild(sub);Q.cmp(a,b,'')(sub,{quiz:ctx.quiz,done:f=>{allFirst=allFirst&&f;if(--left===0)ctx.done(allFirst);}});sub.querySelector('.fb')&&0;});};
+/* قراءة نقطة على خط الأعداد — التهيئة */
+Q.lineRead=(cfg,asks)=>(box,ctx)=>{box.insertAdjacentHTML('beforeend',`<p class="qt">اكتب العدد الذي تمثّله كل نقطة على خط الأعداد:</p><div class="fig">${nline(cfg)}</div><div class="lr">${asks.map(([l])=>`<label>${l}: <input inputmode="numeric" dir="ltr" data-l="${l}" aria-label="النقطة ${l}"></label>`).join('')}</div><button type="button" class="btn primary ck">تحقّق</button>`);
+  const fb=fbBox();box.appendChild(fb);let first=true,fin=false;
+  box.querySelector('.ck').onclick=()=>{if(fin)return;let msg='';asks.forEach(([l,v])=>{const i=box.querySelector(`[data-l="${l}"]`),t=digitsOnly(i.value);i.classList.remove('okb','badb');if(t&&+t===v)i.classList.add('okb');else{i.classList.add('badb');if(!msg)msg=t?`النقطة ${l}: عُدّ العلامات من أقرب عدد مكتوب. كل علامة تزيد ${ar(cfg.step)}.`:`اكتب العدد عند النقطة ${l}.`;}});
+    if(msg){bad(fb,msg);first=false;}else{fin=true;ok(fb,'صحيح.');ctx.done(first);}};};
+/* تمثيل عدد على خط الأعداد (توسّع) */
+Q.linePlace=(L,step,j)=>(box,ctx)=>{const v=L+j*step;box.insertAdjacentHTML('beforeend',`<p class="qt">اضغط على موقع العدد ${N(v)} على خط الأعداد.</p><p class="hint">على الخط ١٠ قفزات متساوية من ${N(L)} إلى ${N(L+10*step)}.</p><div class="fig">${nline({min:L,max:L+10*step,step,label:10,tap:true})}</div>`);
+  const fb=fbBox();box.appendChild(fb);let first=true,fin=false;
+  box.querySelectorAll('.hit').forEach(c=>{const go=()=>{if(fin)return;const vv=+c.dataset.v;
+    if(vv===v){c.classList.add('ok');fin=true;ok(fb,`كل قفزة تساوي ${N(step)}، ومن ${N(L)} إلى ${N(v)} نحتاج ${ar(j)} قفزات.`);ctx.done(first);}
+    else{c.classList.add('no');bad(fb,`هذه العلامة تمثّل ${N(vv)}. كل قفزة على هذا الخط تساوي ${N(step)}؛ فكم قفزة نحتاج من ${N(L)} لنصل إلى ${N(v)}؟`);
+      if(ctx.quiz){fin=true;box.querySelector(`.hit[data-v="${v}"]`).classList.add('ok');ctx.done(false);}first=false;}};
+    c.onclick=go;c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}};});};
+Q.lineValue=(L,step,j)=>(box,ctx)=>{const v=L+j*step,opts=[{v,html:N(v),ok:true,fb:`كل قفزة ${N(step)}، والنقطة بعد ${ar(j)} قفزات من ${N(L)}.`}];
+  if(j>1)opts.push({v:v-step,html:N(v-step),fb:'عُدّ القفزات من بداية الخط مرة أخرى؛ هذا العدد ينقص قفزة واحدة.'});
+  if(j<9)opts.push({v:v+step,html:N(v+step),fb:'عُدّ القفزات من بداية الخط مرة أخرى؛ هذا العدد يزيد قفزة واحدة.'});
+  opts.push({v:L+j*step/10,html:N(L+j*step/10),fb:`طول القفزة هنا ${N(step)}، وليس ${N(step/10)}: الفرق بين طرفي الخط ${N(10*step)} مقسوم على ١٠ قفزات.`});
+  optQ(box,ctx,{stem:`<p class="qt">ما العدد الذي تمثّله النقطة <b>؟</b> على خط الأعداد؟</p><div class="fig">${nline({min:L,max:L+10*step,step,label:10,mark:v})}</div>`,opts:uniq(opts)});};
+/* اختيار عام */
+Q.mcq=(stem,opts)=>(box,ctx)=>optQ(box,ctx,{stem,opts,lay:'col'});
+
+/* =====================================================
+   مولّدات «توسّع إلى ١٢ منزلة» والتحدي
+   ===================================================== */
+const G={
+  place(){const n=rnum(ri(10,12),.15);let k;do{k=ri(1,nDig(n)-1);}while(!digitAt(n,k));return {ind:1,r:Q.place(n,k)};},
+  placeTap(){const n=rnum(ri(10,12),.15);let k;do{k=ri(0,nDig(n)-1);}while(!digitAt(n,k));return {ind:1,r:(box,ctx)=>{
+    box.insertAdjacentHTML('beforeend',`<p class="qt">اضغط على الرقم الذي في منزلة <b>${PN[k]}</b>.</p>${numDigits(n,-1,true)}`);const fb=fbBox();box.appendChild(fb);let first=true,fin=false;
+    box.querySelectorAll('.dg').forEach(b=>b.onclick=()=>{if(fin)return;const kk=+b.dataset.k;
+      if(kk===k){b.classList.add('hl');fin=true;ok(fb,`الرقم ${ar(digitAt(n,k))} في منزلة ${PN[k]}، وقيمته ${N(digitAt(n,k)*P10(k))}.`);ctx.done(first);}
+      else{b.classList.add('bad');const same=Math.floor(kk/3)===Math.floor(k/3);bad(fb,`هذا الرقم في منزلة <b>${PN[kk]}</b>. `+(same?`أنت في الدورة الصحيحة (${PER[Math.floor(k/3)]})، فابحث فيها عن المنزلة المطلوبة.`:`ابحث أولًا عن دورة <b>${PER[Math.floor(k/3)]}</b>: كل ثلاثة أرقام من اليمين دورة، وأولها دورة الواحدات.`));
+        if(ctx.quiz){fin=true;box.querySelector(`.dg[data-k="${k}"]`).classList.add('hl');ctx.done(false);}first=false;}});}};},
+  words(){return {ind:2,r:Q.words(rnum(ri(10,12),.3))};},
+  expanded(){return {ind:2,r:Q.expanded(rnum(ri(10,12),.35))};},
+  stdW(){const n=rnum(ri(10,12),.35);return {ind:2,r:Q.std(words(n),n,'w')};},
+  stdE(){const n=rnum(ri(10,12),.4);return {ind:2,r:Q.std(`<bdi class="n" dir="ltr">${expanded(expTerms(n))}</bdi>`,n,'e')};},
+  line(){const k=ri(5,10),step=P10(k),L=ri(1,9)*step*10,j=ri(1,9);return {ind:1,r:ri(0,1)?Q.linePlace(L,step,j):Q.lineValue(L,step,j)};},
+  round(){const L=ri(10,12);let n=rnum(L,.12);const p=pick([3,4,5,6,7,8,9,10].filter(x=>x<L-1));if(rnd()<.2){const s=String(n).split('');s[L-p]='5';n=+s.join('');}return {ind:1,r:Q.round(n,p)};},
+  cmp(){const t=ri(0,9);let a,b;
+    if(t===0){a=rnum(ri(10,12));b=a;}
+    else if(t<=3){const d=ri(10,11);b=rnum(d+1,.2);const lb=Math.floor(b/P10(d));a=+(String(lb<9?ri(lb+1,9):9)+String(rnum(d,.2)).slice(1));}
+    else{const d=ri(10,12);a=rnum(d,.2);const s=String(a).split('');const i=ri(1,d-1);let x;do{x=String(ri(0,9));}while(x===s[i]);s[i]=x;b=+s.join('');}
+    if(rnd()<.5)[a,b]=[b,a];return {ind:3,r:Q.cmp(a,b)};},
+  order(){const up=ri(0,1)===0,d=ri(10,11),base=rnum(d,.2),set=new Set([base]);
+    while(set.size<4){let m;if(ri(0,3)===0)m=rnum(d+(ri(0,1)?1:-1),.2);else{const s=String(base).split('');const i=ri(0,Math.min(5,d-1));s[i]=String(i===0?ri(1,9):ri(0,9));m=+s.join('');}if(m>0&&nDig(m)<=12)set.add(m);}
+    return {ind:3,r:Q.order([...set],up)};}};
+
+/* =====================================================
+   محتوى الدروس (من كتاب الطالب — الصف الخامس، الفصل الدراسي الأول)
+   ===================================================== */
+const W2=n=>`<bdi class="n" dir="ltr">${expanded(expTerms(n))}</bdi>`;
+const LESSONS={
+ t0:[
+  {tag:'التهيئة ١–٦ · ص١٢',t:'الصيغة اللفظية',r:Q.mcq('<p class="qt">اختر الصيغة اللفظية للعدد ٣٧١:</p>',[{v:1,html:'ثلاث مئة وواحد وسبعون',ok:true},{v:2,html:'ثلاث مئة وسبعة عشر',fb:'هذه قراءة العدد ٣١٧. انظر إلى رقم العشرات: ٧.'},{v:3,html:'ثلاثون وسبعة وواحد',fb:'الرقم ٣ في منزلة المئات، فنقرأ «ثلاث مئة».'}])},
+  {tag:'التهيئة ٧–١٢ · ص١٢',t:'خط الأعداد',r:Q.lineRead({min:0,max:16,step:1,label:1,points:[{v:2,t:'ب'},{v:5,t:'جـ'},{v:12,t:'هـ'},{v:8,t:'د'}]},[['ب',2],['جـ',5],['د',8],['هـ',12]])},
+  {tag:'التهيئة ١٦ · ص١٢',t:'الإشارات',r:Q.cmp(471,470,'<p class="qt">اكتب الجملة «٤٧١ أكبر من ٤٧٠» مستعملًا إحدى الإشارات (&gt; ، &lt; ، =):</p>')},
+  {tag:'التهيئة ١٧ · ص١٢',t:'الإشارات',r:Q.cmp(35,38,'<p class="qt">في مدينة الخُبر بلغت درجة الحرارة العظمى أمس ٣٨ درجة، واليوم ٣٥ درجة. اكتب الجملة «٣٥ أقل من ٣٨» مستعملًا إحدى الإشارات:</p>')}],
+ t1:[
+  {tag:'استعد · ص١٣',t:'جدول المنازل',r:Q.chart({target:125000,prompt:'<p class="qt">تبلغ مساحة منطقة حائل حوالي ١٢٥٠٠٠ كيلومتر مربع. مثّل هذا العدد في جدول المنازل، وراقب صيغه الثلاث.</p>',hint:'في الأعداد الكبيرة نسمّي كل ثلاثة أرقام دورة أعداد.'})},
+  {tag:'مثال ١ · ص١٣',t:'القيمة المنزلية',r:Q.place(365200,5)},
+  {tag:'مثال ٢ · ص١٤',t:'الصيغة التحليلية',r:Q.expBuild(647000,'<p class="qt">صحارى: الربع الخالي من أكبر الصحاري الرملية في العالم، وتبلغ مساحته حوالي ٦٤٧٠٠٠ كلم². اكتب قيمة كل رقم، ثم الصيغة التحليلية.</p>')},
+  {tag:'مثال ٣ · ص١٤',t:'الصيغة اللفظية',r:Q.chart({target:1650072900,prompt:'<p class="qt">اقرأ العدد ١٦٥٠٠٧٢٩٠٠: مثّله أولًا في جدول المنازل.</p>',hint:'تذكّر: لقراءة عدد، اقرأ العدد داخل جدول المنازل، ثم اذكر اسم الدورة.'})},
+  {tag:'مثال ٣ · ص١٤',t:'الصيغة اللفظية',r:Q.words(1650072900)},
+  {tag:'تأكد ١–٣ · ص١٤',t:'القيمة المنزلية',r:Q.place(491306200513,10)},
+  {tag:'تأكد ٤ · ص١٤',t:'الصيغة القياسية',r:Q.std('١٢ مليونًا و٣٢٤ ألفًا و٥٠٠',12324500,'w')},
+  {tag:'تأكد ٥ · ص١٤',t:'الصيغة القياسية',r:Q.std(W2(531046),531046,'e')},
+  {tag:'تأكد ٧ · ص١٤',t:'الصيغة التحليلية',r:Q.expanded(205801300)},
+  {tag:'تأكد ٨ · ص١٤',t:'الصيغة القياسية',r:Q.std('أربعة آلاف وأربعة',4004,'w')},
+  {tag:'تدرّب ١١ · ص١٥',t:'القيمة المنزلية',r:Q.place(179703341650,8)},
+  {tag:'تدرّب ١٢ · ص١٥',t:'القيمة المنزلية',r:Q.place(4165300241,9)},
+  {tag:'تدرّب ١٤ · ص١٥',t:'الصيغة القياسية',r:Q.std('خمسون بليونًا، ومئة مليون، وخمسة وتسعون',50100000095,'w')},
+  {tag:'تدرّب ١٥ · ص١٥',t:'الصيغة القياسية',r:Q.std(W2(83254670),83254670,'e')},
+  {tag:'تدرّب ١٨ · ص١٥',t:'الصيغة التحليلية',r:Q.expBuild(107000523094,'<p class="qt">اكتب العدد بالصيغة التحليلية: اكتب قيمة كل رقم.</p>')},
+  {tag:'تدرّب ١٨ · ص١٥',t:'الصيغة اللفظية',r:Q.words(107000523094)},
+  {tag:'تدرّب ٢٠ · ص١٥',t:'الصيغة القياسية',r:Q.std('٢٠ مليون ريال',20000000,'w')},
+  {tag:'مسألة من واقع الحياة ٢١ · ص١٥',t:'كاسيني',r:Q.std('مليار و٤٩٤ مليون كيلومتر',1494000000,'w')},
+  {tag:'مسألة من واقع الحياة ٢٢ · ص١٥',t:'كاسيني',r:Q.words(1188000000,'<p class="qt">اقرأ العدد الدالّ على تكلفة الرحلة:</p><p class="big">١١٨٨٠٠٠٠٠٠ ريال</p>')},
+  {tag:'مسألة مفتوحة ٢٤ · ص١٥',t:'مهارات التفكير العليا',r:Q.chart({cond:(n,D)=>D[10]!==7?'ضع الرقم ٧ في منزلة <b>عشرات البلايين</b>: الدورة الرابعة من اليمين، المنزلة الثانية فيها.':D[8]!==5?'ضع الرقم ٥ في منزلة <b>مئات الملايين</b>: دورة الملايين، المنزلة الثالثة فيها.':true,prompt:'<p class="qt">اكتب عددًا بحيث يكون الرقم ٧ في منزلة عشرات البلايين، والرقم ٥ في منزلة مئات الملايين، ثم اقرأه.</p>',hint:'أكمل باقي المنازل بأي أرقام تريدها.'})},
+  {tag:'تدريب على اختبار ٢٩ · ص١٩',t:'اختيار من متعدد',r:Q.mcq('<p class="qt">المحيط الهادي يغطي حوالي ١٦٩٢٠٠٠٠٠ كيلومتر مربع. هذا العدد يُكتب بالصيغة اللفظية:</p>',[
+     {v:1,html:'مليون وستمائة واثنان وتسعون ألفًا',fb:'هذه قراءة ١٦٩٢٠٠٠، وفيها سبعة أرقام فقط. العدد فيه تسعة أرقام: دورة الملايين فيها ١٦٩.'},
+     {v:2,html:'مئة وتسعة وستون مليونًا ومئتا ألف',ok:true,fb:'دورة الملايين ١٦٩، ودورة الألوف ٢٠٠.'},
+     {v:3,html:'مليار وستمائة واثنان وتسعون مليونًا',fb:'المليار يحتاج عشرة أرقام، والعدد فيه تسعة أرقام فقط.'},
+     {v:4,html:'مئة وتسعة وستون مليارًا ومئتا مليون',fb:'الدورة خطأ: ١٦٩ في دورة الملايين لا البلايين.'}])}],
+ g1:{goal:6,make:()=>pick([G.place,G.placeTap,G.words,G.expanded,G.stdW,G.stdE])()},
+ t2:[
+  {tag:'مثال ١ · ص١٦',t:'استعمال خط الأعداد',r:Q.cmpLine({min:208,max:214,step:1,label:2,points:[{v:209},{v:214}]},[[214,209]])},
+  {tag:'مثال ٢ · ص١٧',t:'استعمال القيمة المنزلية',r:Q.cmp(5790,5488,'<p class="qt">المسافة بين بيت محمد والمدرسة ٥٧٩٠ مترًا، وبين بيت مسعود والمدرسة ٥٤٨٨ مترًا. قارن بين المسافتين:</p>')},
+  {tag:'تأكد ١–٤ · ص١٧',t:'استعمال خط الأعداد',r:Q.cmpLine({min:586,max:610,step:1,label:2,points:[{v:589},{v:594},{v:597},{v:602},{v:610}]},[[597,589],[602,610],[594,594],[610,589]])},
+  {tag:'تأكد ٧ · ص١٧',t:'المقارنة',r:Q.cmp(5655710,5654911)},
+  {tag:'تأكد ٨ · ص١٧',t:'المقارنة',r:Q.cmp(6650,2700,'<p class="qt">يبلغ طول نهر النيل ٦٦٥٠ كلم، وطول نهر الفرات ٢٧٠٠ كلم. قارن بين الطولين:</p>')},
+  {tag:'تدرّب ١٧ · ص١٨',t:'المقارنة',r:Q.cmp(114208600,112300792)},
+  {tag:'تدرّب ١٨ · ص١٨',t:'المقارنة',r:Q.cmp(7655240000,7655420000)},
+  {tag:'تدرّب ١٩ · ص١٨',t:'المقارنة',r:Q.cmp(10856432021,10856432020)},
+  {tag:'مهارات التفكير العليا ٢٥ · ص١٩',t:'تحدٍّ',r:Q.digits([4,7,1,9,3,8])}],
+ g2:{goal:6,make:()=>pick([G.cmp,G.cmp,G.line])()},
+ t3:[
+  {tag:'مثال ١ · ص٣٣',t:'ملاعب',r:Q.order([70100,23000,22500],false,`<p class="qt">سعة ملاعب كرة القدم: استاد الملك فهد الدولي ٧٠١٠٠، استاد الأمير فيصل بن فهد ٢٣٠٠٠، استاد الأمير محمد بن فهد ٢٢٥٠٠.</p><div class="fig">${nline({min:20000,max:80000,step:10000,label:1,points:[{v:22500},{v:23000},{v:70100}],callout:false})}</div>`)},
+  {tag:'تأكد ١ · ص٣٤',t:'المسافات',r:Q.order([567,643,590,645],true)},
+  {tag:'تدرّب ٨ · ص٣٥',t:'أعداد المتفرجين',r:Q.order([7248,7300,7249,7342],true)},
+  {tag:'تدرّب ٩ · ص٣٥',t:'التوفير السنوي',r:Q.order([32829,32830,33200,32547],true)},
+  {tag:'تدرّب ١٤ · ص٣٥',t:'إنتاج الإسمنت',r:Q.order([5976000,7273958,4287660,3362832],false,'<p class="qt">كميات إنتاج الإسمنت بالطن عام ١٤٣٢هـ: اليمامة ٥٩٧٦٠٠٠، السعودية ٧٢٧٣٩٥٨، القصيم ٤٢٨٧٦٦٠، الشرقية ٣٣٦٢٨٣٢. أيّ الشركات أكثر إنتاجًا؟ وأيّها أقل؟</p>')}],
+ g3:{goal:4,make:G.order},
+ t4:[
+  {tag:'مثال ١ · ص٤٧',t:'تقريب الأعداد الكلية',r:Q.roundSteps(17818,3,'<p class="qt">جغرافيا: تبلغ مساحة دولة الكويت ١٧٨١٨ كلم². قرّب العدد إلى أقرب ألف.</p>')},
+  {tag:'تأكد ١–٤ · ص٤٨',t:'التقريب',r:Q.round(8317,2)},
+  {tag:'تأكد ١–٤ · ص٤٨',t:'التقريب',r:Q.round(1096,1)},
+  {tag:'تدرّب ١٤ · ص٤٩',t:'التقريب',r:Q.round(106950,3)},
+  {tag:'تدرّب ١٧ · ص٤٩',t:'التقريب',r:Q.round(692300,4)},
+  {tag:'تدرّب ٢٤ · ص٤٩',t:'سباق الدراجات',r:Q.round(3374,2,'<p class="qt">بلغت مسافة أحد سباقات الدراجات الهوائية ٣٣٧٤ مترًا. قرّب هذه المسافة إلى أقرب مئة متر:</p>')},
+  {tag:'توسّع · ١٢ منزلة',t:'بالخطوات الأربع',r:Q.roundSteps(436825190457,9,'<p class="qt">قرّب العدد إلى أقرب بليون.</p>')}],
+ g4:{goal:6,make:G.round}};
+
+/* =====================================================
+   بناء الصفحة
+   ===================================================== */
+const SECS=[{id:'t0'},{id:'t1',g:'g1'},{id:'t2',g:'g2'},{id:'t3',g:'g3'},{id:'t4',g:'g4'}];
+const DONE=new Set(JSON.parse(store.get('pv12b-done')||'[]'));const GEN={};SECS.forEach(s=>{if(s.g)GEN[s.g]=Math.min(LESSONS[s.g].goal,+(store.get('pv12b-'+s.g)||0));});
+const save=()=>{store.set('pv12b-done',JSON.stringify([...DONE]));for(const g in GEN)store.set('pv12b-'+g,GEN[g]);};
+function updProg(){let t=0,g=0;SECS.forEach(s=>{const items=LESSONS[s.id];let st=0,sg=0;items.forEach((_,i)=>{st++;if(DONE.has(s.id+':'+i))sg++;});if(s.g){st+=LESSONS[s.g].goal;sg+=GEN[s.g];}
+    t+=st;g+=sg;const c=$(`#${s.id} .count`);if(c)c.innerHTML=`أنجزت ${ar(sg)} من ${ar(st)}`+(sg>=st?' ✓':'');document.querySelector(`nav.steps [data-go="${s.id}"]`).classList.toggle('ok',sg>=st);
+    if(s.g){const gc=$(`#${s.id} .gcount`);if(gc)gc.textContent=`أنجزت ${ar(GEN[s.g])} من ${ar(LESSONS[s.g].goal)}`;}});
+  $('#pg-t').textContent=`أنجزت ${ar(g)} من ${ar(t)}`;$('#pg-b').style.width=(g/t*100)+'%';}
+function build(sec){const host=$(`#${sec.id} .items`);LESSONS[sec.id].forEach((it,i)=>{const key=sec.id+':'+i;
+    const c=E('div','card'+(DONE.has(key)?' done':''));c.innerHTML=`<div class="qhead"><span class="qn">${ar(i+1)}</span><div><span class="tag">${it.tag}</span><b class="tt">${it.t}</b></div></div>`;const box=E('div','qbox');c.appendChild(box);host.appendChild(c);
+    it.r(box,{quiz:false,done:()=>{c.classList.add('done');if(!DONE.has(key)){DONE.add(key);save();updProg();}}});});
+  if(sec.g){const gc=E('div','card ext');gc.innerHTML=`<div class="qhead"><span class="qn">＋</span><div><span class="tag">توسّع: أعداد ضمن ١٢ منزلة</span><b class="tt">أسئلة جديدة في كل مرة</b></div></div><p class="gcount count"></p>`;
+    const box=E('div','qbox'),nx=E('button','btn primary nxt','سؤال جديد ←');nx.type='button';gc.append(box,nx);host.appendChild(gc);
+    const go=()=>{box.innerHTML='';nx.hidden=true;const q=LESSONS[sec.g].make();q.r(box,{quiz:false,done:()=>{if(GEN[sec.g]<LESSONS[sec.g].goal){GEN[sec.g]++;save();updProg();}nx.hidden=false;}});};nx.onclick=go;go();}
+  host.insertAdjacentHTML('beforeend','<p class="credit">إعداد وتصميم: أ. خالد رفيع الحمدي</p>');}
+
+/* --- التحدي الختامي --- */
+function quiz(){const host=$('#t5 .qbox'),bar=$('#t5 .qbar');let QS=[],i=0,res=[];
+  const IND=['','يحدد القيمة المنزلية لأرقام الأعداد ضمن ١٢ منزلة، ويمثلها على خط الأعداد، ويقربها إلى أقرب منزلة معطاة.','يقرأ الأعداد ضمن ١٢ منزلة، ويكتبها في الصور القياسية واللفظية والتحليلية.','يقارن بين الأعداد ضمن ١٢ منزلة باستخدام الرموز (&gt;، &lt;، =)، ويرتبها تصاعديًّا وتنازليًّا.'];
+  const SEC={1:['t1','t2','t4'],2:['t1'],3:['t2','t3']};
+  function start(){QS=[G.placeTap(),G.place(),G.line(),G.round(),G.words(),G.expanded(),G.stdW(),G.cmp(),G.cmp(),G.order()];i=0;res=[];show();}
+  function show(){if(i>=QS.length)return report();bar.innerHTML=QS.map((_,j)=>`<i class="${j<i?(res[j]?'ok':'no'):j===i?'cur':''}"></i>`).join('');
+    host.innerHTML=`<p class="qn2">السؤال ${ar(i+1)} من ${ar(QS.length)} · المؤشر ${ar(QS[i].ind)}</p>`;const b=E('div','qbox');host.appendChild(b);
+    const nx=E('button','btn primary',i===QS.length-1?'اعرض النتيجة ←':'السؤال التالي ←');nx.type='button';nx.hidden=true;nx.onclick=()=>{i++;show();};
+    QS[i].r(b,{quiz:true,done:ok=>{res[i]=ok;nx.hidden=false;}});host.appendChild(nx);}
+  function report(){bar.innerHTML=QS.map((_,j)=>`<i class="${res[j]?'ok':'no'}"></i>`).join('');const tot=res.filter(Boolean).length;
+    let h=`<h3 class="score">نتيجتك: ${ar(tot)} من ${ar(QS.length)}</h3><div class="scroll"><table class="rep"><thead><tr><th>المؤشر</th><th>الدرجة</th><th>التوصية</th></tr></thead><tbody>`;
+    [1,2,3].forEach(k=>{const js=QS.map((q,j)=>q.ind===k?j:-1).filter(j=>j>=0),okc=js.filter(j=>res[j]).length,full=okc===js.length;
+      h+=`<tr><td>${ar(k)}. ${IND[k]}</td><td class="sc ${full?'ok':okc/js.length>=.5?'mid':'no'}">${ar(okc)} / ${ar(js.length)}</td><td>${full?'متقن ✓':'راجع: '+SEC[k].map(id=>`<button type="button" class="lnk" data-go="${id}">${document.querySelector(`nav.steps [data-go="${id}"]`).dataset.n}</button>`).join('، ')}</td></tr>`;});
+    h+='</tbody></table></div><button type="button" class="btn primary again">أعد التحدي بأسئلة جديدة ↺</button>';host.innerHTML=h;
+    host.querySelector('.again').onclick=start;host.querySelectorAll('.lnk').forEach(b=>b.onclick=()=>goto(b.dataset.go));}
+  start();}
+
+/* --- التنقل --- */
+const started={};
+function goto(id){document.querySelectorAll('section.part').forEach(s=>s.hidden=s.id!==id);document.querySelectorAll('nav.steps button').forEach(b=>b.setAttribute('aria-current',b.dataset.go===id?'true':'false'));
+  if(!started[id]){started[id]=1;if(id==='t5')quiz();else{const s=SECS.find(x=>x.id===id);if(s)build(s);}updProg();}
+  store.set('pv12b-tab',id);window.scrollTo({top:0,behavior:'smooth'});}
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>goto(b.dataset.go));
+/* --- مسح التقدم --- */
+function resetUI(prefix){const w=$('#rstw');if(!w)return;const idle=()=>{w.innerHTML='<button type="button" class="btn sm" id="rst">↺ مسح التقدم</button>';$('#rst').onclick=ask;};
+  const ask=()=>{w.innerHTML='<span class="rq">مسح كل التقدم المحفوظ على هذا الجهاز؟</span><button type="button" class="btn sm danger" id="rsty">نعم، امسح</button><button type="button" class="btn sm" id="rstn">إلغاء</button>';
+    $('#rstn').onclick=idle;$('#rsty').onclick=()=>{try{Object.keys(localStorage).filter(k=>k.startsWith(prefix)).forEach(k=>localStorage.removeItem(k));}catch(e){}location.reload();};$('#rstn').focus();};
+  idle();}
+resetUI('pv12b-');
+updProg();goto(store.get('pv12b-tab')||'t0');
+if(location.search.includes('test'))window.__T={G,Q,goto,words,LESSONS,setSeed:s=>{SEED=s;}};
+})();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>رحلة في أجهزة الجسم</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@600;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: a translucent human body stands in a dark examination room; system chips filter what is visible; a mission card guides order-the-path → watch → conclude. */
+:root{--bg:#F5EEEC;--panel:rgba(255,255,255,.95);--ink:#24161A;--muted:#6B5A5E;--line:#E5D6D8;--accent:#B23A48;--accent-soft:#FBE7E9;--ok:#15803D;--ok-bg:#E6F6EA;--bad:#C2410C;--bad-bg:#FFF0E6;
+ --display:"Baloo Bhaijaan 2","IBM Plex Sans Arabic",system-ui,sans-serif;--body:"IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#140D10;--panel:rgba(30,20,24,.95);--ink:#F2E8EA;--muted:#B9A5AA;--line:#3A2A30;--accent:#F0828F;--accent-soft:#3A1E24;--ok:#4ADE80;--ok-bg:#12291C;--bad:#FB923C;--bad-bg:#2E1C10;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#140D10;--panel:rgba(30,20,24,.95);--ink:#F2E8EA;--muted:#B9A5AA;--line:#3A2A30;--accent:#F0828F;--accent-soft:#3A1E24;--ok:#4ADE80;--ok-bg:#12291C;--bad:#FB923C;--bad-bg:#2E1C10;color-scheme:dark}
+html,body{direction:rtl}*{box-sizing:border-box}[hidden]{display:none!important}html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;overflow:hidden}
+#stage{position:fixed;inset:0;touch-action:none;user-select:none}#cv{width:100%;height:100%;display:block;cursor:grab}
+.top{position:fixed;top:0;inset-inline:0;z-index:5;padding:calc(10px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px));display:grid;gap:6px;justify-items:center;pointer-events:none}
+h1{margin:0;font:800 clamp(1.15rem,3vw,1.6rem)/1.2 var(--display);background:var(--panel);padding:4px 16px;border-radius:99px;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.nav{display:flex;gap:4px;background:var(--panel);border-radius:99px;padding:4px;box-shadow:0 2px 10px rgba(0,0,0,.15);pointer-events:auto;flex-wrap:wrap;justify-content:center}
+.nav button{border:0;background:none;color:var(--muted);font:600 .85rem var(--body);padding:4px 11px;border-radius:99px;cursor:pointer}.nav button.on{background:var(--accent);color:#fff}.nav button.done{color:var(--ok)}
+#sys{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;pointer-events:auto}
+#sys button{border:1.5px solid transparent;background:var(--panel);color:var(--ink);font:600 .8rem var(--body);padding:3px 10px;border-radius:99px;cursor:pointer;box-shadow:0 1px 6px rgba(0,0,0,.12)}#sys button.on{border-color:var(--accent)}
+#sys i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-inline-end:5px}
+.card{position:fixed;bottom:0;transition:transform .25s ease;inset-inline:0;z-index:6;margin:0 auto;max-width:620px;padding:0 max(12px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px))}
+.cin{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);display:grid;gap:8px;max-height:42vh;overflow:auto}
+.kick{margin:0;font-size:.78rem;font-weight:700;color:var(--accent)}h2{margin:0;font:800 1.25rem/1.3 var(--display)}
+.lead{margin:0}.step{margin:0;font-weight:700}.small{margin:0;font-size:.85rem;color:var(--muted)}
+.seq{display:flex;flex-wrap:wrap;gap:6px}.seq span{border:1.5px dashed var(--line);border-radius:10px;padding:2px 10px;font-size:.85rem;color:var(--muted);min-width:34px;text-align:center}.seq span.f{border-style:solid;border-color:var(--ok);background:var(--ok-bg);color:var(--ink);font-weight:600}
+.opts{display:grid;gap:6px}.opt{text-align:start;border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:12px;padding:8px 12px;font:500 .95rem var(--body);cursor:pointer}
+.opt.right{border-color:var(--ok);background:var(--ok-bg)}.opt.wrong{border-color:var(--bad);background:var(--bad-bg)}.opt:disabled{cursor:default}
+.fb{margin:0;font-size:.92rem}.fb.ok{color:var(--ok)}.fb.bad{color:var(--bad)}
+.rule{background:var(--accent-soft);border-radius:12px;padding:8px 12px;margin:0}.rule b{display:block;font-family:var(--display)}
+.info{margin:0;background:var(--accent-soft);border-radius:12px;padding:8px 12px}.info b{display:block;font-family:var(--display);font-size:1.05rem}
+.go{border:0;background:var(--accent);color:#fff;border-radius:12px;padding:8px 16px;font:700 .95rem var(--body);cursor:pointer;justify-self:start}.go:disabled{opacity:.45;cursor:default}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.chips{display:flex;flex-wrap:wrap;gap:5px}.chips span{font-size:.78rem;border:1px solid var(--line);border-radius:99px;padding:0 9px;color:var(--muted)}.chips span.got{background:var(--ok-bg);border-color:var(--ok);color:var(--ink)}
+.src{font-size:.72rem;color:var(--muted);margin:0}
+#toast{position:fixed;z-index:8;top:calc(150px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);background:rgba(30,14,18,.92);color:#FBEFF1;border-radius:12px;padding:8px 16px;font-weight:600;max-width:min(90vw,460px);text-align:center;pointer-events:none}
+:focus-visible{outline:3px solid #F59F00;outline-offset:2px}
+@media (min-width:900px){.card{inset-inline:auto;inset-inline-start:max(16px,env(safe-area-inset-right,0px));bottom:auto;top:calc(110px + env(safe-area-inset-top,0px));width:380px;padding:0}.cin{max-height:calc(100vh - 140px)}.hd .tg{display:none}}
+.hd{display:flex;align-items:center;gap:8px}.hd>div{flex:1;min-width:0}.hd .tg{border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:10px;width:36px;height:32px;font-size:1rem;cursor:pointer;flex:none}
+.dots{display:flex;gap:5px;align-items:center;font-size:.75rem;color:var(--muted)}.dots i{width:22px;height:5px;border-radius:9px;background:var(--line)}.dots i.c{background:var(--accent)}.dots i.d{background:var(--ok)}
+.card.mini .lead,.card.mini .src,.card.mini .full{display:none}.card.mini h2{font-size:1rem}.card.mini .cin{gap:5px;padding:8px 14px}
+.tstep{display:flex;align-items:center;gap:8px}.tstep b{font:800 1.15rem var(--display);color:var(--accent)}.tno{font-size:.75rem;background:var(--accent-soft);border-radius:99px;padding:1px 9px;font-variant-numeric:tabular-nums}
+.ttx{margin:0;font-weight:600}.tfd{margin:0;font-size:.9rem;color:var(--muted);background:var(--accent-soft);border-radius:10px;padding:5px 10px}
+.tnav{display:flex;gap:6px}.tb{border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:12px;padding:9px 12px;font:700 .95rem var(--body);cursor:pointer}.tb:disabled{opacity:.4;cursor:default}.tb.go2{flex:1;background:var(--accent);color:#fff;border-color:var(--accent)}.tb.go2:disabled{background:var(--line);border-color:var(--line);color:var(--muted);opacity:1}
+.grip{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:0;background:var(--panel);color:var(--muted);border-radius:14px 14px 0 0;padding:5px 0 3px;cursor:grab;touch-action:none;font:500 .72rem var(--body);margin-bottom:-12px;padding-bottom:14px;box-shadow:0 -2px 10px rgba(0,0,0,.12)}
+.grip span{width:42px;height:5px;border-radius:9px;background:var(--line)}.grip:active{cursor:grabbing}.card.moved{margin:0;max-width:none;transition:none}.card.drag .cin{box-shadow:0 10px 34px rgba(0,0,0,.35)}
+.olist{display:grid;gap:8px}.ogrp{display:grid;gap:4px}.ogrp b{font-size:.78rem;color:var(--muted);display:flex;align-items:center;gap:6px}.ogrp b i{width:9px;height:9px;border-radius:50%}
+.obtn{border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:99px;padding:2px 10px;font:600 .82rem var(--body);cursor:pointer}.obtn.got{border-color:var(--ok);background:var(--ok-bg)}.obtn.sel{border-color:var(--accent);background:var(--accent);color:#fff}
+.hint2{margin:0;font-size:.85rem;color:var(--muted)}
+.pane{display:grid;gap:8px}
+@media (max-width:600px){h2{font-size:1.1rem}.cin{max-height:40vh}.nav button{padding:3px 8px;font-size:.8rem}}
+</style>
+
+<div id="stage"><canvas id="cv" aria-label="جسم إنسان ثلاثي الأبعاد تظهر فيه الأجهزة الحيوية"></canvas></div>
+<div class="top"><h1>رحلة في أجهزة الجسم</h1><nav class="nav" id="ms" aria-label="المهام"></nav><div id="sys" aria-label="إظهار الأجهزة"></div></div>
+<div class="card"><button class="grip" type="button" id="grip" aria-label="اسحب لتحريك البطاقة. اضغط مرتين لإعادتها إلى مكانها"><span></span><small>اسحب لتحريك البطاقة</small></button><div class="cin" id="cin" aria-live="polite"></div></div>
+<div id="toast" role="status" hidden></div>
+
+<script>
+(()=>{'use strict';document.documentElement.dir='rtl';document.documentElement.lang='ar';
+const $=s=>document.querySelector(s),ar=n=>Number(n).toLocaleString('ar-SA');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const cv=$('#cv'),cx=cv.getContext('2d');let W=0,H=0,DPR=1,CX0=0,CY0=0;
+let AVH=600;const fit=()=>{DPR=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);};
+const place=()=>{const top=($('#sys')?.getBoundingClientRect().bottom||100)+8;if($('.card')?.classList.contains('moved')){CX0=W/2;AVH=H-top-10;CY0=top+AVH*.5;return;}if(W>=900){CX0=(W-400)/2;AVH=H-top-10;CY0=top+AVH*.52;}else{const b=$('.card .cin')?.getBoundingClientRect().top||H*.6;AVH=Math.max(160,b-top-6);CX0=W/2;CY0=top+AVH*.5;}};addEventListener('resize',fit);fit();
+
+/* ===== محرّك ===== */
+const cam={yaw:0,pitch:.08,dist:5.2,t:[0,1.3,0]};
+const P=p=>{const cy=Math.cos(cam.yaw),sy=Math.sin(cam.yaw),cp=Math.cos(cam.pitch),sp=Math.sin(cam.pitch);const x=p[0]-cam.t[0],y=p[1]-cam.t[1],z=p[2]-cam.t[2];
+  const x1=x*cy-z*sy,z1=x*sy+z*cy,y2=y*cp-z1*sp,z2=y*sp+z1*cp,d=cam.dist-z2,s=Math.min(W*1.05,AVH*1.18)/Math.max(d,.05);return [CX0+x1*s,CY0-y2*s,d,s];};
+const LT=(()=>{const v=[-.4,.8,.6],n=Math.hypot(...v);return v.map(a=>a/n);})();
+const rgb=h=>{const n=parseInt(h.slice(1),16);return [n>>16&255,n>>8&255,n&255];};
+const col=(h,k)=>{const c=rgb(h).map(v=>Math.max(0,Math.min(255,Math.round(v*k))));return `rgb(${c[0]},${c[1]},${c[2]})`;};
+const sub=(a,b)=>[a[0]-b[0],a[1]-b[1],a[2]-b[2]],crs=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+let Q=[],LB=[],HIT=[];
+const poly=(pts,c,a=1,tag=null)=>Q.push({k:'p',pts,c,a,tag});
+const ball=(p,r,c,a=1,tag=null)=>Q.push({k:'s',p,r,c,a,tag});
+const rod=(p,q,r,c,a=1,tag=null)=>Q.push({k:'l',p,q,r,c,a,tag});
+const label=(p,t)=>LB.push({p,t});
+const flush=()=>{const it=[];HIT=[];for(const o of Q){if(o.k==='p'){o.pr=o.pts.map(P);o.d=o.pr.reduce((s,v)=>s+v[2],0)/o.pr.length;const nn=crs(sub(o.pts[1],o.pts[0]),sub(o.pts[2],o.pts[0])),L=Math.hypot(...nn)||1;o.sh=.62+.45*Math.abs((nn[0]*LT[0]+nn[1]*LT[1]+nn[2]*LT[2])/L);}
+    else if(o.k==='s'){o.pr=P(o.p);o.d=o.pr[2];}else{o.pa=P(o.p);o.pb=P(o.q);o.d=(o.pa[2]+o.pb[2])/2;}it.push(o);}
+  it.sort((a,b)=>b.d-a.d);
+  for(const o of it){cx.globalAlpha=o.a;let h=null;
+    if(o.k==='p'){cx.beginPath();o.pr.forEach((v,i)=>i?cx.lineTo(v[0],v[1]):cx.moveTo(v[0],v[1]));cx.closePath();cx.fillStyle=col(o.c,o.sh);cx.fill();if(o.tag)h={tag:o.tag,poly:o.pr};}
+    else if(o.k==='s'){const [x,y,,s]=o.pr,r=Math.max(.5,o.r*s);const g=cx.createRadialGradient(x-r*.35,y-r*.4,r*.1,x,y,r);g.addColorStop(0,col(o.c,1.45));g.addColorStop(.6,col(o.c,1));g.addColorStop(1,col(o.c,.6));cx.fillStyle=g;cx.beginPath();cx.arc(x,y,r,0,7);cx.fill();if(o.tag)h={tag:o.tag,c:[x,y,r+3]};}
+    else{const w=Math.max(1.2,o.r*(o.pa[3]+o.pb[3]));cx.strokeStyle=col(o.c,1);cx.lineCap='round';cx.lineWidth=w;cx.beginPath();cx.moveTo(o.pa[0],o.pa[1]);cx.lineTo(o.pb[0],o.pb[1]);cx.stroke();if(o.tag)h={tag:o.tag,seg:[o.pa,o.pb,w/2+5]};}
+    if(h)HIT.push(h);}
+  cx.globalAlpha=1;Q=[];
+  cx.font='600 12.5px "IBM Plex Sans Arabic",system-ui,sans-serif';cx.direction='rtl';cx.textBaseline='middle';cx.textAlign='center';
+  for(const l of LB){const [x,y]=P(l.p);const w=cx.measureText(l.t).width+14,lx=Math.min(W-w/2-6,Math.max(w/2+6,x)),ly=y-22;cx.strokeStyle='rgba(255,255,255,.8)';cx.lineWidth=1.2;cx.beginPath();cx.moveTo(x,y);cx.lineTo(lx,ly+10);cx.stroke();
+    cx.fillStyle='rgba(30,14,18,.88)';cx.beginPath();cx.roundRect?cx.roundRect(lx-w/2,ly-11,w,22,8):cx.rect(lx-w/2,ly-11,w,22);cx.fill();cx.fillStyle='#FBEFF1';cx.fillText(l.t,lx,ly);}LB=[];};
+const ellip=(c,rx,ry,rz,colr,a,tag,NU=6,NV=10,rot=0)=>{const cr=Math.cos(rot),sr=Math.sin(rot);const S=(u,v)=>{const x=rx*Math.sin(u)*Math.cos(v),y=ry*Math.cos(u),z=rz*Math.sin(u)*Math.sin(v);return [c[0]+x*cr-y*sr,c[1]+x*sr+y*cr,c[2]+z];};
+  for(let i=0;i<NU;i++)for(let j=0;j<NV;j++){const u0=i/NU*Math.PI,u1=(i+1)/NU*Math.PI,v0=j/NV*2*Math.PI,v1=(j+1)/NV*2*Math.PI;poly([S(u0,v0),S(u1,v0),S(u1,v1),S(u0,v1)],colr,a,tag);}};
+const tube=(path,r,c,a,tag)=>{for(let i=0;i<path.length-1;i++)rod(path[i],path[i+1],r,c,a,tag);};
+const along=(path,t)=>{const L=[0];for(let i=1;i<path.length;i++)L.push(L[i-1]+Math.hypot(...sub(path[i],path[i-1])));const T=Math.max(0,Math.min(1,t))*L[L.length-1];let i=1;while(i<L.length-1&&L[i]<T)i++;const k=(T-L[i-1])/((L[i]-L[i-1])||1);return path[i-1].map((v,j)=>v+(path[i][j]-v)*k);};
+const HR=(i,k=1)=>{const v=Math.sin(i*12.9898+k*78.233)*43758.5453;return v-Math.floor(v);};
+
+/* ===== التشريح ===== */
+const SI=[];for(let k=0;k<7;k++){const y=.72-k*.09,a=k%2?[.38,-.38]:[-.38,.38];SI.push([a[0],y,.14],[a[1],y,.14]);}
+const PATH={food:[[0,2.98,.42],[0,2.9,.18],[0,2.72,-.06],[0,2.2,-.12],[.05,1.7,-.1],[.3,1.36,-.02],[.45,1.15,.06],[.3,.95,.08],[-.38,.78,.14],...SI,[-.5,.08,.06],[-.58,.4,.06],[-.6,.85,.06],[.6,.85,.06],[.62,.3,.06],[.55,.0,.06],[.2,-.3,.06]],
+ air:[[0,3.3,.58],[0,3.18,.38],[0,2.98,.06],[0,2.74,.1],[0,2.4,.08],[0,2.1,.07],[.32,1.88,.05],[.48,1.68,.06],[.6,1.52,.08]],
+ trachea:[[0,2.8,.1],[0,2.1,.07]],bL:[[0,2.1,.07],[-.32,1.88,.05],[-.48,1.68,.06],[-.6,1.52,.08]],bR:[[0,2.1,.07],[.32,1.88,.05],[.48,1.68,.06],[.6,1.52,.08]],
+ esoph:[[0,2.9,.18],[0,2.72,-.06],[0,2.2,-.12],[.05,1.7,-.1],[.3,1.36,-.02]],
+ li:[[-.5,.08,.06],[-.58,.4,.06],[-.6,.85,.06],[.6,.85,.06],[.62,.3,.06],[.55,.0,.06],[.2,-.3,.06]],
+ /* الدورة الدموية: القلب ← الرئتان ← القلب ← الجسم ← القلب */
+ blood:[[.08,1.6,.24],[.25,1.78,.2],[.5,1.75,.12],[.62,1.6,.1],[.4,1.62,.18],[.12,1.62,.26],[.04,1.95,.12],[-.08,1.85,-.2],[-.05,1.2,-.26],[-.04,.6,-.26],[0,.42,0],[.2,-.2,-.12],[.28,-.9,-.08],[.3,-1.4,-.05],[.18,-.9,-.14],[.12,-.2,-.2],[.1,.6,-.2],[.1,1.25,-.15],[.1,1.5,.15]],
+ artBody:[[.04,1.95,.12],[-.08,1.85,-.2],[-.05,1.2,-.26],[-.04,.6,-.26],[0,.42,0],[.2,-.2,-.12],[.28,-.9,-.08],[.3,-1.4,-.05]],
+ veinBody:[[.3,-1.4,-.05],[.18,-.9,-.14],[.12,-.2,-.2],[.1,.6,-.2],[.1,1.25,-.15],[.1,1.5,.15]],
+ pulA:[[.08,1.6,.24],[.25,1.78,.2],[.5,1.75,.12],[.62,1.6,.1]],pulV:[[.62,1.6,.1],[.4,1.62,.18],[.12,1.62,.26]],
+ pulA2:[[.08,1.6,.24],[-.25,1.78,.2],[-.5,1.75,.12]],armA:[[-.08,1.92,.0],[-.75,1.95,.0],[-1.05,1.2,.1],[-1.15,.4,.2]],armV:[[-1.12,.4,.18],[-1.0,1.2,.06],[-.7,1.9,-.05],[.1,1.5,.1]]};
+const SYS={dig:{n:'الهضمي',c:'#E58FA6'},res:{n:'التنفسي',c:'#7FB8E8'},cir:{n:'الدوري',c:'#D94848'},exc:{n:'الإخراج',c:'#B58A3C'}};
+const ORG={mouth:{n:'الفم',s:['dig'],d:'يبدأ فيه هضم الطعام، ومنه يدخل الهواء أيضًا.',at:[0,2.98,.42]},
+ esoph:{n:'المريء',s:['dig'],d:'أنبوب ينقل الطعام من الفم إلى المعدة.',at:[0,2.3,-.1]},
+ stomach:{n:'المعدة',s:['dig'],d:'يحلّل الحمض والإنزيم فيها الغذاء إلى دقائق صغيرة.',at:[.45,1.15,.06]},
+ liver:{n:'الكبد',s:['dig','exc'],d:'عضو في الجهاز الهضمي، ويعمل أيضًا على تخليص الجسم من الفضلات.',at:[-.35,1.32,.2]},
+ pancreas:{n:'البنكرياس',s:['dig'],d:'غدة هضمية تفرز عصارة هضمية تحلّل البروتين والنشويات والدهون.',at:[.2,.92,-.08]},
+ small:{n:'الأمعاء الدقيقة',s:['dig'],d:'يكتمل فيها الهضم، وتمتص المواد الغذائية وتنقلها إلى الدم.',at:[0,.45,.14]},
+ large:{n:'الأمعاء الغليظة',s:['dig'],d:'تمتص الماء من بقايا الطعام، ثم يُتخلّص من الفضلات.',at:[-.6,.6,.06]},
+ nose:{n:'الأنف',s:['res'],d:'يدخل منه الهواء إلى الجسم.',at:[0,3.3,.58]},
+ pharynx:{n:'البلعوم',s:['res'],d:'ممر يعبر منه الهواء بعد الأنف والفم.',at:[0,2.98,.06]},
+ larynx:{n:'الحنجرة',s:['res'],d:'يمر بها الهواء إلى القصبة الهوائية.',at:[0,2.74,.1]},
+ trachea:{n:'القصبة الهوائية',s:['res'],d:'أنبوب يحمل الهواء نحو الرئتين.',at:[0,2.35,.08]},
+ bronchi:{n:'الشعبتان الهوائيتان',s:['res'],d:'تتفرعان إلى شعيبات هوائية أدق فأدق داخل الرئتين.',at:[.32,1.88,.05]},
+ alveoli:{n:'الحويصلات الهوائية',s:['res'],d:'أكياس صغيرة يتم عندها تبادل الغازات بين الدم والهواء عبر جدرانها الرقيقة.',at:[.6,1.5,.1]},
+ lungs:{n:'الرئتان',s:['res','exc'],d:'تزوّدان الجسم بالأكسجين، وتخلّصانه من ثاني أكسيد الكربون.',at:[-.52,1.95,.2]},
+ diaph:{n:'الحجاب الحاجز',s:['res'],d:'عضلة تنقبض وتنبسط لتنظّم عملية الشهيق والزفير.',at:[.0,1.1,.3]},
+ heart:{n:'القلب',s:['cir'],d:'يضخ الدم إلى الرئتين وإلى جميع أجزاء الجسم.',at:[.08,1.6,.3]},
+ artery:{n:'الشرايين',s:['cir'],d:'أوعية دموية تحمل الدم من القلب إلى الرئتين وسائر أعضاء الجسم.',at:[-.05,1.2,-.26]},
+ vein:{n:'الأوردة',s:['cir'],d:'أوعية دموية تعيد الدم إلى القلب، وفيها صمامات تمنع رجوعه.',at:[.1,.6,-.2]},
+ capil:{n:'الشعيرات الدموية',s:['cir'],d:'أوعية دموية ضيقة جدًا، يتم فيها تبادل المواد والغازات مع الخلايا.',at:[.3,-1.4,-.05]},
+ kidney:{n:'الكليتان',s:['exc'],d:'تخلّصان الجسم من الفضلات.',at:[.42,.55,-.3]},
+ skin:{n:'الجلد',s:['exc'],d:'يغطي الجسم، ويساعد على تخليصه من بعض الفضلات مع العرق.',at:[-.95,.9,.25]}};
+const S={vis:{dig:1,res:1,cir:1,exc:1},sel:null,breath:0,anim:null,mi:0,phase:'',seen:new Set(),excFound:new Set()};
+const on=k=>ORG[k].s.some(s=>S.vis[s]);
+const hl=k=>S.sel===k||(S.flash&&S.flash.has(k));
+const C=(k,c)=>hl(k)?'#FFE066':c;
+function body(t){const br=S.breath;
+  /* الجسم */
+  const sk='#E8C4A8',sa=.13;ellip([0,1.0,0],.95,1.65,.52,sk,sa,'skin',8,14);ball([0,3.25,0],.5,sk,.18,'skin');rod([0,2.62,0],[0,2.82,0],.2,sk,.15,'skin');
+  [1,-1].forEach(s=>{rod([s*.82,2.2,0],[s*1.05,1.2,.1],.17,sk,.13,'skin');rod([s*1.05,1.2,.1],[s*1.15,.3,.2],.14,sk,.13,'skin');rod([s*.35,-.5,0],[s*.33,-2.2,0],.22,sk,.12,'skin');});
+  /* الهضمي */
+  if(S.vis.dig){ball([0,2.98,.42],.08,C('mouth','#C9475A'),1,'mouth');tube(PATH.esoph,.055,C('esoph','#E89AA8'),1,'esoph');
+    ellip([.45,1.15,.06],.36,.26,.22,C('stomach','#E7889C'),.95,'stomach',6,10,.5);ellip([-.35,1.32,.12],.55,.24,.3,C('liver','#8E3A3A'),.92,'liver',6,10,-.15);
+    ellip([.2,.92,-.08],.33,.07,.09,C('pancreas','#EDC07A'),1,'pancreas',4,8,.1);tube([[-.38,.78,.14],...SI],.042,C('small','#F2A5B8'),1,'small');tube(PATH.li,.095,C('large','#C97A8E'),.95,'large');}
+  /* التنفسي */
+  if(S.vis.res){ball([0,3.3,.58],.07,C('nose','#D9A08A'),1,'nose');ball([0,2.98,.06],.075,C('pharynx','#E9B3A0'),1,'pharynx');ellip([0,2.74,.1],.09,.07,.08,C('larynx','#E2C9A8'),1,'larynx',4,8);
+    tube(PATH.trachea,.06,C('trachea','#EBDCC6'),1,'trachea');tube(PATH.bL,.04,C('bronchi','#EBDCC6'),1,'bronchi');tube(PATH.bR,.04,C('bronchi','#EBDCC6'),1,'bronchi');
+    const ls=1+br*.12;[-1,1].forEach(s=>ellip([s*.52,1.78,0],.36*ls,.6*ls,.3*ls,C('lungs','#F2A6AE'),.42,'lungs',6,10));
+    [[-.6,1.52,.08],[.6,1.52,.08],[-.55,1.9,.1],[.55,1.9,.1]].forEach((p,i)=>{for(let k=0;k<5;k++)ball([p[0]+(HR(i*5+k,1)-.5)*.14,p[1]+(HR(i*5+k,2)-.5)*.14,p[2]+.03],.045,C('alveoli','#F7C7CD'),1,'alveoli');});
+    const dy=1.1-br*.12;const dpts=[];for(let k=0;k<14;k++){const a=k/14*2*Math.PI;dpts.push([Math.cos(a)*.88,dy+(br>.5?0:.0)-.0,Math.sin(a)*.45]);}
+    for(let k=0;k<14;k++){const a=dpts[k],b=dpts[(k+1)%14];poly([[0,dy+.18-br*.1,0],a,b],C('diaph','#C46E6E'),.55,'diaph');}}
+  /* الدوري */
+  if(S.vis.cir){ellip([.08,1.6,.24],.19,.23,.17,C('heart','#B8323A'),1,'heart',6,10,.3);
+    tube(PATH.artBody,.045,C('artery','#D93A3A'),1,'artery');tube(PATH.pulV,.035,C('artery','#D93A3A'),1,'artery');tube(PATH.armA,.03,C('artery','#D93A3A'),1,'artery');
+    tube(PATH.veinBody,.045,C('vein','#3B6FD1'),1,'vein');tube(PATH.pulA,.035,C('vein','#3B6FD1'),1,'vein');tube(PATH.pulA2,.035,C('vein','#3B6FD1'),1,'vein');tube(PATH.armV,.03,C('vein','#3B6FD1'),1,'vein');
+    for(let k=0;k<6;k++){const a=[.3,-1.4,-.05],b=[.22+HR(k,3)*.2,-1.5-HR(k,4)*.15,-.1+HR(k,5)*.1];rod(a,b,.012,C('capil','#9B4FB0'),1,'capil');rod(b,[.18,-1.42,-.12],.012,C('capil','#9B4FB0'),1,'capil');}}
+  /* الإخراج */
+  if(S.vis.exc){[-1,1].forEach(s=>ellip([s*.42,.55,-.3],.13,.22,.11,C('kidney','#8E3B46'),1,'kidney',5,8));
+    if(!S.vis.dig)ellip([-.35,1.32,.12],.55,.24,.3,C('liver','#8E3A3A'),.92,'liver',6,10,-.15);
+    if(!S.vis.res)[-1,1].forEach(s=>ellip([s*.52,1.78,0],.36,.6,.3,C('lungs','#F2A6AE'),.42,'lungs',6,10));}
+  if(S.sel&&ORG[S.sel])label(ORG[S.sel].at,ORG[S.sel].n);}
+
+/* ===== الحركات (رحلات) ===== */
+const ANIM={
+ food:{dur:9,draw(t){const T=Math.min(1,t);const p=along(PATH.food,T);const stI=6/PATH.food.length;
+   if(T<.27)ball(p,.11,'#9C6B3E',1);else if(T<.72){for(let k=0;k<4;k++)ball([p[0]+(HR(k,1)-.5)*.12,p[1]+(HR(k,2)-.5)*.12,p[2]+.05],.045,'#C98B4E',1);}
+   else ball(p,.06,'#7A6A5A',1);
+   if(T>.4&&T<.75){const q=(T-.4)/.35;for(let k=0;k<3;k++){const a=along(PATH.food,.4+q*.3-k*.04),b=[-.04,.6,-.26];const u=Math.min(1,(q*3-k*.4)%1);ball([a[0]+(b[0]-a[0])*u,a[1]+(b[1]-a[1])*u,a[2]+(b[2]-a[2])*u],.035,'#F2C230',1);}}
+   S.flash=new Set([T<.08?'mouth':T<.27?'esoph':T<.4?'stomach':T<.72?'small':'large']);}},
+ air:{dur:8,draw(t){const ph=(t%4)/4;S.breath=ph<.5?Math.sin(ph*2*Math.PI):0;const inn=ph<.5;
+   for(let k=0;k<6;k++){const u=inn?((ph*2)+k*.12)%1:1-(((ph-.5)*2)+k*.12)%1;const p=along(PATH.air,u);ball(p,.04,inn?'#E5484D':'#8A939E',1);}
+   if(inn&&ph>.3){for(let k=0;k<4;k++){const a=[.6,1.52,.1],b=[.4,1.62,.18];const u=((ph-.3)*5+k*.25)%1;ball([a[0]+(b[0]-a[0])*u,a[1]+(b[1]-a[1])*u,a[2]+(b[2]-a[2])*u],.03,'#E5484D',1);}}
+   const steps=['nose','pharynx','larynx','trachea','bronchi','alveoli'];S.flash=new Set([steps[Math.min(5,Math.floor((inn?ph*2:1-(ph-.5)*2)*6))]]);
+   label([.0,3.55,.3],inn?'شهيق: الحجاب الحاجز ينقبض':'زفير: الحجاب الحاجز ينبسط');}},
+ blood:{dur:10,draw(t){const T=t%10/10;const n=PATH.blood.length;for(let k=0;k<5;k++){const u=(T+k*.2)%1;const p=along(PATH.blood,u);const ox=u>.17&&u<.62;ball(p,.06,ox?'#E03131':'#3B5BDB',1);}
+   const u=T;S.flash=new Set([u<.05||(u>.27&&u<.33)?'heart':u<.17?'lungs':u<.6?'artery':u<.66?'capil':'vein']);}},
+ team:{dur:10,draw(t){const T=Math.min(1,t/10);const cell=[-1.12,.45,.3];
+   const g=T<.5?along([[0,.45,.14],[-.04,.6,-.26],[-.05,1.2,-.26],[.08,1.6,.24]],T*2):along([[.08,1.6,.24],[-.08,1.92,.0],[-.75,1.95,.0],[-1.05,1.2,.1],cell],(T-.5)*2);
+   const o=T<.5?along([[0,3.3,.58],[0,2.1,.07],[.48,1.68,.06],[.6,1.52,.08],[.4,1.62,.18],[.08,1.6,.24]],T*2):along([[.08,1.6,.24],[-.08,1.92,.0],[-.75,1.95,.0],[-1.05,1.2,.1],cell],(T-.5)*2+.03);
+   if(T<.97){ball(g,.06,'#F2C230',1);ball(o,.05,'#E5484D',1);}
+   ellip(cell,.16,.12,.12,'#F7D6C4',.95,null,5,8);if(T>.95){ball(cell,.12+Math.sin(t*8)*.03,'#FFD43B',.8);label(cell,'⚡ طاقة في الخلية');}
+   if(T<.5)label([.3,.55,.2],'جلوكوز من الأمعاء الدقيقة');else if(T<.95)label([-.75,1.95,0],'الدم ينقلهما إلى الخلية');}}};
+
+
+/* ===== رحلة الغذاء خطوة بخطوة ===== */
+const alongI=(path,f)=>{f=Math.max(0,Math.min(path.length-1,f));const i=Math.min(path.length-2,Math.floor(f)),k=f-i;return path[i].map((v,j)=>v+(path[i+1][j]-v)*k);};
+const TOUR=[
+ {o:'mouth',n:'الفم',a:0,b:0,dur:4,f:'lump',t:'يبدأ الهضم في الفم: يتم ابتلاع الغذاء وتفكيكه إلى أجزاء أصغر.',food:'الغذاء قطعة كبيرة تصبح أصغر.'},
+ {o:'esoph',n:'المريء',a:0,b:5,dur:6,f:'lump',t:'المريء أنبوب ينقل الطعام من الفم إلى المعدة.',food:'الغذاء ينزل في المريء نحو المعدة.'},
+ {o:'stomach',n:'المعدة',a:5,b:7,dur:6,f:'pieces',t:'يحلّل الحمض والإنزيم في المعدة الغذاء إلى دقائق صغيرة.',food:'الغذاء يتفتّت إلى دقائق صغيرة.'},
+ {o:'pancreas',n:'البنكرياس والكبد',a:7,b:9.5,dur:6,f:'fine',juice:1,t:'تفرز الغدد الهضمية عصارة هضمية تحلّل البروتين والنشويات والدهون.',food:'الدقائق تتحلّل إلى مواد أبسط تستفيد منها الخلايا.'},
+ {o:'small',n:'الأمعاء الدقيقة',a:9.5,b:22,dur:12,f:'fine',absorb:1,t:'يكتمل الهضم في الأمعاء الدقيقة، وتقوم بامتصاص المواد الغذائية ونقلها إلى الدم.',food:'المواد الغذائية (الأصفر) تنتقل إلى الدم، فيحملها إلى خلايا الجسم.'},
+ {o:'large',n:'الأمعاء الغليظة',a:22,b:29,dur:9,f:'waste',t:'تمر بقايا الطعام التي لم تُهضم في الأمعاء الغليظة.',food:'بقيت فضلات لا قيمة لها للجسم.'},
+ {o:'large',n:'التخلّص من الفضلات',a:29,b:29.6,dur:3,f:'waste',out:1,t:'يتم التخلص من الفضلات خارج الجسم بعملية الإخراج.',food:'انتهت رحلة الغذاء.'}];
+
+/* ===== رحلات النَّفَس والدم والإخراج ===== */
+const mix3=(a,b,t)=>a.map((v,j)=>v+(b[j]-v)*t);
+const dotsFlow=(a,b,u,n,c,r=.03,sp=1.5)=>{for(let k=0;k<n;k++){const q=(u*sp+k/n)%1;ball(mix3(a,b,q),r,c,1);}};
+const LUNG=[.6,1.52,.08],ALV=[.6,1.52,.1],CAP=[.3,-1.4,-.05],CELL=[.45,-1.6,.12],KID=[.42,.55,-.3],LIV=[-.35,1.32,.2],ARM=[-1.12,.5,.25];
+const blueRed=u=>{const a=rgb('#3B5BDB'),b=rgb('#E03131');return '#'+a.map((v,i)=>Math.round(v+(b[i]-v)*u).toString(16).padStart(2,'0')).join('');};
+const cellAt=(p,c='#F7D6C4')=>{ellip(p,.14,.1,.1,c,.95,null,5,8);ball(p,.04,'#7A4FB0',1);};
+const TOURS={air:[
+ {o:['nose'],n:'الأنف والفم',dur:4,t:'في الشهيق ينقبض الحجاب الحاجز، فيدخل الهواء عبر الأنف والفم. والشهيق يزوّد الجسم بالأكسجين.',x:'🌬️ هواء غني بالأكسجين يدخل الجسم.',d(u){S.breath=u*.3;const p=alongI(PATH.air,u);dotsFlow([0,3.6,.9],p,u,4,'#E5484D',.035,.8);return p;}},
+ {o:['pharynx'],n:'البلعوم',dur:3,t:'ينتقل الهواء من الأنف والفم إلى البلعوم.',x:'🌬️ الهواء يمر في البلعوم.',d(u){S.breath=.3+u*.1;const p=alongI(PATH.air,1+u);ball(p,.045,'#E5484D',1);return p;}},
+ {o:['larynx'],n:'الحنجرة',dur:3,t:'ثم ينتقل الهواء إلى الحنجرة.',x:'🌬️ الهواء يمر في الحنجرة.',d(u){S.breath=.4+u*.1;const p=alongI(PATH.air,2+u);ball(p,.045,'#E5484D',1);return p;}},
+ {o:['trachea'],n:'القصبة الهوائية',dur:4,t:'فالقصبة الهوائية: أنبوب يحمل الهواء نحو الرئتين.',x:'🌬️ الهواء ينزل في القصبة الهوائية.',d(u){S.breath=.5+u*.15;const p=alongI(PATH.air,3+u*2);ball(p,.045,'#E5484D',1);return p;}},
+ {o:['bronchi'],n:'الشعبتان الهوائيتان',dur:5,t:'ثم إلى الشعبتين الهوائيتين اللتين تتفرعان إلى شعيبات هوائية أدق فأدق.',x:'🌬️ الهواء يتفرّع إلى الرئتين.',d(u){S.breath=.65+u*.2;const a=alongI(PATH.bR,u*3),b=alongI(PATH.bL,u*3);ball(a,.04,'#E5484D',1);ball(b,.04,'#E5484D',1);return a;}},
+ {o:['alveoli','lungs'],n:'الحويصلات الهوائية',dur:7,t:'تنتهي الشعيبات بأكياس صغيرة تسمّى الحويصلات الهوائية، وعندها يتم تبادل الغازات بين الدم والهواء من خلال جدرانها الرقيقة.',x:'🔴 الأكسجين ينتقل إلى الدم، و⚪ ثاني أكسيد الكربون ينتقل من الدم إلى الهواء.',d(u){S.breath=.85+u*.15;const v=[.4,1.62,.18];dotsFlow(ALV,v,u,4,'#E5484D',.032,2);dotsFlow(v,ALV,u+.12,3,'#9AA4B2',.032,2);return ALV;}},
+ {o:['diaph','lungs'],n:'الزفير',dur:6,t:'في الزفير ينبسط الحجاب الحاجز، فيخرج الهواء. والزفير يساعد الجسم على التخلص من الفضلات، ومنها ثاني أكسيد الكربون والماء.',x:'⚪ ثاني أكسيد الكربون يخرج من الجسم.',d(u){S.breath=1-u;const p=alongI(PATH.air,8-u*8);ball(p,.045,'#9AA4B2',1);if(u>.85)dotsFlow([0,3.3,.58],[0,3.7,1],u,3,'#9AA4B2',.03,3);return p;}}],
+blood:[
+ {o:['vein'],n:'الدم يعود إلى القلب',dur:7,t:'يتدفق الدم غير المؤكسج (غير المحمّل بالأكسجين) إلى القلب عبر الأوردة.',x:'🔵 دم غير مؤكسج يحمل ثاني أكسيد الكربون.',d(u){const p=alongI(PATH.veinBody,u*(PATH.veinBody.length-1));ball(p,.065,'#3B5BDB',1);return p;}},
+ {o:['heart'],n:'القلب يضخ إلى الرئتين',dur:5,t:'يضخ القلب الدم غير المؤكسج إلى الرئتين.',x:'🔵 الدم يتجه إلى الرئتين.',d(u){const p=alongI(PATH.pulA,u*(PATH.pulA.length-1));ball(p,.065,'#3B5BDB',1);return p;}},
+ {o:['lungs','alveoli'],n:'تبادل الغازات في الرئتين',dur:6,t:'في الرئة داخل الحويصلة الهوائية يتم تبادل الغازات؛ فيتخلص الدم من ثاني أكسيد الكربون، ويُحمَّل بالأكسجين.',x:'🔵 ← 🔴 يصبح الدم مؤكسجًا.',d(u){const p=[.62,1.6,.1];ball(p,.07,blueRed(u),1);dotsFlow(p,[.6,1.75,.3],u,3,'#9AA4B2',.03,2);dotsFlow([.6,1.75,.3],p,u+.15,3,'#E5484D',.03,2);return p;}},
+ {o:['heart'],n:'العودة إلى القلب',dur:4,t:'يتدفق الدم المؤكسج (المحمّل بالأكسجين) من الرئتين إلى القلب.',x:'🔴 دم مؤكسج يعود إلى القلب.',d(u){const p=alongI(PATH.pulV,u*(PATH.pulV.length-1));ball(p,.065,'#E03131',1);return p;}},
+ {o:['artery','heart'],n:'القلب يضخ إلى الجسم',dur:7,t:'يضخ القلب الدم المؤكسج إلى سائر أجزاء الجسم عبر الشرايين. وعندما يصل إلى الأمعاء الدقيقة يُحمَّل بالمواد الغذائية.',x:'🔴 الدم يحمل الأكسجين، و🟡 المواد الغذائية.',d(u){const p=alongI(PATH.artBody,u*(PATH.artBody.length-1));ball(p,.065,'#E03131',1);if(u>.45&&u<.75)dotsFlow([0,.45,.14],p,(u-.45)*3,3,'#F2C230',.03,1);if(u>.6)ball([p[0]+.05,p[1]+.05,p[2]],.03,'#F2C230',1);return p;}},
+ {o:['capil'],n:'الشعيرات الدموية',dur:7,t:'يصل الدم إلى الشعيرات الدموية، فتنتقل المواد الغذائية والأكسجين عبر جدرانها الرقيقة إلى الخلايا، وتمرّر الخلايا فضلاتها إلى الدم، فيصبح الدم غير مؤكسج.',x:'🔴 ← 🔵 الدم يسلّم الأكسجين ويأخذ الفضلات.',d(u){cellAt(CELL);const p=CAP;ball(p,.065,blueRed(1-u),1);dotsFlow(p,CELL,u,2,'#E5484D',.028,2);dotsFlow(p,CELL,u+.25,2,'#F2C230',.028,2);dotsFlow(CELL,p,u+.5,2,'#9AA4B2',.028,2);label(CELL,'خلية');return p;}},
+ {o:['vein'],n:'وتستمر الدورة',dur:6,t:'ينتقل الدم غير المؤكسج مرة أخرى إلى القلب، وتستمر هذه العملية.',x:'🔁 الدورة الدموية مستمرة طوال الحياة.',d(u){const p=alongI(PATH.veinBody,u*(PATH.veinBody.length-1));ball(p,.065,'#3B5BDB',1);return p;}}],
+exc:[
+ {o:[],n:'الخلايا تنتج فضلات',dur:5,t:'في أثناء عمل الخلايا تنتج فضلات، ومنها ثاني أكسيد الكربون. وهذه الفضلات لا قيمة لها، وقد تؤدي إلى تسمم الخلايا والأنسجة إذا بقيت في الجسم.',x:'⚪ فضلات تتجمّع حول الخلية.',d(u){cellAt(CELL,'#EBC9B8');for(let k=0;k<Math.floor(u*6);k++)ball([CELL[0]+(HR(k,1)-.5)*.35,CELL[1]+(HR(k,2)-.5)*.3,CELL[2]+.05],.026,'#9AA4B2',1);label(CELL,'خلية');return CELL;}},
+ {o:['vein','capil'],n:'الدم يحمل الفضلات',dur:6,t:'تمرّر الخلايا فضلاتها إلى الدم، فيحملها الدم بعيدًا عن الخلايا.',x:'🔵 الدم يحمل الفضلات نحو أعضاء الإخراج.',d(u){cellAt(CELL,'#F7D6C4');const p=alongI(PATH.veinBody,u*3);ball(p,.06,'#3B5BDB',1);for(let k=0;k<3;k++)ball([p[0]+.06*Math.cos(k*2),p[1]+.06*Math.sin(k*2),p[2]+.05],.022,'#9AA4B2',1);return p;}},
+ {o:['kidney'],n:'الكليتان',dur:6,t:'تعمل الكليتان على تخليص الجسم من الفضلات.',x:'⚪ الفضلات تُفصل من الدم في الكليتين، ثم تخرج من الجسم.',d(u){const a=alongI(PATH.veinBody,3),p=mix3(a,KID,Math.min(1,u*2));ball(p,.06,'#3B5BDB',1);if(u>.4)dotsFlow(KID,[.3,-.4,-.2],(u-.4)*2,4,'#C9A84B',.03,1.5);return KID;}},
+ {o:['lungs'],n:'الرئتان',dur:6,t:'وتعمل الرئتان على تخليص الجسم من ثاني أكسيد الكربون؛ فالزفير يساعد الجسم على التخلص من الفضلات.',x:'⚪ ثاني أكسيد الكربون يخرج مع هواء الزفير.',d(u){S.breath=1-u;const p=alongI(PATH.air,8-u*8);ball(p,.045,'#9AA4B2',1);return [-.52,1.95,.2];}},
+ {o:['liver'],n:'الكبد',dur:5,t:'ويعمل الكبد أيضًا على تخليص الجسم من الفضلات.',x:'⚪ الدم يمر بالكبد فيخلّصه من بعض الفضلات.',d(u){const a=[.1,.9,-.2];ball(mix3(a,LIV,Math.min(1,u*1.5)),.055,'#3B5BDB',1);dotsFlow(mix3(a,LIV,.6),LIV,u,3,'#9AA4B2',.026,2);return LIV;}},
+ {o:['skin'],n:'الجلد',dur:5,t:'ويعمل الجلد كذلك على تخليص الجسم من بعض الفضلات مع العرق.',x:'💧 قطرات عرق تخرج على سطح الجلد.',d(u){for(let k=0;k<6;k++){const q=(u*1.2+k/6)%1,b=[ARM[0]-.05+HR(k,5)*.1,ARM[1]+(HR(k,6)-.5)*.8,ARM[2]];ball([b[0]-q*.25,b[1]-q*.1,b[2]+q*.1],.03,'#8FD3FF',1-q*.6);}return ARM;}}]};
+
+const TL=k=>k==='food'?TOUR:TOURS[k];
+function drawTour(){const T=S.tour;if(!T)return;const st=TL(T.k)[T.i],u=Math.min(1,(performance.now()-T.t0)/1000/(st.dur/(reduce?4:1)));
+  if(st.d){const p=st.d(u);S.focus=p;S.flash=new Set(st.o);if(p)label(p,st.n);T.u=u;const nb=$('#tnx');if(nb){const ready=u>=1;if(nb.disabled===ready)nb.disabled=!ready;}return;}
+  let p=alongI(PATH.food,st.a+(st.b-st.a)*u);if(st.out)p=[p[0],p[1]-u*.4,p[2]];
+  if(st.a===st.b){p=[p[0],p[1],p[2]+Math.sin(u*30)*.015];}
+  if(st.f==='lump'){const r=st.o==='mouth'?.12-u*.04:.08;ball(p,r,'#9C6B3E',1);}
+  else if(st.f==='pieces'){const sp=.04+u*.08;for(let k=0;k<6;k++)ball([p[0]+(HR(k,1)-.5)*sp*2,p[1]+(HR(k,2)-.5)*sp*2,p[2]+.05],.05-u*.015,'#B07A45',1);}
+  else if(st.f==='fine'){for(let k=0;k<8;k++)ball([p[0]+(HR(k,3)-.5)*.14,p[1]+(HR(k,4)-.5)*.1,p[2]+.05],.025,'#C98B4E',1);}
+  else ball(p,.06,'#6B5A45',st.out?1-u*.7:1);
+  if(st.juice){for(let k=0;k<4;k++){const q=(u*2+k*.25)%1,a=[.2,.92,-.08],b=alongI(PATH.food,9);ball([a[0]+(b[0]-a[0])*q,a[1]+(b[1]-a[1])*q,a[2]+(b[2]-a[2])*q+.04],.03,'#7FD36A',1);}}
+  if(st.absorb){const v=[-.04,.6,-.26];for(let k=0;k<5;k++){const q=(u*4+k*.2)%1,a=alongI(PATH.food,st.a+(st.b-st.a)*Math.max(0,u-.05*k));ball([a[0]+(v[0]-a[0])*q,a[1]+(v[1]-a[1])*q,a[2]+(v[2]-a[2])*q],.035,'#F2C230',1);}
+    const bv=alongI(PATH.artBody,3+u);ball(bv,.04,'#F2C230',1);}
+  S.focus=p;S.flash=new Set(st.o==='pancreas'?['pancreas','liver']:[st.o]);label(p,st.n);T.u=u;
+  const nb=$('#tnx');if(nb){const ready=u>=1;if(nb.disabled===ready)nb.disabled=!ready;}}
+function tourUI(){const T=S.tour,L=TL(T.k),st=L[T.i],w=$('#watch');const last=T.i===L.length-1;
+  w.innerHTML=`<div class="tstep"><span class="tno">${ar(T.i+1)}/${ar(L.length)}</span><b>${st.n}</b></div>
+   <p class="ttx">${st.t}</p><p class="tfd">${st.x||('🍞 '+st.food)}</p>
+   <div class="tnav"><button class="tb" type="button" id="tpv" ${T.i?'':'disabled'} aria-label="الخطوة السابقة">→ السابق</button><button class="tb rp" type="button" id="trp" aria-label="أعد هذه الخطوة">↺</button>
+   ${last?`<button class="tb go2" type="button" id="tq">إلى السؤال ←</button>`:`<button class="tb go2" type="button" id="tnx" disabled>التالي ←</button>`}</div>`;
+  $('#tpv').onclick=()=>tourGo(T.i-1);$('#trp').onclick=()=>tourGo(T.i);if(last)$('#tq').onclick=()=>{S.tour=null;S.flash=null;pane(3);};else $('#tnx').onclick=()=>tourGo(T.i+1);}
+function tourGo(i){S.tour={k:S.tour?S.tour.k:'food',i,t0:performance.now()};S.anim=null;tourUI();}
+function startTour(k='food'){S.sel=null;S.vis.cir=1;if(k==='air'||k==='exc')S.vis.res=1;nav();pane(2);mini(false);S.tour={k,i:0,t0:performance.now()};tourGo(0);}
+
+/* ===== المهام ===== */
+const MS=[
+ {t:'استكشف',k:'استكشاف حر',explore:true},
+ {t:'رحلة الغذاء',k:'المهمة ١ · الجهاز الهضمي',sys:['dig','cir'],intro:'تتناول وجبة طعام. رتّب مسار الغذاء: اضغط على الأعضاء بالترتيب.',seq:['mouth','esoph','stomach','small','large'],
+  hint:{mouth:'من أين يدخل الطعام؟',esoph:'أنبوب ينقل الطعام نحو الأسفل.',stomach:'كيس يحلّل الطعام بالحمض.',small:'أنبوب طويل ملتفّ.',large:'آخر جزء: أنبوب أعرض يحيط بالأمعاء الدقيقة.'},anim:'food',
+  q:'أين تنتقل المواد الغذائية من الجهاز الهضمي إلى الدم؟',o:['الأمعاء الدقيقة','المعدة','الأمعاء الغليظة','المريء'],c:0,h:{1:'المعدة تحلّل الطعام إلى دقائق، لكن راقب أين خرجت النقاط الصفراء إلى الوعاء الدموي.',2:'تصل الأمعاء الغليظة بقايا الطعام بعد امتصاص الغذاء.',3:'المريء ينقل الطعام فقط.'},
+  rule:'<b>الهضم</b>عملية يتم فيها ابتلاع الغذاء وتفكيكه إلى أجزاء ومركبات بسيطة يمكن للخلايا الاستفادة منها. وفي الإنسان يحدث الهضم في الفم والمعدة والأمعاء الدقيقة، وتقوم الأمعاء الدقيقة بامتصاص المواد الغذائية ونقلها إلى الدم.'},
+ {t:'رحلة النَّفَس',k:'المهمة ٢ · الجهاز التنفسي',sys:['res','cir'],intro:'تأخذ نَفَسًا. رتّب مسار الهواء من الخارج إلى الداخل.',seq:['nose','pharynx','larynx','trachea','bronchi','alveoli'],
+  hint:{nose:'من أين يدخل الهواء؟',pharynx:'ممر خلف الأنف والفم.',larynx:'تقع فوق القصبة الهوائية مباشرة.',trachea:'أنبوب طويل في الرقبة.',bronchi:'تتفرّع القصبة إلى فرعين.',alveoli:'أكياس صغيرة جدًا في آخر الشعيبات.'},anim:'air',
+  q:'أين يتم تبادل الغازات بين الهواء والدم؟',o:['في الحويصلات الهوائية','في القصبة الهوائية','في الحنجرة'],c:0,h:{1:'القصبة ممر للهواء فقط. راقب أين انتقلت النقاط الحمراء إلى الدم.',2:'الحنجرة ممر للهواء.'},
+  rule:'<b>التنفس</b>يدخل الهواء عبر الفم والأنف إلى البلعوم، ثم إلى الحنجرة، فالقصبة الهوائية، ثم إلى الشعبتين الهوائيتين اللتين تتفرعان إلى شعيبات هوائية أدق فأدق، حتى تنتهي بأكياس صغيرة تسمّى الحويصلات الهوائية، وعندها يحدث تبادل الغازات بين الدم والهواء. ويتم الشهيق والزفير بانقباض الحجاب الحاجز وانبساطه.'},
+ {t:'رحلة الدم',k:'المهمة ٣ · الجهاز الدوري',sys:['cir','res'],intro:'رتّب خطوات الدورة الدموية كما في شكل الكتاب.',order:['يتدفق الدم غير المؤكسج إلى القلب','يُضخ الدم غير المؤكسج إلى الرئتين','يتخلص الدم في الرئتين من ثاني أكسيد الكربون ويحمل بالأكسجين','يتدفق الدم المؤكسج إلى القلب، ثم يُضخ إلى سائر أجزاء الجسم'],mix:[2,0,3,1],anim:'blood',
+  q:'أقرأ الشكل (من الكتاب): أين يُضخّ الدم غير المؤكسج؟',o:['إلى الرئتين','إلى سائر أجزاء الجسم','إلى الأمعاء الدقيقة'],c:0,h:{1:'الدم الذي يُضخ إلى الجسم هو الدم المؤكسج (الأحمر).',2:'راقب الكرات الزرقاء: إلى أين تذهب أولًا من القلب؟'},
+  rule:'<b>الدوران</b>حركة المواد المهمة، ومنها الأكسجين والجلوكوز والفضلات، في الجسم. يضخ القلب الدم غير المؤكسج إلى الرئتين، فيتم تبادل الغازات في الحويصلات الهوائية، ويعود الدم المؤكسج إلى القلب فيُضخ إلى جميع أجزاء الجسم. وعندما يصل إلى الأمعاء الدقيقة يُحمّل بالمواد الغذائية، ثم يصل عبر الشعيرات الدموية إلى الخلايا. اللون الأحمر: دم مؤكسج، والأزرق: دم غير مؤكسج.'},
+ {t:'الإخراج',k:'المهمة ٤ · التخلص من الفضلات',sys:['exc'],intro:'الفضلات لا قيمة لها، وقد تسمّم الخلايا إذا بقيت. اعثر على أعضاء الجسم الأربعة التي تخلّصه منها.',find:['kidney','lungs','liver','skin'],anim:'exc',
+  q:'التفكير الناقد (من الكتاب): هل جهاز التنفس جزء من جهاز الإخراج؟',o:['نعم، لأن الرئتين تخلّصان الجسم من ثاني أكسيد الكربون','لا، لأن الرئتين تأخذان الأكسجين فقط'],c:0,h:{1:'في رحلة النَّفَس رأيت ثاني أكسيد الكربون يخرج مع الزفير. أليس هذا تخلّصًا من فضلات؟'},
+  rule:'<b>الإخراج</b>عملية يتم فيها تخليص الجسم من الفضلات. وهذه الفضلات لا قيمة لها، وقد تؤدي إلى تسمّم الخلايا والأنسجة إذا بقيت في الجسم. وتعمل الكليتان والرئتان والكبد والجلد على تخليص الجسم من الفضلات.'},
+ {t:'الفريق',k:'المهمة ٥ · الأجهزة تعمل معًا',sys:['dig','res','cir'],intro:'خلية في عضلة الذراع تحتاج إلى طاقة. شغّل وراقب من أين يأتيها ما تحتاج إليه.',anim:'team',watchOnly:true,
+  q:'يعمل الهضم والتنفس والدوران معًا. ماذا يقدّم كل منها للخلية؟',o:['الهضم يوفر الجلوكوز، والتنفس يوفر الأكسجين، والدوران ينقلهما إلى الخلية','الهضم يوفر الأكسجين، والتنفس يوفر الجلوكوز','الدوران يصنع الطاقة بنفسه'],c:0,h:{1:'راقب: الكرة الصفراء (الجلوكوز) جاءت من الأمعاء، والحمراء (الأكسجين) من الرئتين.',2:'الدم ينقل المواد فقط، والطاقة تتحرر داخل الخلية.'},
+  rule:'<b>عمل مشترك</b>يعمل جهازا الهضم والتنفس معًا للحفاظ على حياة المخلوقات الحية؛ فالهضم يوفر سكر الجلوكوز للخلايا، والتنفس يوفر الأكسجين اللازم لتحويل السكر إلى طاقة تستخدمها الخلية للقيام بأنشطتها الحيوية. والدوران ينقل هذه المواد إلى جميع الخلايا، والإخراج يخلّص الجسم من الفضلات.'}];
+const done=new Set();
+function nav(){$('#ms').innerHTML=MS.map((m,i)=>`<button type="button" data-m="${i}" class="${i===S.mi?'on':''} ${done.has(i)?'done':''}">${done.has(i)?'✓ ':''}${m.t}</button>`).join('');$('#ms').querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>open(+b.dataset.m));
+  $('#sys').innerHTML=Object.entries(SYS).map(([k,v])=>`<button type="button" data-s="${k}" class="${S.vis[k]?'on':''}" aria-pressed="${!!S.vis[k]}"><i style="background:${v.c}"></i>${v.n}</button>`).join('');
+  $('#sys').querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{const k=b.dataset.s;S.vis[k]=S.vis[k]?0:1;if(!Object.values(S.vis).some(Boolean))S.vis[k]=1;nav();});}
+const toast=t=>{const el=$('#toast');el.textContent=t;el.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(()=>el.hidden=true,2600);};
+let seqI=0,ordI=0;
+function open(i){S.tour=null;S.mi=i;S.sel=null;S.flash=null;S.anim=null;S.breath=0;seqI=0;ordI=0;const m=MS[i],c=$('#cin');
+  if(m.explore){S.vis={dig:1,res:1,cir:1,exc:1};nav();renderExplore();return;}
+  S.vis={dig:0,res:0,cir:0,exc:0};m.sys.forEach(s=>S.vis[s]=1);if(m.find)S.excFound=new Set();nav();
+  let task='';if(m.seq)task=`<p class="step">١. اضغط على الأعضاء بالترتيب في المجسّم:</p><div class="seq" id="sq">${m.seq.map((k,j)=>`<span>${ar(j+1)}</span>`).join('')}</div><p class="fb" id="sf"></p>`;
+  else if(m.order)task=`<p class="step">١. رتّب الخطوات (اضغط بالترتيب):</p><div class="opts" id="od">${m.mix.map(j=>`<button class="opt" type="button" data-o="${j}">${m.order[j]}</button>`).join('')}</div><div class="seq" id="sq">${m.order.map((_,j)=>`<span>${ar(j+1)}</span>`).join('')}</div><p class="fb" id="sf"></p>`;
+  else if(m.find)task=`<p class="step">١. اضغط على أعضاء الإخراج في المجسّم (الجلد: اضغط على سطح الجسم):</p><div class="chips" id="fd">${m.find.map(k=>`<span data-f="${k}">؟</span>`).join('')}</div><p class="fb" id="sf"></p>`;
+  else task=`<p class="step">١. شغّل الرحلة وراقب.</p><button class="go" type="button" id="play">▶ شغّل</button>`;
+  c.innerHTML=`<div class="hd"><div><p class="kick">${m.k}</p><h2>${m.t}</h2></div><button class="tg" type="button" id="mn" aria-label="تصغير البطاقة">▾</button></div>
+   <div class="dots" id="dt"></div>
+   <div class="pane" id="p1"><p class="lead">${m.intro}</p>${task}</div>
+   <div class="pane" id="watch" hidden><p class="step">راقب الرحلة في المجسّم 👀</p><p class="hint2">السؤال يظهر بعد قليل.</p><button class="go full" type="button" id="replay">↺ أعد الرحلة</button></div>
+   <div class="pane" id="qq" hidden><p class="step">${m.q}</p><div class="opts">${m.o.map((o,k)=>`<button class="opt" type="button" data-q="${k}">${o}</button>`).join('')}</div><p class="fb" id="qf"></p><button class="go full" type="button" id="replay2" style="background:transparent;color:var(--accent);border:1.5px solid var(--accent)">↺ شاهد الرحلة مرة أخرى</button></div>
+   <div class="pane" id="rr" hidden><p class="fb ok">✓ صحيح!</p><p class="rule">${m.rule}</p>${i<MS.length-1?`<button class="go" type="button" id="nx">المهمة التالية ←</button>`:`<p class="small">أنهيت المهام. انتقل إلى «استكشف» لتراجع وظائف الأعضاء.</p>`}</div>
+   <p class="src">📖 الكتاب ص١٠٨–١١٧</p>`;
+  pane(1);$('#mn').onclick=()=>mini(!$('.card').classList.contains('mini'));
+  if(m.order)c.querySelectorAll('[data-o]').forEach(b=>b.onclick=()=>{const j=+b.dataset.o;const f=$('#sf');if(j===ordI){b.disabled=true;b.classList.add('right');const sp=$('#sq').children[ordI];sp.className='f';sp.textContent=ar(ordI+1)+' ✓';ordI++;f.textContent='';if(ordI===m.order.length)startAnim();}
+    else{f.className='fb bad';f.textContent=ordI===0?'ابدأ من عودة الدم الذي سلّم أكسجينه إلى القلب.':'ليست هذه. ماذا يحدث للدم بعد «'+m.order[ordI-1]+'»؟';}});
+  if($('#play'))$('#play').onclick=()=>{$('#play').disabled=true;startAnim();};
+  $('#replay').onclick=()=>{S.anim={k:m.anim,t0:performance.now()};};$('#replay2').hidden=!m.anim;$('#replay2').onclick=()=>{if(TL(m.anim||'')){startTour(m.anim);return;}S.anim={k:m.anim,t0:performance.now()};mini(true);setTimeout(()=>mini(false),reduce?300:4500);};
+  c.querySelectorAll('[data-q]').forEach(b=>b.onclick=()=>{const k=+b.dataset.q,f=$('#qf');if(k===m.c){b.classList.add('right');c.querySelectorAll('[data-q]').forEach(x=>x.disabled=true);done.add(i);nav();pane(4);const nx=$('#nx');if(nx)nx.onclick=()=>open(i+1);}
+    else{b.classList.add('wrong');b.disabled=true;f.className='fb bad';f.textContent=m.h[k]||'راقب الرحلة مرة أخرى.';}});}
+function startAnim(){const m=MS[S.mi];if(TL(m.anim||'')){const k=m.anim;setTimeout(()=>startTour(k),700);return;}const go=()=>{if(m.anim){S.anim={k:m.anim,t0:performance.now()};pane(2);setTimeout(()=>{if(MS[S.mi]===m&&!$('#watch').hidden)pane(3);},reduce?300:(m.anim==='blood'?6000:ANIM[m.anim].dur*800));}else pane(3);};setTimeout(go,m.anim?900:600);}
+const SMALL=()=>W<900;
+function mini(on){const c=$('.card');c.classList.toggle('mini',!!on);const b=$('#mn');if(b){b.textContent=on?'▴':'▾';b.setAttribute('aria-label',on?'تكبير البطاقة':'تصغير البطاقة');}}
+function pane(n){const m=MS[S.mi];['p1','watch','qq','rr'].forEach((id,k)=>{const e=$('#'+id);if(e)e.hidden=k+1!==n;});
+  const lab=['أنفّذ','أراقب','أستنتج','القاعدة'];$('#dt').innerHTML=lab.map((l,k)=>`<i class="${k+1<n?'d':k+1===n?'c':''}"></i>`).join('')+`<span>${ar(n)}/٤ · ${lab[n-1]}</span>`;
+  const bodyTask=(n===2&&!TL(m.anim||''))||(n===1&&(m.seq||m.find));mini(SMALL()&&bodyTask);$('.cin').scrollTop=0;}
+function renderExplore(){const c=$('#cin');const all=Object.keys(ORG);mini(false);
+  c.innerHTML=`<p class="kick">استكشاف حر</p><h2>أجهزة جسم الإنسان</h2><p class="lead">${S.sel?'':'اضغط على أي عضو في المجسّم لتعرف اسمه ووظيفته. الأزرار في الأعلى تُظهر الأجهزة أو تخفيها.'}</p>
+   ${S.sel?`<p class="info"><b>${ORG[S.sel].n}</b>${ORG[S.sel].d}<br><small>الجهاز: ${ORG[S.sel].s.map(s=>SYS[s].n).join('، ')}</small></p>`:''}
+   <p class="small">اضغط على عضو في المجسّم، أو على اسمه هنا. اكتشفت <b>${ar(S.seen.size)}</b> من ${ar(all.length)}.</p>
+   <div class="olist">${Object.entries(SYS).map(([sk,sv])=>`<div class="ogrp"><b><i style="background:${sv.c}"></i>الجهاز ${sv.n}</b><div class="chips">${all.filter(k=>ORG[k].s[0]===sk).map(k=>`<button type="button" class="obtn ${S.sel===k?'sel':S.seen.has(k)?'got':''}" data-org="${k}">${S.seen.has(k)?'✓ ':''}${ORG[k].n}</button>`).join('')}</div></div>`).join('')}</div><button class="go full" type="button" id="st1">ابدأ «رحلة الغذاء» ←</button>
+   <p class="src">📖 الكتاب ص١٠٨–١١٧</p>`;$('#st1').onclick=()=>open(1);
+  c.querySelectorAll('[data-org]').forEach(b=>b.onclick=()=>{const k=b.dataset.org;if(!on(k)){ORG[k].s.forEach(x=>S.vis[x]=1);nav();}S.sel=k;S.seen.add(k);renderExplore();c.scrollTop=0;});}
+/* الضغط */
+function tagAt(x,y){const inP=(p)=>{let c=false;for(let i=0,j=p.length-1;i<p.length;j=i++){if(((p[i][1]>y)!==(p[j][1]>y))&&(x<(p[j][0]-p[i][0])*(y-p[i][1])/(p[j][1]-p[i][1])+p[i][0]))c=!c;}return c;};
+  const dS=(a,b)=>{const vx=b[0]-a[0],vy=b[1]-a[1],t=Math.max(0,Math.min(1,((x-a[0])*vx+(y-a[1])*vy)/((vx*vx+vy*vy)||1)));return Math.hypot(x-a[0]-vx*t,y-a[1]-vy*t);};
+  const LOW={skin:1,lungs:2,diaph:3};let low=null;for(let i=HIT.length-1;i>=0;i--){const h=HIT[i];const ok=h.poly?inP(h.poly):h.c?Math.hypot(x-h.c[0],y-h.c[1])<h.c[2]:dS(h.seg[0],h.seg[1])<h.seg[2];if(!ok)continue;if(LOW[h.tag]){if(!low||LOW[h.tag]>LOW[low])low=h.tag;continue;}return h.tag;}return low;}
+function tap(x,y){const k=tagAt(x,y);if(!k)return;const m=MS[S.mi];
+  if(m.explore){S.sel=k;S.seen.add(k);renderExplore();$('#cin').scrollTop=0;return;}
+  S.sel=k;
+  if(m.seq&&seqI<m.seq.length){const f=$('#sf');if(k===m.seq[seqI]){const sp=$('#sq').children[seqI];sp.className='f';sp.textContent=ORG[k].n;seqI++;f.className='fb ok';f.textContent='صحيح: '+ORG[k].n+'.';if(seqI===m.seq.length){f.textContent='أحسنت! رتّبت المسار. شاهد الرحلة.';startAnim();}}
+    else{f.className='fb bad';f.textContent=(seqI===0?'ليس من هنا يبدأ. ':'ليس بعد «'+ORG[m.seq[seqI-1]].n+'». ')+'تلميح: '+m.hint[m.seq[seqI]];}}
+  else if(m.find){const f=$('#sf');if(m.find.includes(k)&&!S.excFound.has(k)){S.excFound.add(k);const sp=$('#fd').querySelector(`[data-f="${k}"]`);sp.className='got';sp.textContent='✓ '+ORG[k].n;f.className='fb ok';f.textContent=ORG[k].n+': '+ORG[k].d;if(S.excFound.size===4){f.textContent+=' وجدت الأربعة!';startAnim();}}
+    else if(!m.find.includes(k)){f.className='fb bad';f.textContent=ORG[k].n+' ليس من أعضاء الإخراج.';}}}
+const ptr=new Map();let moved=0;
+cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);ptr.set(e.pointerId,[e.clientX,e.clientY]);moved=0;});
+cv.addEventListener('pointermove',e=>{if(!ptr.has(e.pointerId))return;const [px,py]=ptr.get(e.pointerId);const dx=e.clientX-px,dy=e.clientY-py;moved+=Math.abs(dx)+Math.abs(dy);ptr.set(e.pointerId,[e.clientX,e.clientY]);cam.yaw-=dx*.008;cam.pitch=Math.max(-.5,Math.min(.9,cam.pitch+dy*.006));S.drag=performance.now();});
+cv.addEventListener('pointerup',e=>{ptr.delete(e.pointerId);if(moved<6)tap(e.clientX,e.clientY);});cv.addEventListener('pointercancel',e=>ptr.delete(e.pointerId));
+cv.addEventListener('wheel',e=>{e.preventDefault();cam.dist=Math.max(3.5,Math.min(12,cam.dist*(1+Math.sign(e.deltaY)*.07)));},{passive:false});
+
+/* الحلقة */
+function frame(ms){place();{const ty=S.tour&&S.focus&&W<900?Math.max(-.6,Math.min(1.9,S.focus[1]*.6+1.3*.4)):1.3;cam.t[1]+=(ty-cam.t[1])*(reduce?1:.04);}cx.setTransform(DPR,0,0,DPR,0,0);const g=cx.createRadialGradient(CX0,CY0,50,CX0,CY0,Math.max(W,H));g.addColorStop(0,'#3A2A30');g.addColorStop(1,'#140C10');cx.fillStyle=g;cx.fillRect(0,0,W,H);
+  const idle=!S.drag||performance.now()-S.drag>2500;if(idle&&!reduce)cam.yaw+=(Math.sin(ms/4000)*.5-cam.yaw)*.01;
+  if(!S.anim&&!(S.tour&&S.tour.k!=='food'&&S.tour.k!=='blood')){S.breath=reduce?0:(Math.sin(ms/900)*.5+.5)*.6;}
+  body(ms/1000);
+  drawTour();if(S.anim){const t=(performance.now()-S.anim.t0)/1000*(reduce?3:1);ANIM[S.anim.k].draw(t);}
+  flush();requestAnimationFrame(frame);}
+
+/* سحب البطاقة */
+(()=>{const g=$('#grip'),card=$('.card');let d=null;
+  const clamp=(x,y)=>{const r=card.getBoundingClientRect();return [Math.max(4,Math.min(innerWidth-r.width-4,x)),Math.max(4,Math.min(innerHeight-60,y))];};
+  g.addEventListener('pointerdown',e=>{g.setPointerCapture(e.pointerId);const r=card.getBoundingClientRect();d={dx:e.clientX-r.left,dy:e.clientY-r.top,w:r.width,moved:0};});
+  g.addEventListener('pointermove',e=>{if(!d)return;d.moved++;if(!card.classList.contains('moved')){card.classList.add('moved');card.style.width=d.w+'px';card.style.insetInline='auto';card.style.right='auto';card.style.bottom='auto';}
+    card.classList.add('drag');const [x,y]=clamp(e.clientX-d.dx,e.clientY-d.dy);card.style.left=x+'px';card.style.top=y+'px';});
+  const end=()=>{d=null;card.classList.remove('drag');};g.addEventListener('pointerup',end);g.addEventListener('pointercancel',end);
+  const reset=()=>{card.classList.remove('moved');['width','insetInline','right','bottom','left','top'].forEach(k=>card.style[k]='');};
+  g.addEventListener('dblclick',reset);
+  g.addEventListener('keydown',e=>{const st={ArrowUp:[0,-20],ArrowDown:[0,20],ArrowLeft:[-20,0],ArrowRight:[20,0]}[e.key];if(e.key==='Escape'){reset();return;}if(!st)return;e.preventDefault();const r=card.getBoundingClientRect();
+    if(!card.classList.contains('moved')){card.classList.add('moved');card.style.width=r.width+'px';card.style.insetInline='auto';card.style.right='auto';card.style.bottom='auto';}const [x,y]=clamp(r.left+st[0],r.top+st[1]);card.style.left=x+'px';card.style.top=y+'px';});
+  addEventListener('resize',()=>{if(card.classList.contains('moved')){const r=card.getBoundingClientRect();const [x,y]=clamp(r.left,r.top);card.style.left=x+'px';card.style.top=y+'px';}});})();
+open(0);requestAnimationFrame(frame);
+})();
+</script>

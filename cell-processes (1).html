@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>الخلية تعمل</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@600;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: a living plant cell fills the stage (molecules drift in from the air on one side); a mission card guides predict → run → conclude. Sky colour tracks day and night. */
+:root{--bg:#EEF4EA;--panel:rgba(255,255,255,.95);--ink:#14231A;--muted:#5A6B5F;--line:#D5E0D2;--accent:#2F8A3E;--accent-soft:#E2F2E0;--ok:#15803D;--ok-bg:#E6F6EA;--bad:#C2410C;--bad-bg:#FFF0E6;
+ --display:"Baloo Bhaijaan 2","IBM Plex Sans Arabic",system-ui,sans-serif;--body:"IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0E1612;--panel:rgba(20,30,25,.95);--ink:#E6F0E8;--muted:#9FB3A5;--line:#2C3B32;--accent:#6CCB77;--accent-soft:#1A3322;--ok:#4ADE80;--ok-bg:#12291C;--bad:#FB923C;--bad-bg:#2E1C10;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E1612;--panel:rgba(20,30,25,.95);--ink:#E6F0E8;--muted:#9FB3A5;--line:#2C3B32;--accent:#6CCB77;--accent-soft:#1A3322;--ok:#4ADE80;--ok-bg:#12291C;--bad:#FB923C;--bad-bg:#2E1C10;color-scheme:dark}
+html,body{direction:rtl}*{box-sizing:border-box}html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;overflow:hidden}
+#stage{position:fixed;inset:0;touch-action:none;user-select:none}#cv{width:100%;height:100%;display:block;cursor:grab}
+.top{position:fixed;top:0;inset-inline:0;z-index:5;padding:calc(10px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px));display:grid;gap:8px;justify-items:center;pointer-events:none}
+h1{margin:0;font:800 clamp(1.15rem,3vw,1.6rem)/1.2 var(--display);background:var(--panel);padding:4px 16px;border-radius:99px;box-shadow:0 2px 10px rgba(0,0,0,.12)}
+#steps{display:flex;gap:4px;background:var(--panel);border-radius:99px;padding:4px;box-shadow:0 2px 10px rgba(0,0,0,.12);pointer-events:auto;flex-wrap:wrap;justify-content:center}
+#steps button{border:0;background:none;color:var(--muted);font:600 .85rem var(--body);padding:4px 11px;border-radius:99px;cursor:pointer}#steps button.on{background:var(--accent);color:#fff}#steps button.done{color:var(--ok)}#steps button:disabled{opacity:.45;cursor:default}
+.meters{position:fixed;z-index:5;top:calc(98px + env(safe-area-inset-top,0px));inset-inline-end:max(12px,env(safe-area-inset-left,0px));background:var(--panel);border-radius:14px;padding:8px 10px;box-shadow:0 2px 10px rgba(0,0,0,.12);display:grid;gap:3px;font-size:.82rem;font-variant-numeric:tabular-nums;min-width:190px}
+.meters .h{display:grid;grid-template-columns:1fr 46px 46px;gap:4px;color:var(--muted);font-size:.72rem;text-align:center}.meters .h span:first-child{text-align:start}
+.mr{display:grid;grid-template-columns:1fr 46px 46px;gap:4px;align-items:center;text-align:center}.mr span:first-child{text-align:start;display:flex;align-items:center;gap:6px}.mr i{width:11px;height:11px;border-radius:50%;display:inline-block;border:1px solid rgba(0,0,0,.35)}
+.ctl{display:flex;gap:6px;margin-top:4px}.ctl button{flex:1;border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:10px;padding:5px 4px;font:600 .82rem var(--body);cursor:pointer}.ctl button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}.ctl button:disabled{opacity:.4;cursor:default}
+.card{position:fixed;bottom:0;inset-inline:0;z-index:6;margin:0 auto;max-width:620px;padding:0 max(12px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px))}
+.cin{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.15);display:grid;gap:8px;max-height:44vh;overflow:auto}
+.kick{margin:0;font-size:.78rem;font-weight:700;color:var(--accent)}h2{margin:0;font:800 1.25rem/1.3 var(--display)}
+.lead{margin:0}.step{margin:0;font-weight:700}.small{margin:0;font-size:.85rem;color:var(--muted)}
+.opts{display:grid;gap:6px}.opt{text-align:start;border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:12px;padding:8px 12px;font:500 .95rem var(--body);cursor:pointer}
+.opt.sel{border-color:var(--accent);background:var(--accent-soft)}.opt.right{border-color:var(--ok);background:var(--ok-bg)}.opt.wrong{border-color:var(--bad);background:var(--bad-bg)}.opt:disabled{cursor:default}
+.fb{margin:0;font-size:.92rem}.fb.ok{color:var(--ok)}.fb.bad{color:var(--bad)}
+.rule{background:var(--accent-soft);border-radius:12px;padding:8px 12px;margin:0}.rule b{display:block;font-family:var(--display)}
+.eq{font-weight:700;text-align:center;background:var(--accent-soft);border-radius:10px;padding:4px 8px;margin:0}
+.go{border:0;background:var(--accent);color:#fff;border-radius:12px;padding:9px 16px;font:700 .95rem var(--body);cursor:pointer;justify-self:start}.go:disabled{opacity:.45;cursor:default}
+.prog{height:8px;border-radius:99px;background:var(--line);overflow:hidden}.prog i{display:block;height:100%;background:var(--accent);transition:width .3s}
+#toast{position:fixed;z-index:8;top:calc(132px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);background:rgba(12,22,16,.9);color:#F2F8F3;border-radius:12px;padding:8px 16px;font-weight:600;max-width:min(90vw,460px);text-align:center;pointer-events:none}
+.src{font-size:.72rem;color:var(--muted);margin:0}
+:focus-visible{outline:3px solid #F59F00;outline-offset:2px}
+@media (min-width:900px){.card{inset-inline:auto;inset-inline-start:max(16px,env(safe-area-inset-right,0px));bottom:16px;width:420px;padding:0}.cin{max-height:calc(100vh - 130px)}.meters{top:auto;bottom:16px}}
+@media (max-width:600px){.meters{top:calc(124px + env(safe-area-inset-top,0px));min-width:0;font-size:.74rem;padding:6px 8px}.meters .h,.mr{grid-template-columns:1fr 34px 34px}h2{font-size:1.1rem}.cin{max-height:42vh}}
+</style>
+
+<div id="stage"><canvas id="cv" aria-label="محاكاة ثلاثية الأبعاد لخلية نباتية تتحرك فيها الجزيئات"></canvas></div>
+<div class="top"><h1>الخلية تعمل</h1><nav id="steps" aria-label="المهام"></nav></div>
+<div class="meters" aria-live="off"><div class="h"><span>الجزيء</span><span>خارج</span><span>داخل</span></div>
+ <div class="mr"><span><i style="background:#E5484D"></i>أكسجين</span><b id="o2o"></b><b id="o2i"></b></div>
+ <div class="mr"><span><i style="background:#8A939E"></i>ثاني أكسيد الكربون</span><b id="co2o"></b><b id="co2i"></b></div>
+ <div class="mr"><span><i style="background:#4DABF7"></i>ماء</span><b id="h2oo"></b><b id="h2oi"></b></div>
+ <div class="mr"><span><i style="background:#F2C230"></i>جلوكوز</span><b>—</b><b id="glu"></b></div>
+ <div class="mr"><span>⚡ طاقة محرّرة</span><b>—</b><b id="en"></b></div>
+ <div class="ctl"><button type="button" id="run" aria-pressed="false">▶ شغّل</button><button type="button" id="sun" aria-pressed="false">🌙 ليل</button><button type="button" id="spd">⏩ ×١</button><button type="button" id="rst">↺</button></div></div>
+<div id="toast" role="status" hidden></div>
+<div class="card"><div class="cin" aria-live="polite" id="cin"></div></div>
+
+<script>
+(()=>{'use strict';document.documentElement.dir='rtl';document.documentElement.lang='ar';
+const $=s=>document.querySelector(s),ar=n=>Number(n).toLocaleString('ar-SA');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const cv=$('#cv'),cx=cv.getContext('2d');let W=0,H=0,DPR=1,CX0=0,CY0=0;
+const fit=()=>{DPR=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);if(W>=900){CX0=80+(W-80-440)/2+40;CY0=H*.5;}else{CX0=W/2;CY0=H*(W<600?.42:.38);}};addEventListener('resize',fit);fit();
+
+/* ===== محرّك ثلاثي الأبعاد ===== */
+const cam={yaw:-.35,pitch:.28,dist:10.5,t:[-1.4,0,0]};
+const P=p=>{const cy=Math.cos(cam.yaw),sy=Math.sin(cam.yaw),cp=Math.cos(cam.pitch),sp=Math.sin(cam.pitch);const x=p[0]-cam.t[0],y=p[1]-cam.t[1],z=p[2]-cam.t[2];
+  const x1=x*cy-z*sy,z1=x*sy+z*cy,y2=y*cp-z1*sp,z2=y*sp+z1*cp,d=cam.dist-z2,s=Math.min(W,H)*(W<600?1.25:1.05)/Math.max(d,.05);return [CX0+x1*s,CY0-y2*s,d,s];};
+const LT=(()=>{const v=[-.4,.85,.5],n=Math.hypot(...v);return v.map(a=>a/n);})();
+const rgb=h=>{const n=parseInt(h.slice(1),16);return [n>>16&255,n>>8&255,n&255];};
+const col=(h,k)=>{const c=rgb(h).map(v=>Math.max(0,Math.min(255,Math.round(v*k))));return `rgb(${c[0]},${c[1]},${c[2]})`;};
+const sub=(a,b)=>[a[0]-b[0],a[1]-b[1],a[2]-b[2]],crs=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+let Q=[],LB=[];
+const poly=(pts,c,a=1,st=null)=>Q.push({k:'p',pts,c,a,st});
+const ball=(p,r,c,a=1)=>Q.push({k:'s',p,r,c,a});
+const rod=(p,q,r,c,a=1)=>Q.push({k:'l',p,q,r,c,a});
+const label=(p,t)=>LB.push({p,t});
+const flush=()=>{const it=[];for(const o of Q){if(o.k==='p'){o.pr=o.pts.map(P);o.d=o.pr.reduce((s,v)=>s+v[2],0)/o.pr.length;const nn=crs(sub(o.pts[1],o.pts[0]),sub(o.pts[2],o.pts[0])),L=Math.hypot(...nn)||1;o.sh=.65+.4*Math.abs((nn[0]*LT[0]+nn[1]*LT[1]+nn[2]*LT[2])/L);}
+    else if(o.k==='s'){o.pr=P(o.p);o.d=o.pr[2];}else{o.pa=P(o.p);o.pb=P(o.q);o.d=(o.pa[2]+o.pb[2])/2;}it.push(o);}
+  it.sort((a,b)=>b.d-a.d);
+  for(const o of it){cx.globalAlpha=o.a;
+    if(o.k==='p'){cx.beginPath();o.pr.forEach((v,i)=>i?cx.lineTo(v[0],v[1]):cx.moveTo(v[0],v[1]));cx.closePath();cx.fillStyle=col(o.c,o.sh);cx.fill();if(o.st){cx.strokeStyle=o.st;cx.lineWidth=1.2;cx.stroke();}}
+    else if(o.k==='s'){const [x,y,,s]=o.pr,r=o.r*s;const g=cx.createRadialGradient(x-r*.35,y-r*.4,r*.1,x,y,r);g.addColorStop(0,col(o.c,1.5));g.addColorStop(.6,col(o.c,1));g.addColorStop(1,col(o.c,.6));cx.fillStyle=g;cx.beginPath();cx.arc(x,y,r,0,7);cx.fill();}
+    else{cx.strokeStyle=col(o.c,1);cx.lineCap='round';cx.lineWidth=Math.max(1,o.r*(o.pa[3]+o.pb[3]));cx.beginPath();cx.moveTo(o.pa[0],o.pa[1]);cx.lineTo(o.pb[0],o.pb[1]);cx.stroke();}}
+  cx.globalAlpha=1;Q=[];
+  cx.font='600 12.5px "IBM Plex Sans Arabic",system-ui,sans-serif';cx.direction='rtl';cx.textBaseline='middle';cx.textAlign='center';
+  for(const l of LB){const [x,y]=P(l.p);const w=cx.measureText(l.t).width+14;cx.fillStyle='rgba(12,22,16,.82)';cx.beginPath();cx.roundRect?cx.roundRect(x-w/2,y-11,w,22,8):cx.rect(x-w/2,y-11,w,22);cx.fill();cx.fillStyle='#F2F8F3';cx.fillText(l.t,x,y);}LB=[];};
+const box=(x0,y0,z0,x1,y1,z1,colr,a,st,skip=[])=>{const F={f:[[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]],b:[[x0,y0,z0],[x0,y1,z0],[x1,y1,z0],[x1,y0,z0]],l:[[x0,y0,z0],[x0,y0,z1],[x0,y1,z1],[x0,y1,z0]],r:[[x1,y0,z0],[x1,y1,z0],[x1,y1,z1],[x1,y0,z1]],t:[[x0,y1,z0],[x0,y1,z1],[x1,y1,z1],[x1,y1,z0]],d:[[x0,y0,z0],[x1,y0,z0],[x1,y0,z1],[x0,y0,z1]]};
+  for(const k in F)if(!skip.includes(k))poly(F[k],colr,a,st);};
+const ellip=(c,rx,ry,rz,colr,a,NU=5,NV=8,rot=0)=>{const cr=Math.cos(rot),sr=Math.sin(rot);const S=(u,v)=>{const x=rx*Math.sin(u)*Math.cos(v),y=ry*Math.cos(u),z=rz*Math.sin(u)*Math.sin(v);return [c[0]+x*cr-y*sr,c[1]+x*sr+y*cr,c[2]+z];};
+  for(let i=0;i<NU;i++)for(let j=0;j<NV;j++){const u0=i/NU*Math.PI,u1=(i+1)/NU*Math.PI,v0=j/NV*2*Math.PI,v1=(j+1)/NV*2*Math.PI;poly([S(u0,v0),S(u1,v0),S(u1,v1),S(u0,v1)],colr,a);}};
+
+/* ===== المحاكاة ===== */
+const XI=-1.5,XL=-4.3,XR=1.5,YB=1.75,ZB=.95;
+const CHL=[[-.75,1.05,-.3],[.65,.95,.25],[-.45,-.9,.15],[.8,-.55,-.4]],MIT=[[.05,.2,-.25],[.95,1.25,-.45],[-.95,-.15,.35]];
+const KIND={o2:['#E5484D',.085],co2:['#8A939E',.1],h2o:['#4DABF7',.075],glu:['#F2C230',.13]};
+const rnd=(a,b)=>a+Math.random()*(b-a);
+let M=[],fx=[],energy=0,frames=0;const S={speed:1,follow:null,run:false,light:false,photo:false,resp:false,sunAllowed:false,mi:0,phase:'pred',dayT:0,nightT:0,stat:{glu0:0,en0:0}};
+const spawn=(k,inside,n=1,at=null)=>{for(let i=0;i<n;i++){const p=at?[at[0]+rnd(-.15,.15),at[1]+rnd(-.15,.15),at[2]+rnd(-.15,.15)]:[inside?rnd(XI+.15,XR-.15):rnd(XL+.1,XI-.1),rnd(-YB+.1,YB-.1),rnd(-ZB+.1,ZB-.1)];const a=rnd(0,6.28),b=rnd(-1,1);M.push({k,p,v:[Math.cos(a)*.04,b*.03,Math.sin(a)*.03],cd:0});}};
+const inside=m=>m.p[0]>XI;
+const count=(k,ins)=>M.filter(m=>m.k===k&&inside(m)===!!ins).length;
+/* ===== حركة موجَّهة: كل عملية ترسل الجزيئات إلى مكانها ===== */
+const kill=m=>{m.dead=1;if(S.follow===m)S.follow=null;};
+const rIn=()=>[rnd(XI+.25,XR-.25),rnd(-YB+.25,YB-.25),rnd(-ZB+.2,ZB-.2)],rOut=()=>[rnd(XL+.2,XI-.3),rnd(-YB+.25,YB-.25),rnd(-ZB+.2,ZB-.2)];
+const send=(m,tg,job)=>{m.tg=tg;m.job=job;};
+const free=m=>!m.tg&&!m.dead;
+const nearest=(k,c,pref)=>{let best=null,bd=1e9;for(const m of M){if(m.k!==k||!free(m))continue;let d=Math.hypot(m.p[0]-c[0],m.p[1]-c[1],m.p[2]-c[2]);if(pref==='in'&&!inside(m))d+=4;if(d<bd){bd=d;best=m;}}return best;};
+const OCC=new Map();/* عضيّة ← الجزيئات المتجهة إليها */
+let rf=0,lastSend=0;
+function schedule(){
+  /* الانتشار: من التركيز المرتفع إلى المنخفض */
+  if(S.mi===0&&frames-lastSend>22){const o=count('o2',0),i=count('o2',1);const outs=M.filter(m=>m.k==='o2'&&free(m)&&!inside(m)),ins=M.filter(m=>m.k==='o2'&&free(m)&&inside(m));
+    if(o>i+1&&outs.length){send(outs[Math.floor(rnd(0,outs.length))],rIn(),'in');lastSend=frames;}
+    else if(outs.length&&ins.length&&frames-lastSend>60){send(outs[0],rIn(),'in');send(ins[0],rOut(),'out');lastSend=frames;}}
+  /* البناء الضوئي: نهارًا فقط */
+  if(S.photo&&S.light)CHL.forEach((c,ci)=>{const key='c'+ci;if(OCC.get(key))return;if((c.cd||0)>frames)return;const a=nearest('co2',c,'in'),b=nearest('h2o',c,'in');if(!a||!b)return;
+    send(a,[c[0]-.16,c[1]+.12,c[2]],key);send(b,[c[0]+.16,c[1]+.12,c[2]],key);OCC.set(key,[a,b]);});
+  /* التنفس الخلوي: نهارًا وليلًا */
+  if(S.resp)MIT.forEach((c,mi)=>{const key='m'+mi;if(OCC.get(key))return;if((c.cd||0)>frames)return;const a=nearest('glu',c,'in'),b=nearest('o2',c,'in');if(!a||!b)return;
+    send(a,[c[0]-.2,c[1]+.14,c[2]],key);send(b,[c[0]+.2,c[1]+.14,c[2]],key);OCC.set(key,[a,b]);});}
+function react(){for(const [key,pair] of OCC){if(pair.some(m=>m.dead)){pair.forEach(m=>{m.tg=null;m.job=null;});OCC.delete(key);continue;}
+  if(!pair.every(m=>m.arr))continue;const isC=key[0]==='c',c=isC?CHL[+key.slice(1)]:MIT[+key.slice(1)];pair.forEach(kill);OCC.delete(key);c.cd=frames+(isC?70:80);
+  if(isC){if(!S.light){continue;}const g=mk('glu',c),o=mk('o2',c);send(g,rIn(),'store');send(o,rOut(),'exit');fx.push({p:c,t:rf,c:'#7CFC6A',txt:'جلوكوز + أكسجين'});}
+  else{const a=mk('co2',c),w=mk('h2o',c);send(a,rOut(),'exit');send(w,rIn(),'wander');energy++;fx.push({p:c,t:rf,c:'#FFD43B',txt:'⚡ طاقة'});}}}
+const mk=(k,at)=>{spawn(k,1,1,at);return M[M.length-1];};
+const step=()=>{frames++;schedule();
+  for(const m of M){if(m.tg){const d=[m.tg[0]-m.p[0],m.tg[1]-m.p[1],m.tg[2]-m.p[2]],L=Math.hypot(...d),v=.028;
+      if(L<v){m.p=m.tg.slice();if(m.job&&(m.job[0]==='c'||m.job[0]==='m')){m.arr=true;}else{m.tg=null;m.job=null;}}else{m.p=[m.p[0]+d[0]/L*v+rnd(-.006,.006),m.p[1]+d[1]/L*v+rnd(-.006,.006),m.p[2]+d[2]/L*v+rnd(-.006,.006)];}continue;}
+    m.v[0]+=rnd(-.006,.006);m.v[1]+=rnd(-.006,.006);m.v[2]+=rnd(-.006,.006);const s=Math.hypot(...m.v)||1,lim=.012;if(s>lim)m.v=m.v.map(v=>v/s*lim);
+    const n=[m.p[0]+m.v[0],m.p[1]+m.v[1],m.p[2]+m.v[2]];if(n[0]<XL+.05||n[0]>XR-.05){m.v[0]*=-1;n[0]=m.p[0];}if(Math.abs(n[1])>YB-.05){m.v[1]*=-1;n[1]=m.p[1];}if(Math.abs(n[2])>ZB-.05){m.v[2]*=-1;n[2]=m.p[2];}
+    if((m.p[0]>XI)!==(n[0]>XI)){m.v[0]*=-1;n[0]=m.p[0];}m.p=n;}
+  react();M=M.filter(m=>!m.dead);
+  if(S.follow&&frames%2===0){const f=S.follow;f.trail=f.trail||[];f.trail.push(f.p.slice());if(f.trail.length>120)f.trail.shift();}
+  const tot=k=>M.filter(m=>m.k===k).length;if(S.photo&&tot('h2o')<10)spawn('h2o',0,1);if(S.photo&&tot('co2')<8)spawn('co2',0,1);if(S.resp&&tot('o2')<6)spawn('o2',0,1);
+  ['o2','co2'].forEach(k=>{while(tot(k)>40){const i=M.findIndex(m=>m.k===k&&free(m)&&!inside(m));if(i<0)break;M.splice(i,1);}});
+  if(S.light){S.dayT++;S.wasDay=true;}else{S.nightT++;if(S.wasDay)S.nad++;}};
+
+
+/* ===== الرسم ===== */
+function scene(t){
+  box(XL,-YB,-ZB,XI,YB,ZB,'#D6ECF7',.12,'rgba(120,170,200,.35)',['f']);
+  box(XI,-YB,-ZB,XR,YB,ZB,'#7CB85A',.5,'rgba(40,90,30,.7)',['f','l']);
+  poly([[XI,-YB,-ZB],[XI,-YB,ZB],[XI,YB,ZB],[XI,YB,-ZB]],'#E3C25A',.28,'rgba(180,140,40,.9)');
+  box(XI+.08,-YB+.08,-ZB+.08,XR-.08,YB-.08,ZB-.08,'#EEF7D8',.32,null,['f','l']);
+  ellip([.35,-.35,-.62],.38,.34,.3,'#8F5BD0',1);
+  CHL.forEach((c,i)=>{const glow=S.photo&&S.light;ellip(c,.34,.15,.18,glow?'#3FBF52':'#2F7E3A',1,5,8,i*.7);});
+  MIT.forEach((c,i)=>{rod([c[0]-.22,c[1]-.03,c[2]],[c[0]+.22,c[1]+.06,c[2]],.1,S.resp?'#F59A3E':'#C77B3A',1);});
+  for(const m of M){const [c,r]=KIND[m.k];ball(m.p,m.tg?r*1.25:r,c,1);if(m===S.follow)ball(m.p,r*2.1,'#FFFFFF',.35);}
+  if(S.follow&&S.follow.trail){const T=S.follow.trail;for(let i=1;i<T.length;i++)rod(T[i-1],T[i],.012,KIND[S.follow.k][0],.25+.6*i/T.length);}
+  fx=fx.filter(f=>rf-f.t<45);for(const f of fx){const k=(rf-f.t)/45;ball([f.p[0],f.p[1]+.2+k*.5,f.p[2]],.12+k*.25,f.c,.55*(1-k));}
+  if(S.light){for(let i=0;i<5;i++){const x=-3.6+i*1.2;poly([[x,YB+1.4,0],[x+.25,YB+1.4,0],[x+.7,YB,0],[x+.45,YB,0]],'#FFE066',.25);}ball([-4.6,YB+1.6,-.4],.45,'#FFD43B',1);label([-4.6,YB+2.35,-.4],'☀️ الشمس');}
+  else{ball([-4.6,YB+1.6,-.4],.32,'#E6EAF5',1);label([-4.6,YB+2.2,-.4],'🌙 ليل: لا ضوء شمس');if(S.photo)label([CHL[1][0],CHL[1][1]+.5,CHL[1][2]],'لا ضوء ← البلاستيدات متوقفة');}
+  label([(XL+XI)/2,-YB-.3,ZB],'خارج الخلية');label([0,-YB-.3,ZB],'داخل الخلية');
+  if(frames<2||!S.run){label(CHL[1],'بلاستيدة خضراء');label(MIT[1],'ميتوكندريا');label([XI,YB+.25,0],'الغشاء والجدار');}
+  for(const f of fx)if(rf-f.t<30)label([f.p[0],f.p[1]+.55,f.p[2]],f.txt);}
+
+/* ===== المهام ===== */
+const MS=[
+ {t:'الانتشار',k:'المهمة ١ · النقل السلبي',intro:'حول الخلية أكسجين كثير، وداخلها قليل. الجزيئات الصغيرة تعبر الغشاء.',
+  setup(){S.photo=S.resp=false;S.light=true;S.sunAllowed=false;spawn('o2',0,30);spawn('o2',1,3);spawn('co2',0,4);spawn('co2',1,4);spawn('h2o',0,7);spawn('h2o',1,7);},
+  pred:{q:'توقّع: ماذا سيحدث للأكسجين؟',o:['سيدخل إلى الخلية','سيخرج من الخلية','لن يتحرك']},
+  watch:'اضغط «شغّل» وراقب: إلى أين تتجه جزيئات الأكسجين؟ وتابع العدّاد.',goal:()=>count('o2',1)>=14,prog:()=>Math.min(1,count('o2',1)/14),
+  concl:{q:'في أي اتجاه انتقل الأكسجين؟ وهل استعملت الخلية طاقة؟',o:['من التركيز المرتفع إلى المنخفض، دون طاقة','من التركيز المنخفض إلى المرتفع، بطاقة','لم ينتقل'],c:0,h:{1:'خارج الخلية كان الأكسجين أكثر، وانتقل إلى حيث يقل. ولم نعطِ الخلية أي طاقة.',2:'قارن العدد داخل الخلية الآن بما كان في البداية.'}},
+  rule:'<b>النقل السلبي</b>حركة المواد عبر الأغشية دون أن تستخدم الخلية طاقتها. ومنه <b>الانتشار</b>: انتقال المواد، ومنها السكر والأكسجين وثاني أكسيد الكربون، عبر الغشاء البلازمي من منطقة التركيز المرتفع إلى منطقة التركيز المنخفض. وانتشار الماء وحده يسمّى الخاصية الأسموزية.'},
+ {t:'البناء الضوئي',k:'المهمة ٢ · صنع الغذاء',intro:'الآن البلاستيدات الخضراء جاهزة. حول الخلية ثاني أكسيد الكربون والماء.',
+  setup(){S.photo=true;S.resp=false;S.light=false;S.sunAllowed=true;spawn('co2',0,22);spawn('co2',1,4);spawn('h2o',0,7);spawn('h2o',1,9);spawn('o2',0,6);spawn('o2',1,4);},
+  pred:{q:'توقّع: إذا أشرقت الشمس، ماذا ستصنع البلاستيدات الخضراء؟',o:['غذاء (جلوكوز) وأكسجين','ماء فقط','لا شيء']},
+  watch:'اضغط «شغّل» ثم «🌙 ليل» لتحوّله إلى «☀️ نهار». راقب الجزيئات تتجه إلى البلاستيدات. ثم أعده ليلًا: ماذا يحدث؟',goal:()=>count('glu',1)>=4&&S.nad>150,prog:()=>Math.min(1,count('glu',1)/4)*(S.nad>150?1:.9),
+  concl:{q:'ما المواد التي استهلكتها البلاستيدات؟ ومتى توقفت؟',o:['ثاني أكسيد الكربون والماء، وتوقفت في الليل','الجلوكوز والأكسجين، ولم تتوقف','التربة، وتوقفت في النهار'],c:0,h:{1:'راقب العدّاد: الجلوكوز والأكسجين ازدادا؛ إنهما نواتج.',2:'التربة ليست في الخلية. انظر إلى العدّادات.'}},
+  rule:'<b>البناء الضوئي</b>يستخدم طاقة الشمس لإنتاج غذاء على شكل سكر الجلوكوز. المواد المتفاعلة: ثاني أكسيد الكربون والماء، والناتجة: الجلوكوز والأكسجين. ويتم داخل البلاستيدات الخضراء، وتتحكم الطاقة الشمسية في سيره.',eq:'ثاني أكسيد الكربون + ماء ← (ضوء) ← جلوكوز + أكسجين'},
+ {t:'التنفس الخلوي',k:'المهمة ٣ · تحرير الطاقة',intro:'حلّ الليل. في الخلية جلوكوز خزّنته في النهار، وفيها أكسجين.',
+  setup(){S.photo=true;S.resp=true;S.light=false;S.sunAllowed=false;spawn('glu',1,9);spawn('o2',0,10);spawn('o2',1,8);spawn('co2',0,4);spawn('co2',1,2);spawn('h2o',0,7);spawn('h2o',1,7);},
+  pred:{q:'توقّع: هل تحصل الخلية على الطاقة في الليل دون ضوء؟',o:['نعم، من الجلوكوز في الميتوكندريا','لا، الطاقة تأتي من الشمس مباشرة فقط']},
+  watch:'اضغط «شغّل»: راقب الجلوكوز والأكسجين يتجهان إلى الميتوكندريا (البرتقالي)، وعدّاد الطاقة.',goal:()=>energy>=4,prog:()=>Math.min(1,energy/4),
+  concl:{q:'ماذا استهلكت الميتوكندريا؟ وماذا أنتجت؟',o:['استهلكت الجلوكوز والأكسجين، وأنتجت الطاقة وثاني أكسيد الكربون والماء','استهلكت ثاني أكسيد الكربون، وأنتجت الأكسجين','استهلكت الضوء، وأنتجت الجلوكوز'],c:0,h:{1:'هذا يحدث في البلاستيدات في النهار. راقب الأكسجين: هل زاد أم نقص؟',2:'لا يوجد ضوء الآن، ومع ذلك تحررت الطاقة.'}},
+  rule:'<b>التنفس الخلوي</b>تحلّل فيه الخلايا السكر وتطلق الطاقة، ويتطلب وجود الأكسجين؛ لذا يسمّى التنفس الهوائي. وينتج عنه الماء وثاني أكسيد الكربون بوصفهما فضلات. ويحدث في الضوء أو في الظلام.',eq:'جلوكوز + أكسجين ← ثاني أكسيد الكربون + ماء + طاقة'},
+ {t:'الدورة الكاملة',k:'المهمة ٤ · العمليات معًا',intro:'الآن تعمل العمليات كلها. بدّل بين النهار والليل وراقب الأكسجين وثاني أكسيد الكربون خارج الخلية.',
+  setup(){S.photo=true;S.resp=true;S.light=true;S.sunAllowed=true;spawn('co2',0,16);spawn('co2',1,4);spawn('o2',0,8);spawn('o2',1,5);spawn('h2o',0,7);spawn('h2o',1,9);spawn('glu',1,3);},
+  pred:{q:'توقّع: في النهار، هل تُطلق الخلية النباتية أكسجين أكثر مما تستهلك؟',o:['نعم، لأن البناء الضوئي ينتج الأكسجين','لا، لأن التنفس يستهلك كل الأكسجين']},
+  watch:'شغّل نهارًا مدة، ثم ليلًا مدة. لاحظ ماذا يزيد خارج الخلية في كل حالة.',goal:()=>S.dayT>500&&S.nightT>500,prog:()=>Math.min(1,(Math.min(S.dayT,500)+Math.min(S.nightT,500))/1000),
+  concl:{q:'لماذا نقول إن البناء الضوئي والتنفس عمليتان متعاكستان؟',o:['لأن نواتج كل عملية هي المواد التي تحتاج إليها الأخرى','لأنهما تحدثان في الجزء نفسه من الخلية','لأن كلتيهما تحتاج إلى الضوء'],c:0,h:{1:'البناء الضوئي في البلاستيدات، والتنفس في الميتوكندريا.',2:'التنفس استمر في الليل دون ضوء.'}},
+  rule:'<b>عمليتان متعاكستان</b>البناء الضوئي يستهلك ثاني أكسيد الكربون والماء وينتج الجلوكوز والأكسجين، والتنفس يستهلك الجلوكوز والأكسجين وينتج ثاني أكسيد الكربون والماء والطاقة. وتستخدم النباتات فضلات التنفس مرة أخرى في البناء الضوئي.'}];
+const done=new Set();let predPick=-1;
+const steps=$('#steps');
+const drawSteps=()=>{steps.innerHTML=MS.map((m,i)=>`<button type="button" data-m="${i}" class="${i===S.mi?'on':''} ${done.has(i)?'done':''}" ${i>0&&!done.has(i-1)&&i!==S.mi?'disabled':''}>${done.has(i)?'✓ ':''}${m.t}</button>`).join('')+`<button type="button" data-m="4" class="${S.mi===4?'on':''}" ${done.size<4?'disabled':''}>الخلاصة</button>`;
+  steps.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>open(+b.dataset.m));};
+function reset(){S.follow=null;M=[];fx=[];OCC.clear();lastSend=0;energy=0;frames=0;S.dayT=S.nightT=0;S.wasDay=false;S.nad=0;CHL.forEach(c=>c.cd=0);MIT.forEach(c=>c.cd=0);S.run=false;}
+function open(i){S.mi=i;reset();predPick=-1;drawSteps();const C=$('#cin');
+  if(i===4){S.photo=S.resp=true;S.light=true;S.sunAllowed=true;spawn('co2',0,14);spawn('o2',0,8);spawn('h2o',0,7);spawn('h2o',1,8);spawn('glu',1,3);S.run=!reduce;ctl();
+    C.innerHTML=`<p class="kick">الخلاصة</p><h2>كيف تعمل الخلية؟</h2>
+    <p class="rule"><b>💨 النقل السلبي والانتشار</b>تدخل المواد وتخرج عبر الغشاء من التركيز المرتفع إلى المنخفض، دون طاقة.</p>
+    <p class="rule"><b>☀️ البناء الضوئي</b>في البلاستيدات الخضراء، بطاقة الضوء: ثاني أكسيد الكربون + ماء ← جلوكوز + أكسجين.</p>
+    <p class="rule"><b>⚡ التنفس الخلوي</b>في الميتوكندريا، نهارًا وليلًا: جلوكوز + أكسجين ← ثاني أكسيد الكربون + ماء + طاقة.</p>
+    <p class="small">المحاكاة تعمل الآن بكل العمليات. بدّل بين النهار والليل كما تشاء.</p><button class="go" type="button" id="again">↺ ابدأ من المهمة الأولى</button>
+    <p class="src">العلوم · الصف السادس · الخلية النباتية والخلية الحيوانية (الكتاب ص٣٦–٣٩) · مدرسة الحافظ بن عساكر الابتدائية · أ. خالد رفيع الحمدي</p>`;
+    $('#again').onclick=()=>{done.clear();open(0);};return;}
+  const m=MS[i];m.setup();S.phase='pred';ctl();
+  C.innerHTML=`<p class="kick">${m.k}</p><h2>${m.t}</h2><p class="lead">${m.intro}</p>
+   <p class="step">١. ${m.pred.q}</p><div class="opts" id="po">${m.pred.o.map((o,k)=>`<button class="opt" type="button" data-p="${k}">${o}</button>`).join('')}</div>
+   <div id="w" hidden><p class="step">٢. ${m.watch}</p><div class="prog"><i id="pg" style="width:0"></i></div></div>
+   <div id="cc" hidden><p class="step">٣. ${m.concl.q}</p><div class="opts" id="co">${m.concl.o.map((o,k)=>`<button class="opt" type="button" data-c="${k}">${o}</button>`).join('')}</div><p class="fb" id="cf"></p></div>
+   <div id="rr" hidden><p class="rule">${m.rule}</p>${m.eq?`<p class="eq">${m.eq}</p>`:''}<p class="fb" id="pv"></p><button class="go" type="button" id="nx">${i<3?'المهمة التالية ←':'إلى الخلاصة ←'}</button></div>
+   <p class="src">📖 الكتاب ص٣٦–٣٩</p>`;
+  C.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{predPick=+b.dataset.p;C.querySelectorAll('[data-p]').forEach(x=>{x.classList.toggle('sel',x===b);x.disabled=true;});S.phase='watch';$('#w').hidden=false;ctl();$('#run').focus();});
+  C.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{const k=+b.dataset.c,f=$('#cf');if(k===m.concl.c){b.classList.add('right');C.querySelectorAll('[data-c]').forEach(x=>x.disabled=true);f.className='fb ok';f.textContent='صحيح!';$('#rr').hidden=false;done.add(i);drawSteps();
+      $('#pv').className='fb';$('#pv').textContent=predPick===0?'✓ توقّعك في البداية كان صحيحًا.':'توقّعك في البداية كان مختلفًا، والآن رأيت بنفسك ما يحدث.';$('#rr').scrollIntoView({block:'nearest'});}
+    else{b.classList.add('wrong');b.disabled=true;f.className='fb bad';f.textContent=m.concl.h[k]||'راقب العدّادات مرة أخرى.';}});
+  $('#nx').onclick=()=>open(i+1);}
+function ctl(){const r=$('#run'),s=$('#sun');r.textContent=S.run?'⏸ أوقف':'▶ شغّل';r.setAttribute('aria-pressed',S.run);r.disabled=S.mi<4&&S.phase==='pred';
+  s.textContent=S.light?'☀️ نهار':'🌙 ليل';s.setAttribute('aria-pressed',S.light);s.disabled=!S.sunAllowed;}
+$('#run').onclick=()=>{S.run=!S.run;ctl();};$('#spd').onclick=()=>{S.speed=S.speed===1?2:S.speed===2?4:1;$('#spd').textContent='⏩ ×'+ar(S.speed);};$('#sun').onclick=()=>{if(!S.sunAllowed)return;S.light=!S.light;ctl();};$('#rst').onclick=()=>open(S.mi);
+function meters(){const set=(id,v)=>{$('#'+id).textContent=ar(v);};set('o2o',count('o2',0));set('o2i',count('o2',1));set('co2o',count('co2',0));set('co2i',count('co2',1));set('h2oo',count('h2o',0));set('h2oi',count('h2o',1));set('glu',count('glu',1));set('en',energy);}
+
+/* السحب والتدوير */
+const ptr=new Map();let moved=0;
+const pick=(x,y)=>{let best=null,bd=1e9;for(const m of M){const [sx,sy,,sc]=P(m.p);const r=KIND[m.k][1]*sc+12;const d=Math.hypot(x-sx,y-sy);if(d<r&&d<bd){bd=d;best=m;}}return best;};
+const toast=(t)=>{const el=$('#toast');el.textContent=t;el.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(()=>el.hidden=true,2600);};
+cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);ptr.set(e.pointerId,[e.clientX,e.clientY]);moved=0;});
+cv.addEventListener('pointermove',e=>{if(!ptr.has(e.pointerId))return;const [px,py]=ptr.get(e.pointerId);const dx=e.clientX-px,dy=e.clientY-py;moved+=Math.abs(dx)+Math.abs(dy);ptr.set(e.pointerId,[e.clientX,e.clientY]);
+  cam.yaw-=dx*.007;cam.pitch=Math.max(-.6,Math.min(1.2,cam.pitch+dy*.007));});
+const up=e=>{ptr.delete(e.pointerId);if(moved>=6)return;const m=pick(e.clientX,e.clientY);if(!m)return;S.follow=m;m.trail=[];
+  toast(({o2:'تتبّع جزيء الأكسجين وراقب إلى أين يذهب',co2:'تتبّع جزيء ثاني أكسيد الكربون وراقب إلى أين يذهب',h2o:'تتبّع جزيء الماء وراقب إلى أين يذهب',glu:'تتبّع جزيء الجلوكوز: يبقى داخل الخلية'})[m.k]);};
+cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',e=>ptr.delete(e.pointerId));
+cv.addEventListener('wheel',e=>{e.preventDefault();cam.dist=Math.max(6,Math.min(16,cam.dist*(1+Math.sign(e.deltaY)*.07)));},{passive:false});
+
+/* الحلقة */
+let lastGoal=false;
+function frame(){cx.setTransform(DPR,0,0,DPR,0,0);const day=S.light;const g=cx.createLinearGradient(0,0,0,H);g.addColorStop(0,day?'#CDE9F7':'#1A2440');g.addColorStop(1,day?'#EEF6E6':'#0E1424');cx.fillStyle=g;cx.fillRect(0,0,W,H);
+  rf++;if(S.run){const n=reduce?3:S.speed;for(let k=0;k<n;k++)step();}
+  scene();flush();meters();
+  if(S.mi<4&&S.phase==='watch'){const m=MS[S.mi];const pg=$('#pg');if(pg)pg.style.width=(m.prog()*100).toFixed(0)+'%';if(m.goal()){S.phase='concl';$('#cc').hidden=false;$('#cc').scrollIntoView({block:'nearest'});}}
+  requestAnimationFrame(frame);}
+open(0);requestAnimationFrame(frame);
+})();
+</script>

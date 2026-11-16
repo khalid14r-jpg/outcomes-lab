@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>الحركة والإحساس</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@600;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: a translucent human body stands in a dark examination room; system chips filter what is visible; a mission card guides order-the-path → watch → conclude. */
+:root{--bg:#EEF1F6;--panel:rgba(255,255,255,.95);--ink:#24161A;--muted:#6B5A5E;--line:#E5D6D8;--accent:#3B5BA9;--accent-soft:#E4EAF7;--ok:#15803D;--ok-bg:#E6F6EA;--bad:#C2410C;--bad-bg:#FFF0E6;
+ --display:"Baloo Bhaijaan 2","IBM Plex Sans Arabic",system-ui,sans-serif;--body:"IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#140D10;--panel:rgba(30,20,24,.95);--ink:#F2E8EA;--muted:#B9A5AA;--line:#3A2A30;--accent:#8EA8F0;--accent-soft:#1E2640;--ok:#4ADE80;--ok-bg:#12291C;--bad:#FB923C;--bad-bg:#2E1C10;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#140D10;--panel:rgba(30,20,24,.95);--ink:#F2E8EA;--muted:#B9A5AA;--line:#3A2A30;--accent:#8EA8F0;--accent-soft:#1E2640;--ok:#4ADE80;--ok-bg:#12291C;--bad:#FB923C;--bad-bg:#2E1C10;color-scheme:dark}
+html,body{direction:rtl}*{box-sizing:border-box}[hidden]{display:none!important}html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;overflow:hidden}
+#stage{position:fixed;inset:0;touch-action:none;user-select:none}#cv{width:100%;height:100%;display:block;cursor:grab}
+.top{position:fixed;top:0;inset-inline:0;z-index:5;padding:calc(10px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px));display:grid;gap:6px;justify-items:center;pointer-events:none}
+h1{margin:0;font:800 clamp(1.15rem,3vw,1.6rem)/1.2 var(--display);background:var(--panel);padding:4px 16px;border-radius:99px;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.nav{display:flex;gap:4px;background:var(--panel);border-radius:99px;padding:4px;box-shadow:0 2px 10px rgba(0,0,0,.15);pointer-events:auto;flex-wrap:wrap;justify-content:center}
+.nav button{border:0;background:none;color:var(--muted);font:600 .85rem var(--body);padding:4px 11px;border-radius:99px;cursor:pointer}.nav button.on{background:var(--accent);color:#fff}.nav button.done{color:var(--ok)}
+
+.who{display:flex;gap:2px;background:var(--panel);border-radius:99px;padding:3px;box-shadow:0 2px 10px rgba(0,0,0,.15);pointer-events:auto}.who button{border:0;background:transparent;color:var(--ink);border-radius:99px;padding:3px 12px;font:700 .85rem var(--body);cursor:pointer}.who button.on{background:var(--accent);color:#fff}
+#sys{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;pointer-events:auto}
+#sys button{border:1.5px solid transparent;background:var(--panel);color:var(--ink);font:600 .8rem var(--body);padding:3px 10px;border-radius:99px;cursor:pointer;box-shadow:0 1px 6px rgba(0,0,0,.12)}#sys button.on{border-color:var(--accent)}
+#sys i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-inline-end:5px}
+.card{position:fixed;bottom:0;transition:transform .25s ease;inset-inline:0;z-index:6;margin:0 auto;max-width:620px;padding:0 max(12px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px))}
+.cin{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);display:grid;gap:8px;max-height:42vh;overflow:auto}
+.kick{margin:0;font-size:.78rem;font-weight:700;color:var(--accent)}h2{margin:0;font:800 1.25rem/1.3 var(--display)}
+.lead{margin:0}.step{margin:0;font-weight:700}.small{margin:0;font-size:.85rem;color:var(--muted)}
+.seq{display:flex;flex-wrap:wrap;gap:6px}.seq span{border:1.5px dashed var(--line);border-radius:10px;padding:2px 10px;font-size:.85rem;color:var(--muted);min-width:34px;text-align:center}.seq span.f{border-style:solid;border-color:var(--ok);background:var(--ok-bg);color:var(--ink);font-weight:600}
+.opts{display:grid;gap:6px}.opt{text-align:start;border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:12px;padding:8px 12px;font:500 .95rem var(--body);cursor:pointer}
+.opt.right{border-color:var(--ok);background:var(--ok-bg)}.opt.wrong{border-color:var(--bad);background:var(--bad-bg)}.opt:disabled{cursor:default}
+.fb{margin:0;font-size:.92rem}.fb.ok{color:var(--ok)}.fb.bad{color:var(--bad)}
+.rule{background:var(--accent-soft);border-radius:12px;padding:8px 12px;margin:0}.rule b{display:block;font-family:var(--display)}
+.info{margin:0;background:var(--accent-soft);border-radius:12px;padding:8px 12px}.info b{display:block;font-family:var(--display);font-size:1.05rem}
+.go{border:0;background:var(--accent);color:#fff;border-radius:12px;padding:8px 16px;font:700 .95rem var(--body);cursor:pointer;justify-self:start}.go:disabled{opacity:.45;cursor:default}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.chips{display:flex;flex-wrap:wrap;gap:5px}.chips span{font-size:.78rem;border:1px solid var(--line);border-radius:99px;padding:0 9px;color:var(--muted)}.chips span.got{background:var(--ok-bg);border-color:var(--ok);color:var(--ink)}
+.src{font-size:.72rem;color:var(--muted);margin:0}
+#toast{position:fixed;z-index:8;top:calc(150px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);background:rgba(30,14,18,.92);color:#FBEFF1;border-radius:12px;padding:8px 16px;font-weight:600;max-width:min(90vw,460px);text-align:center;pointer-events:none}
+:focus-visible{outline:3px solid #F59F00;outline-offset:2px}
+@media (min-width:900px){.card{inset-inline:auto;inset-inline-start:max(16px,env(safe-area-inset-right,0px));bottom:auto;top:calc(110px + env(safe-area-inset-top,0px));width:380px;padding:0}.cin{max-height:calc(100vh - 140px)}.hd .tg{display:none}}
+.hd{display:flex;align-items:center;gap:8px}.hd>div{flex:1;min-width:0}.hd .tg{border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:10px;width:36px;height:32px;font-size:1rem;cursor:pointer;flex:none}
+.dots{display:flex;gap:5px;align-items:center;font-size:.75rem;color:var(--muted)}.dots i{width:22px;height:5px;border-radius:9px;background:var(--line)}.dots i.c{background:var(--accent)}.dots i.d{background:var(--ok)}
+.card.mini .lead,.card.mini .src,.card.mini .full{display:none}.card.mini h2{font-size:1rem}.card.mini .cin{gap:5px;padding:8px 14px}
+.tstep{display:flex;align-items:center;gap:8px}.tstep b{font:800 1.15rem var(--display);color:var(--accent)}.tno{font-size:.75rem;background:var(--accent-soft);border-radius:99px;padding:1px 9px;font-variant-numeric:tabular-nums}
+.ttx{margin:0;font-weight:600}.tfd{margin:0;font-size:.9rem;color:var(--muted);background:var(--accent-soft);border-radius:10px;padding:5px 10px}
+.tnav{display:flex;gap:6px}.tb{border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:12px;padding:9px 12px;font:700 .95rem var(--body);cursor:pointer}.tb:disabled{opacity:.4;cursor:default}.tb.go2{flex:1;background:var(--accent);color:#fff;border-color:var(--accent)}.tb.go2:disabled{background:var(--line);border-color:var(--line);color:var(--muted);opacity:1}
+.grip{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:0;background:var(--panel);color:var(--muted);border-radius:14px 14px 0 0;padding:5px 0 3px;cursor:grab;touch-action:none;font:500 .72rem var(--body);margin-bottom:-12px;padding-bottom:14px;box-shadow:0 -2px 10px rgba(0,0,0,.12)}
+.grip span{width:42px;height:5px;border-radius:9px;background:var(--line)}.grip:active{cursor:grabbing}.card.moved{margin:0;max-width:none;transition:none}.card.drag .cin{box-shadow:0 10px 34px rgba(0,0,0,.35)}
+.olist{display:grid;gap:8px}.ogrp{display:grid;gap:4px}.ogrp b{font-size:.78rem;color:var(--muted);display:flex;align-items:center;gap:6px}.ogrp b i{width:9px;height:9px;border-radius:50%}
+.obtn{border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:99px;padding:2px 10px;font:600 .82rem var(--body);cursor:pointer}.obtn.got{border-color:var(--ok);background:var(--ok-bg)}.obtn.sel{border-color:var(--accent);background:var(--accent);color:#fff}
+.ends{display:flex;justify-content:space-between;direction:ltr;font-size:.78rem;color:var(--muted)}.pulse{margin:0;font-size:1.05rem;background:var(--accent-soft);border-radius:10px;padding:6px 10px}
+.hint2{margin:0;font-size:.85rem;color:var(--muted)}
+.pane{display:grid;gap:8px}
+@media (max-width:600px){h2{font-size:1.1rem}.cin{max-height:40vh}.nav button{padding:3px 8px;font-size:.8rem}}
+</style>
+
+<div id="stage"><canvas id="cv" aria-label="جسم إنسان ثلاثي الأبعاد يظهر فيه الهيكل والعضلات والأعصاب"></canvas></div>
+<div class="top"><h1>الحركة والإحساس</h1><div class="who" id="who" role="group" aria-label="اختر المخلوق"><button type="button" data-w="human">🧍 الإنسان</button><button type="button" data-w="rabbit">🐇 الأرنب</button></div><nav class="nav" id="ms" aria-label="المهام"></nav><div id="sys" aria-label="إظهار الأجهزة"></div></div>
+<div class="card"><button class="grip" type="button" id="grip" aria-label="اسحب لتحريك البطاقة. اضغط مرتين لإعادتها إلى مكانها"><span></span><small>اسحب لتحريك البطاقة</small></button><div class="cin" id="cin" aria-live="polite"></div></div>
+<div id="toast" role="status" hidden></div>
+
+<script>
+(()=>{'use strict';document.documentElement.dir='rtl';document.documentElement.lang='ar';
+const $=s=>document.querySelector(s),ar=n=>Number(n).toLocaleString('ar-SA');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const cv=$('#cv'),cx=cv.getContext('2d');let W=0,H=0,DPR=1,CX0=0,CY0=0;
+let AVH=600;const fit=()=>{DPR=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);};
+const place=()=>{const top=($('#sys')?.getBoundingClientRect().bottom||100)+8;if($('.card')?.classList.contains('moved')){CX0=W/2;AVH=H-top-10;CY0=top+AVH*.5;return;}if(W>=900){CX0=(W-400)/2;AVH=H-top-10;CY0=top+AVH*.52;}else{const b=$('.card .cin')?.getBoundingClientRect().top||H*.6;AVH=Math.max(160,b-top-6);CX0=W/2;CY0=top+AVH*.5;}};addEventListener('resize',fit);fit();
+
+/* ===== محرّك ===== */
+const cam={yaw:0,pitch:.08,dist:6.2,t:[0,1.0,0]};
+const P=p=>{const cy=Math.cos(cam.yaw),sy=Math.sin(cam.yaw),cp=Math.cos(cam.pitch),sp=Math.sin(cam.pitch);const x=p[0]-cam.t[0],y=p[1]-cam.t[1],z=p[2]-cam.t[2];
+  const x1=x*cy-z*sy,z1=x*sy+z*cy,y2=y*cp-z1*sp,z2=y*sp+z1*cp,d=cam.dist-z2,s=Math.min(W*1.05,AVH*1.18)/Math.max(d,.05);return [CX0+x1*s,CY0-y2*s,d,s];};
+const LT=(()=>{const v=[-.4,.8,.6],n=Math.hypot(...v);return v.map(a=>a/n);})();
+const rgb=h=>{const n=parseInt(h.slice(1),16);return [n>>16&255,n>>8&255,n&255];};
+const col=(h,k)=>{const c=rgb(h).map(v=>Math.max(0,Math.min(255,Math.round(v*k))));return `rgb(${c[0]},${c[1]},${c[2]})`;};
+const sub=(a,b)=>[a[0]-b[0],a[1]-b[1],a[2]-b[2]],crs=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+let Q=[],LB=[],HIT=[];
+const poly=(pts,c,a=1,tag=null)=>Q.push({k:'p',pts,c,a,tag});
+const ball=(p,r,c,a=1,tag=null)=>Q.push({k:'s',p,r,c,a,tag});
+const rod=(p,q,r,c,a=1,tag=null)=>Q.push({k:'l',p,q,r,c,a,tag});
+const label=(p,t)=>LB.push({p,t});
+const flush=()=>{const it=[];HIT=[];for(const o of Q){if(o.k==='p'){o.pr=o.pts.map(P);o.d=o.pr.reduce((s,v)=>s+v[2],0)/o.pr.length;const nn=crs(sub(o.pts[1],o.pts[0]),sub(o.pts[2],o.pts[0])),L=Math.hypot(...nn)||1;o.sh=.62+.45*Math.abs((nn[0]*LT[0]+nn[1]*LT[1]+nn[2]*LT[2])/L);}
+    else if(o.k==='s'){o.pr=P(o.p);o.d=o.pr[2];}else{o.pa=P(o.p);o.pb=P(o.q);o.d=(o.pa[2]+o.pb[2])/2;}it.push(o);}
+  it.sort((a,b)=>b.d-a.d);
+  for(const o of it){cx.globalAlpha=o.a;let h=null;
+    if(o.k==='p'){cx.beginPath();o.pr.forEach((v,i)=>i?cx.lineTo(v[0],v[1]):cx.moveTo(v[0],v[1]));cx.closePath();cx.fillStyle=col(o.c,o.sh);cx.fill();if(o.tag)h={tag:o.tag,poly:o.pr};}
+    else if(o.k==='s'){const [x,y,,s]=o.pr,r=Math.max(.5,o.r*s);const g=cx.createRadialGradient(x-r*.35,y-r*.4,r*.1,x,y,r);g.addColorStop(0,col(o.c,1.45));g.addColorStop(.6,col(o.c,1));g.addColorStop(1,col(o.c,.6));cx.fillStyle=g;cx.beginPath();cx.arc(x,y,r,0,7);cx.fill();if(o.tag)h={tag:o.tag,c:[x,y,r+3]};}
+    else{const w=Math.max(1.2,o.r*(o.pa[3]+o.pb[3]));cx.strokeStyle=col(o.c,1);cx.lineCap='round';cx.lineWidth=w;cx.beginPath();cx.moveTo(o.pa[0],o.pa[1]);cx.lineTo(o.pb[0],o.pb[1]);cx.stroke();if(o.tag)h={tag:o.tag,seg:[o.pa,o.pb,w/2+5]};}
+    if(h)HIT.push(h);}
+  cx.globalAlpha=1;Q=[];
+  cx.font='600 12.5px "IBM Plex Sans Arabic",system-ui,sans-serif';cx.direction='rtl';cx.textBaseline='middle';cx.textAlign='center';
+  for(const l of LB){const [x,y]=P(l.p);const w=cx.measureText(l.t).width+14,lx=Math.min(W-w/2-6,Math.max(w/2+6,x)),ly=y-22;cx.strokeStyle='rgba(255,255,255,.8)';cx.lineWidth=1.2;cx.beginPath();cx.moveTo(x,y);cx.lineTo(lx,ly+10);cx.stroke();
+    cx.fillStyle='rgba(30,14,18,.88)';cx.beginPath();cx.roundRect?cx.roundRect(lx-w/2,ly-11,w,22,8):cx.rect(lx-w/2,ly-11,w,22);cx.fill();cx.fillStyle='#FBEFF1';cx.fillText(l.t,lx,ly);}LB=[];};
+const ellip=(c,rx,ry,rz,colr,a,tag,NU=6,NV=10,rot=0)=>{const cr=Math.cos(rot),sr=Math.sin(rot);const S=(u,v)=>{const x=rx*Math.sin(u)*Math.cos(v),y=ry*Math.cos(u),z=rz*Math.sin(u)*Math.sin(v);return [c[0]+x*cr-y*sr,c[1]+x*sr+y*cr,c[2]+z];};
+  for(let i=0;i<NU;i++)for(let j=0;j<NV;j++){const u0=i/NU*Math.PI,u1=(i+1)/NU*Math.PI,v0=j/NV*2*Math.PI,v1=(j+1)/NV*2*Math.PI;poly([S(u0,v0),S(u1,v0),S(u1,v1),S(u0,v1)],colr,a,tag);}};
+const tube=(path,r,c,a,tag)=>{for(let i=0;i<path.length-1;i++)rod(path[i],path[i+1],r,c,a,tag);};
+const along=(path,t)=>{const L=[0];for(let i=1;i<path.length;i++)L.push(L[i-1]+Math.hypot(...sub(path[i],path[i-1])));const T=Math.max(0,Math.min(1,t))*L[L.length-1];let i=1;while(i<L.length-1&&L[i]<T)i++;const k=(T-L[i-1])/((L[i]-L[i-1])||1);return path[i-1].map((v,j)=>v+(path[i][j]-v)*k);};
+const HR=(i,k=1)=>{const v=Math.sin(i*12.9898+k*78.233)*43758.5453;return v-Math.floor(v);};
+
+/* ===== التشريح: الحركة والإحساس ===== */
+const PATH={};
+const mix3=(a,b,t)=>a.map((v,j)=>v+(b[j]-v)*t);
+const add=(p,d)=>[p[0]+d[0],p[1]+d[1],p[2]+d[2]];
+const norm=v=>{const l=Math.hypot(...v)||1;return v.map(x=>x/l);};
+const SYS={ske:{n:'الهيكلي',c:'#E9DFC4'},mus:{n:'العضلي',c:'#C8504E'},ner:{n:'العصبي',c:'#F2C94C'},end:{n:'الغدد الصمّاء',c:'#E67AA0'}};
+const SH=[.82,2.2,0],EL=[1.0,1.25,.08],SHL=[-.82,2.2,0],ELL=[-1.0,1.25,.08],WRL=[-1.12,.35,.2];
+const armDir=b=>{const th=b*2.3;return norm([.13*(1-b)-.12*b,-Math.cos(th),.35*Math.sin(th)+.13]);};
+const WR=()=>add(EL,armDir(S.bend).map(v=>v*.92));
+let ORG={skull:{n:'الجمجمة',s:['ske'],d:'قاسية جدًّا لكي تحمي الدماغ الحساس من الإصابة، كما أنها خفيفة الوزن؛ لكي يسهل إبقاء الرأس منتصبًا.',at:[0,3.6,.1]},
+ spine:{n:'الفقرات',s:['ske'],d:'عظام العمود الفقري. والفقاريات، ومنها الإنسان، لها جهاز هيكلي يتكوّن من العظام والأربطة والأوتار.',at:[0,2.2,-.27]},
+ ribs:{n:'القفص الصدري (الأضلاع)',s:['ske'],d:'يحمي القلب والرئتين.',at:[.55,1.9,.3]},
+ pelvis:{n:'الحوض',s:['ske'],d:'عظم يدعم الجسم، وترتبط به عظام الفخذين.',at:[.3,.05,.2]},
+ femur:{n:'عظم الفخذ',s:['ske'],d:'العظام نسيج صلب وخفيف وقوي، يكسب الجسم شكله ويساعده على الحركة.',at:[.33,-.7,0]},
+ armb:{n:'عظام الذراع',s:['ske'],d:'العظام تتحرك بسهولة، لكنها لا تستطيع الحركة وحدها؛ فمصدر القوة التي تحركها هو الجهاز العضلي.',at:[.9,1.7,.04]},
+ lig:{n:'الأربطة',s:['ske'],d:'نسيج يربط العظام بعضها ببعض.',at:[1.0,1.25,.08]},
+ biceps:{n:'العضلة الأمامية للعضد',s:['mus'],d:'عندما تنقبض تسحب عظم الساعد فينثني الذراع، وعندها تنبسط العضلة الخلفية.',at:[.95,1.75,.18]},
+ triceps:{n:'العضلة الخلفية للعضد',s:['mus'],d:'عندما تنقبض تسحب عظم الساعد فيُفرد الذراع، وعندها تنبسط العضلة الأمامية.',at:[.9,1.75,-.15]},
+ tendon:{n:'الوتر',s:['mus'],d:'نسيج مرن قوي يربط العضلة بالعظم.',at:[1.02,1.12,.2]},
+ thigh:{n:'عضلات الفخذ',s:['mus'],d:'العضلات تعمل في أزواج أو مجموعات متقابلة، وتحرّك الرجل عند المشي والقفز.',at:[-.33,-.6,.12]},
+ brain:{n:'الدماغ',s:['ner'],d:'ينظّم حركات العضلات، ويفسّر المعلومات التي تصله من أعضاء الحس، وينظّم وظائف أعضاء الجسم.',at:[0,3.42,.05]},
+ cord:{n:'الحبل الشوكي',s:['ner'],d:'يمرّر المعلومات من الدماغ وإليه.',at:[0,1.4,-.2]},
+ nerves:{n:'الأعصاب',s:['ner'],d:'ترسل معلومات من أجزاء الجسم المختلفة إلى الدماغ.',at:[.9,1.75,0]},
+ eye:{n:'العين',s:['ner'],d:'من أعضاء الحس؛ ترسل الخلايا العصبية فيها معلومات إلى الدماغ.',at:[.15,3.3,.45]},
+ adrenal:{n:'الغدتان الكظريتان',s:['end'],d:'فوق الكليتين؛ تفرزان هرمون الأدرينالين، وتهيّئان الجسم لحالات الطوارئ والإجهاد.',at:[.42,.86,-.3]}};
+const S={vis:{ske:1,mus:1,ner:1,end:1},sel:null,breath:0,anim:null,mi:0,phase:'',seen:new Set(),excFound:new Set(),bend:0,bendT:0,bpm:72,showOrg:0,ball:null,adr:0,hop:0,who:(()=>{try{return localStorage.getItem('mv-who')==='rabbit'?'rabbit':'human';}catch(e){return 'human';}})()};
+const on=k=>ORG[k].s.some(s=>S.vis[s]);
+const hl=k=>S.sel===k||(S.flash&&S.flash.has(k));
+const C=(k,c)=>hl(k)?'#FFE066':c;
+function arm(sd,b){const sh=sd>0?SH:SHL,el=sd>0?EL:ELL,dir=sd>0?armDir(b):norm(sub(WRL,ELL)),wr=add(el,dir.map(v=>v*.92));return {sh,el,dir,wr};}
+function body(t){S.bend+=(S.bendT-S.bend)*(reduce?1:.08);
+  const sk='#E8C4A8',sa=.11;ellip([0,1.0,0],.95,1.65,.52,sk,sa,null,8,14);ball([0,3.25,0],.5,sk,.14,null);rod([0,2.62,0],[0,2.82,0],.2,sk,.12,null);
+  [1,-1].forEach(s=>{const A=arm(s,s>0?S.bend:0);rod(A.sh,A.el,.17,sk,.11,null);rod(A.el,A.wr,.14,sk,.11,null);ball(A.wr,.13,sk,.12,null);rod([s*.35,-.5,0],[s*.33,-2.2,0],.22,sk,.1,null);});
+  const B='#EDE3C8';
+  if(S.vis.ske){ellip([0,3.3,0],.36,.42,.38,C('skull',B),.55,'skull',6,10);ellip([0,3.0,.18],.2,.1,.18,C('skull',B),.55,'skull',4,8);
+    for(let k=0;k<17;k++){const y=2.85-k*.17;ellip([0,y,-.27],.07,.06,.07,C('spine',B),1,'spine',4,6);}
+    for(let r=0;r<6;r++){const y=2.3-r*.16,w=.45+r*.03;[1,-1].forEach(s=>{const pts=[];for(let k=0;k<=6;k++){const a=k/6*Math.PI;pts.push([s*w*Math.sin(a),y-.06*Math.sin(a),-.25*Math.cos(a)+(.38-.25)*0+(a>Math.PI/2?(.38+.25)*0:0)]);}
+      const P2=pts.map((p,k)=>{const a=k/6;return [p[0],p[1],-.25+.63*a];});for(let k=0;k<6;k++)rod(P2[k],P2[k+1],.02,C('ribs',B),1,'ribs');});}
+    rod([0,2.32,.38],[0,1.5,.38],.035,C('ribs',B),1,'ribs');[1,-1].forEach(s=>rod([0,2.45,.25],[s*.75,2.38,0],.03,C('ribs',B),1,'ribs'));
+    ellip([0,.05,-.02],.5,.2,.28,C('pelvis',B),.9,'pelvis',5,10);
+    [1,-1].forEach(s=>{rod([s*.3,-.05,0],[s*.33,-1.3,0],.06,C('femur',B),1,'femur');rod([s*.33,-1.35,0],[s*.33,-2.15,0],.05,C('femur',B),1,'femur');ball([s*.33,-1.32,0],.075,C('lig','#D9E8F2'),1,'lig');
+      const A=arm(s,s>0?S.bend:0);rod(add(A.sh,[0,-.05,0]),A.el,.045,C('armb',B),1,'armb');rod(A.el,add(A.wr,A.dir.map(v=>-.1)),.035,C('armb',B),1,'armb');ball(A.el,.06,C('lig','#D9E8F2'),1,'lig');ball(A.sh,.07,C('lig','#D9E8F2'),1,'lig');});}
+  if(S.vis.mus){[1,-1].forEach(s=>{const b=s>0?S.bend:0,A=arm(s,b);const fw=norm([0,0,1]);
+      const a1=add(A.sh,[0,-.12,.1]),b1=add(A.el,A.dir.map(v=>v*.16)),m1=add(mix3(a1,b1,.45),[0,0,.07+b*.1]);const r1=.065+b*.05;
+      rod(a1,m1,r1,C('biceps','#C8504E'),1,'biceps');rod(m1,add(b1,[0,.05,0]),r1*.8,C('biceps','#C8504E'),1,'biceps');rod(add(b1,[0,.07,0]),b1,.03,C('tendon','#F4F1E6'),1,'tendon');
+      const a2=add(A.sh,[0,-.12,-.1]),b2=add(A.el,[0,.02,-.09]),m2=add(mix3(a2,b2,.5),[0,0,-.06+b*.03]);const r2=.075-b*.03;
+      rod(a2,m2,r2,C('triceps','#B5443F'),1,'triceps');rod(m2,b2,r2*.8,C('triceps','#B5443F'),1,'triceps');
+      rod([s*.33,-.15,.06],[s*.33,-1.1,.08],.11,C('thigh','#C8504E'),.95,'thigh');rod([s*.33,-.15,-.06],[s*.33,-1.1,-.08],.1,C('thigh','#B5443F'),.95,'thigh');});}
+  if(S.vis.ner){ellip([0,3.42,.02],.3,.22,.3,C('brain','#F2A0B0'),1,'brain',6,10);rod([0,3.15,-.18],[0,.1,-.2],.035,C('cord','#F2C94C'),1,'cord');
+    [1,-1].forEach(s=>{ball([s*.15,3.3,.45],.06,C('eye','#FFFFFF'),1,'eye');ball([s*.15,3.3,.5],.025,'#2B3A55',1,'eye');
+      const A=arm(s,s>0?S.bend:0);[[[0,2.4,-.2],A.sh],[A.sh,A.el],[A.el,A.wr],[[0,.1,-.2],[s*.33,-1.2,-.02]],[[s*.33,-1.2,-.02],[s*.33,-2.1,-.02]],[[0,1.6,-.2],[s*.5,1.3,.1]]].forEach(([a,b])=>rod(a,b,.013,C('nerves','#E8B930'),1,'nerves'));});}
+  if(S.vis.end){[1,-1].forEach(s=>{ellip([s*.42,.55,-.3],.12,.2,.1,'#8E3B46',.45,null,4,7);ellip([s*.42,.82,-.3],.1,.06,.08,C('adrenal','#E67AA0'),1,'adrenal',4,6);});}
+  if(S.showOrg){const hb=1+Math.max(0,Math.sin(t*S.bpm/60*2*Math.PI))*.12;ellip([.08,1.6,.24],.17*hb,.2*hb,.15*hb,'#B8323A',1,null,5,8,.3);if(S.showOrg>1)[-1,1].forEach(s=>ellip([s*.5,1.8,0],.3,.5,.25,'#F2A6AE',.45,null,5,8));}
+  if(S.sel&&ORG[S.sel])label(ORG[S.sel].at,ORG[S.sel].n);}
+const ANIM={};const TOUR=[];
+const dotsFlow=(a,b,u,n,c,r=.03,sp=1.5)=>{for(let k=0;k<n;k++){const q=(u*sp+k/n)%1;ball(mix3(a,b,q),r,c,1);}};
+const sig=(path,u,c='#FFE14D')=>{const p=along(path,Math.min(1,u));ball(p,.06,c,1);ball(p,.11,c,.3);return p;};
+const BRAIN=[0,3.42,.05],CORDB=[0,2.4,-.2];
+const armPath=()=>{const A=arm(1,S.bend);return [BRAIN,[0,3.1,-.18],CORDB,A.sh,add(mix3(A.sh,A.el,.5),[0,0,.1])];};
+const BALL0=[1.2,3.4,4],BALL1=[.25,3.35,.75];
+const TOURS={
+ skel:[
+  {o:['skull','brain'],n:'الجمجمة تحمي الدماغ',dur:6,t:'للجهاز الهيكلي وظيفتان رئيستان: الأولى أن العظام في هذا الجهاز تحمي بعض الأعضاء الطرية في الجسم؛ فالجمجمة قاسية جدًّا لكي تحمي الدماغ الحساس من الإصابة.',x:'🛡️ الدماغ داخل الجمجمة.',d(u){S.vis.ner=1;S.showOrg=0;return [0,3.4,.1];}},
+  {o:['skull'],n:'جمجمة خفيفة',dur:5,t:'كما أن الجمجمة خفيفة الوزن؛ لكي يسهل إبقاء الرأس منتصبًا.',x:'⚖️ قاسية وخفيفة معًا.',d(u){return [0,3.5,.1];}},
+  {o:['ribs'],n:'القفص الصدري',dur:6,t:'القفص الصدري يحمي القلب والرئتين.',x:'❤️🫁 القلب والرئتان داخل الأضلاع.',d(u){S.showOrg=2;return [.3,1.9,.3];}},
+  {o:['skull','spine','ribs','pelvis','femur','armb'],n:'هيكل يكسب الجسم شكله',dur:6,t:'والوظيفة الثانية للجهاز الهيكلي هي توفير هيكل صلب للجسم ليكسب الجسم شكله، وليساعده على الحركة.',x:'🦴 العظام نسيج صلب وخفيف وقوي.',d(u){S.showOrg=0;return [0,1.2,.2];}},
+  {o:['lig'],n:'الأربطة والأوتار',dur:6,t:'الأربطة نسيج يربط العظام بعضها ببعض، والأوتار نسيج يربط العظام والعضلات.',x:'🔗 عند المفاصل ترتبط العظام بالأربطة.',d(u){return EL;}},
+  {o:['armb'],n:'العظام لا تتحرك وحدها',dur:6,t:'العظام تتحرك بسهولة، لكنها لا تستطيع الحركة وحدها؛ فمصدر القوة التي تحركها هو الجهاز العضلي.',x:'💪 من يحرّك العظم؟ اكتشف ذلك في المهمة التالية.',d(u){S.vis.mus=1;S.bendT=u>.3?.7:0;return EL;}}],
+ muscle:[
+  {o:['brain','cord','nerves'],n:'أمر من الدماغ',dur:6,t:'تُرسَل أوامر أو تعليمات على شكل إشارات كهربائية من الدماغ إلى العضلات لتنقبض أو تنبسط.',x:'⚡ إشارة تنتقل من الدماغ إلى عضلة الذراع.',d(u){S.bendT=0;return sig(armPath(),u);}},
+  {o:['biceps'],n:'العضلة تنقبض',dur:6,t:'تقوم العضلات المنقبضة بسحب الوتر الذي يحرّك العظم.',x:'↗️ العضلة الأمامية تقصر وتغلظ، فينثني الذراع.',d(u){S.bendT=u;return ORG.biceps.at;}},
+  {o:['tendon'],n:'الوتر',dur:5,t:'ترتبط معظم العضلات مع العظام بأوتار مرنة قوية. فعندما تنقبض العضلات تتحرك العظام.',x:'🪢 الوتر ينقل سحب العضلة إلى العظم.',d(u){S.bendT=1;return ORG.tendon.at;}},
+  {o:['triceps'],n:'العضلة المقابلة تنبسط',dur:6,t:'العضلات التي تسبّب الحركة تعمل في أزواج أو مجموعات متقابلة؛ فعندما تقوم عضلة ما بالانقباض تقوم العضلة المقابلة بالانبساط.',x:'↔️ الأمامية منقبضة، والخلفية منبسطة.',d(u){S.bendT=1;return ORG.triceps.at;}},
+  {o:['triceps','biceps'],n:'لفرد الذراع',dur:7,t:'ولفرد الذراع تنقبض العضلة الخلفية وتنبسط الأمامية. فالعضلات تقوم بعملية السحب، ولا تقوم بعملية الدفع أبدًا.',x:'↘️ الخلفية تنقبض فتسحب الساعد إلى الأسفل.',d(u){S.bendT=1-u;return ORG.triceps.at;}}],
+ nerve:[
+  {o:['eye'],n:'مثير: كرة قادمة!',dur:5,t:'أعضاء الحس تستقبل المعلومات من البيئة. تخيّل أن كرة قادمة نحو وجهك.',x:'⚽ العين ترى الكرة.',d(u){S.bendT=0;const p=mix3(BALL0,mix3(BALL0,BALL1,.55),u);ball(p,.18,'#F4F4F4',1);ball(add(p,[.05,.05,.12]),.06,'#2B2B2B',1);return [.15,3.3,.45];}},
+  {o:['eye','nerves'],n:'العين ترسل معلومات',dur:5,t:'تقوم الخلايا العصبية في العينين بإرسال معلومات إلى الدماغ.',x:'⚡ إشارة من العين إلى الدماغ.',d(u){const b=mix3(BALL0,BALL1,.55);ball(b,.18,'#F4F4F4',1);return sig([[.15,3.3,.45],[.1,3.38,.25],BRAIN],u,'#7FD3FF');}},
+  {o:['brain'],n:'الدماغ يفسّر',dur:5,t:'الدماغ يفسّر المعلومات التي تصله من أعضاء الحس، وينظّم حركات العضلات.',x:'🧠 «كرة قادمة! ارفع يدك».',d(u){const b=mix3(BALL0,BALL1,.55);ball(b,.18,'#F4F4F4',1);ball(BRAIN,.32+Math.sin(u*25)*.02,'#FFE066',.35);return BRAIN;}},
+  {o:['cord','nerves'],n:'الحبل الشوكي والأعصاب',dur:5,t:'يستجيب الدماغ بإرسال أوامر ينقلها الجهاز العصبي، عبر الحبل الشوكي والأعصاب، إلى العضلات.',x:'⚡ الأمر ينزل في الحبل الشوكي ثم الأعصاب.',d(u){const b=mix3(BALL0,BALL1,.55);ball(b,.18,'#F4F4F4',1);return sig(armPath(),u);}},
+  {o:['biceps'],n:'الاستجابة',dur:6,t:'تنقبض العضلات فترتفع اليد وتصد الكرة. ويحدث ذلك كله في أقل من جزء من الثانية.',x:'✋ اليد ترتفع في أقل من ثانية.',d(u){S.bendT=1;const b=u<.5?mix3(mix3(BALL0,BALL1,.55),[1.1,2.6,.9],u*2):mix3([1.1,2.6,.9],[2.5,3.2,2.8],(u-.5)*2);ball(b,.18,'#F4F4F4',1);return WR();}}],
+ adr:[
+  {o:['eye','brain'],n:'خطر!',dur:5,t:'ماذا يمكن أن يحدث إذا أحسّ الإنسان بخطر يداهمه أو عدو يقترب منه؟ يرى بعينيه، فيرسل الجهاز العصبي المعلومات إلى الدماغ.',x:'⚠️ الدماغ يدرك الخطر.',d(u){S.bpm=72;S.showOrg=1;return BRAIN;}},
+  {o:['adrenal'],n:'الغدتان الكظريتان',dur:6,t:'في الوقت نفسه يقوم جهاز الغدد الصمّاء بإفراز هرمون خاص يسمّى الأدرينالين، من الغدتين الكظريتين فوق الكليتين.',x:'🟣 الغدتان تفرزان الأدرينالين.',d(u){S.bpm=72;const g=[.42,.82,-.3];ball(g,.12+Math.sin(u*30)*.02,'#FF9BC4',.5);return g;}},
+  {o:['adrenal'],n:'الهرمون في الدم',dur:6,t:'والهرمونات مواد كيميائية تُفرَز في الدم مباشرة، وتغيّر أنشطة الجسم.',x:'🩸 الأدرينالين يسري في الدم نحو القلب.',d(u){S.bpm=72+u*20;dotsFlow([.42,.82,-.3],[.08,1.6,.24],u,4,'#E67AA0',.035,1.5);dotsFlow([-.42,.82,-.3],[.08,1.6,.24],u+.2,3,'#E67AA0',.035,1.5);return [.25,1.2,0];}},
+  {o:[],n:'القلب يسرع',dur:6,t:'الأدرينالين يسرّع من نبضات القلب ليزيد من الدم المتدفق إلى العضلات.',x:'❤️ نبضات القلب تزداد.',d(u){S.bpm=92+u*48;return [.08,1.6,.24];}},
+  {o:['thigh','biceps'],n:'مستعد للهرب أو الدفاع',dur:6,t:'وحالما تزداد نبضات القلب يصبح الجسم مستعدًا للهرب أو الدفاع عن نفسه. ويعمل الجهاز العصبي وجهاز الغدد الصمّاء معًا في حالات الطوارئ والإجهاد.',x:'🏃 العضلات مستعدة.',d(u){S.bpm=140;dotsFlow([.08,1.6,.24],[.33,-.7,.1],u,4,'#E03131',.035,2);dotsFlow([.08,1.6,.24],ORG.biceps.at,u+.1,3,'#E03131',.035,2);return [.3,.2,.1];}}]};
+
+const alongI=(path,f)=>{f=Math.max(0,Math.min(path.length-1,f));const i=Math.min(path.length-2,Math.floor(f)),k=f-i;return path[i].map((v,j)=>v+(path[i+1][j]-v)*k);};
+
+/* ===== الأرنب ===== */
+const RH=s=>[-.75,.35,s*.32];
+const rleg=(s,b)=>{const H=RH(s),K=mix3([-.3,-.1,s*.34],[-.55,-.4,s*.34],b),A=mix3([-.95,-.72,s*.34],[-1.1,-.85,s*.34],b),T=mix3([-.3,-.97,s*.34],[-1.6,-.98,s*.34],b);return {H,K,A,T};};
+const RBR=[1.45,1.32,0],RCB=[1.0,1.05,0];
+const ORG_H=ORG;
+const ORG_R=(()=>{const o={};for(const k in ORG_H)if(k!=='thigh')o[k]={...ORG_H[k]};
+  const at={skull:[1.45,1.65,0],spine:[0,1.15,0],ribs:[.45,.15,.45],pelvis:[-.8,.55,.3],femur:[-.45,.1,.4],armb:[.82,-.4,.3],lig:[-.3,-.1,.34],biceps:[-.45,.35,.5],triceps:[-.75,.05,.5],tendon:[-.35,-.25,.45],brain:[1.42,1.35,0],cord:[0,1.0,0],nerves:[-.5,.1,.36],eye:[1.72,1.35,.28],adrenal:[-.25,.85,.17]};
+  for(const k in at)o[k].at=at[k];
+  o.armb.n='عظام الرجل الأمامية';o.femur.n='عظم الفخذ';o.biceps.n='العضلة الأمامية للفخذ';o.biceps.d='عندما تنقبض تسحب عظام الرجل فتُفرد الرجل ويندفع الأرنب، وعندها تنبسط العضلة الخلفية.';
+  o.triceps.n='العضلة الخلفية للفخذ';o.triceps.d='عندما تنقبض تسحب رجل الأرنب فتنثني، وعندها تنبسط العضلة الأمامية.';
+  o.eye.d='من أعضاء الحس؛ ترسل الخلايا العصبية في عيني الأرنب معلومات إلى الدماغ.';o.ribs.d='يحمي القلب والرئتين.';return o;})();
+function rabbitBody(t){S.bend+=(S.bendT-S.bend)*(reduce?1:.08);if(!S.tour)S.hop=(S.hop||0)*.9;if(W<900){FOX0.splice(0,3,3.6,-.5,-2.8);FOX1.splice(0,3,2.1,-.5,-2.2);}else{FOX0.splice(0,3,5,-.45,-.6);FOX1.splice(0,3,2.9,-.45,-.4);}const hop=S.hop||0,dy=hop;const Y=p=>[p[0],p[1]+dy,p[2]];
+  const sk='#B9A089',sa=.13;ellip(Y([0,.6,0]),1.3,.75,.62,sk,sa,null,8,14);ellip(Y([1.4,1.35,0]),.45,.38,.36,sk,.16,null,6,10);
+  [1,-1].forEach(s=>{rod(Y([1.25,1.65,s*.12]),Y([.9,2.7,s*.34]),.07,sk,.2,null);const L=rleg(s,S.bend);rod(Y(L.H),Y(L.K),.2,sk,.1,null);rod(Y(L.K),Y(L.A),.12,sk,.1,null);rod(Y(L.A),Y(L.T),.08,sk,.1,null);rod(Y([.8,.2,s*.25]),Y([.85,-.95,s*.25]),.1,sk,.1,null);});
+  ball(Y([-1.35,.8,0]),.22,'#EFE7DA',.25,null);
+  const B='#EDE3C8';
+  if(S.vis.ske){ellip(Y([1.45,1.38,0]),.36,.28,.27,C('skull',B),.6,'skull',6,10);ellip(Y([1.75,1.18,0]),.16,.1,.13,C('skull',B),.6,'skull',4,6);
+    for(let k=0;k<20;k++){const u=k/19,x=1.05-u*2.3,y=1.0+Math.sin(u*Math.PI)*.18-u*.15;ellip(Y([x,y,0]),.06,.055,.06,C('spine',B),1,'spine',4,6);}
+    for(let r=0;r<6;r++){const x=.75-r*.14;[1,-1].forEach(s=>{const pts=[];for(let k=0;k<=6;k++){const a=k/6*Math.PI;pts.push(Y([x-.05*Math.sin(a),1.08-.95*(1-Math.cos(a))/2,s*.5*Math.sin(a)]));}for(let k=0;k<6;k++)rod(pts[k],pts[k+1],.02,C('ribs',B),1,'ribs');});}
+    ellip(Y([-.8,.55,0]),.32,.18,.3,C('pelvis',B),.9,'pelvis',5,10);
+    [1,-1].forEach(s=>{const L=rleg(s,S.bend);rod(Y(L.H),Y(L.K),.055,C('femur',B),1,'femur');rod(Y(L.K),Y(L.A),.04,C('femur',B),1,'femur');rod(Y(L.A),Y(L.T),.03,C('femur',B),1,'femur');ball(Y(L.K),.07,C('lig','#D9E8F2'),1,'lig');ball(Y(L.A),.05,C('lig','#D9E8F2'),1,'lig');
+      rod(Y([.8,.35,s*.25]),Y([.82,-.35,s*.25]),.04,C('armb',B),1,'armb');rod(Y([.82,-.35,s*.25]),Y([.86,-.95,s*.25]),.032,C('armb',B),1,'armb');});}
+  if(S.vis.mus){[1,-1].forEach(s=>{const b=S.bend,L=rleg(s,b),o=[0,0,s*.06];
+      const a1=add(L.H,[.12,.08,0]),e1=add(mix3(L.K,L.A,.15),[.06,0,0]),m1=add(mix3(a1,e1,.45),[.08+.08*b,0,0]);const r1=.06+b*.045;
+      rod(Y(add(a1,o)),Y(add(m1,o)),r1,C('biceps','#C8504E'),1,'biceps');rod(Y(add(m1,o)),Y(add(add(e1,[0,.08,0]),o)),r1*.75,C('biceps','#C8504E'),1,'biceps');rod(Y(add(add(e1,[0,.08,0]),o)),Y(add(e1,o)),.035,C('tendon','#F4F1E6'),1,'tendon');
+      const a2=add(L.H,[-.14,-.02,0]),e2=add(L.A,[-.03,.05,0]),m2=add(mix3(a2,e2,.45),[-.1+.04*b,0,0]);const r2=.085-b*.03;
+      rod(Y(add(a2,o)),Y(add(m2,o)),r2,C('triceps','#B5443F'),1,'triceps');rod(Y(add(m2,o)),Y(add(e2,o)),r2*.7,C('triceps','#B5443F'),1,'triceps');});}
+  if(S.vis.ner){ellip(Y(RBR),.22,.15,.18,C('brain','#F2A0B0'),1,'brain',5,8);const cp=[];for(let k=0;k<12;k++){const u=k/11;cp.push(Y([1.05-u*2.2,.92+Math.sin(u*Math.PI)*.18-u*.15,0]));}for(let k=0;k<11;k++)rod(cp[k],cp[k+1],.028,C('cord','#F2C94C'),1,'cord');
+    [1,-1].forEach(s=>{ball(Y([1.72,1.35,s*.28]),.07,C('eye','#3A2A20'),1,'eye');const L=rleg(s,S.bend);[[[-.75,.78,0],L.H],[L.H,L.K],[L.K,L.A],[L.A,L.T],[[.75,.95,0],[.8,.3,s*.25]],[[.8,.3,s*.25],[.86,-.9,s*.25]]].forEach(([a,b])=>rod(Y(a),Y(b),.012,C('nerves','#E8B930'),1,'nerves'));});}
+  if(S.vis.end){[1,-1].forEach(s=>{ellip(Y([-.25,.65,s*.17]),.13,.09,.08,'#8E3B46',.45,null,4,7);ellip(Y([-.25,.8,s*.17]),.08,.05,.07,C('adrenal','#E67AA0'),1,'adrenal',4,6);});}
+  if(S.showOrg){const hb=1+Math.max(0,Math.sin(t*S.bpm/60*2*Math.PI))*.12;ellip(Y([.55,.45,0]),.16*hb,.18*hb,.14*hb,'#B8323A',1,null,5,8,.3);if(S.showOrg>1)[-1,1].forEach(s=>ellip(Y([.45,.7,s*.25]),.3,.28,.18,'#F2A6AE',.45,null,5,8));}
+  if(S.sel&&ORG[S.sel])label(Y(ORG[S.sel].at),ORG[S.sel].n);}
+function fox(p,t){const r='#D9772B';ellip(p,.6,.28,.25,r,1,null,6,9);ellip(add(p,[-.55,.35,0]),.25,.22,.2,r,1,null,5,8);ellip(add(p,[-.88,.28,0]),.2,.08,.08,r,1,null,4,6);
+  [1,-1].forEach(s=>{poly([add(p,[-.5,.52,s*.1]),add(p,[-.6,.52,s*.12]),add(p,[-.55,.78,s*.12])],'#3A2A20',1);ball(add(p,[-.75,.42,s*.11]),.035,'#111',1);
+    [.35,-.35].forEach(x=>rod(add(p,[x,-.15,s*.15]),add(p,[x+Math.sin(t*14+x*5+s)*.12,-.6,s*.15]),.05,'#7A3E1A',1));});
+  rod(add(p,[.55,.05,0]),add(p,[1.15,.25+Math.sin(t*5)*.1,0]),.12,r,1);ball(add(p,[1.2,.27,0]),.1,'#F5EFE6',1);}
+const RAB_PATH=()=>{const L=rleg(1,S.bend);return [RBR,RCB,[0,1.08,0],[-.75,.8,0],L.H,L.K];};
+const FOX0=[5,-.45,-.6],FOX1=[2.9,-.45,-.4];
+const TOURS_R={
+ skel:[
+  {o:['skull','brain'],n:'الجمجمة تحمي الدماغ',dur:6,t:'للجهاز الهيكلي وظيفتان رئيستان: الأولى أن العظام في هذا الجهاز تحمي بعض الأعضاء الطرية في الجسم؛ فالجمجمة قاسية جدًّا لكي تحمي الدماغ الحساس من الإصابة.',x:'🛡️ دماغ الأرنب داخل الجمجمة.',d(u){S.vis.ner=1;S.showOrg=0;return [1.45,1.4,0];}},
+  {o:['skull'],n:'جمجمة خفيفة',dur:5,t:'كما أن الجمجمة خفيفة الوزن؛ لكي يسهل إبقاء الرأس منتصبًا.',x:'⚖️ قاسية وخفيفة معًا.',d(u){return [1.45,1.6,0];}},
+  {o:['ribs'],n:'القفص الصدري',dur:6,t:'القفص الصدري يحمي القلب والرئتين.',x:'❤️🫁 القلب والرئتان داخل الأضلاع.',d(u){S.showOrg=2;return [.45,.6,.3];}},
+  {o:['skull','spine','ribs','pelvis','femur','armb'],n:'هيكل يكسب الجسم شكله',dur:6,t:'والوظيفة الثانية للجهاز الهيكلي هي توفير هيكل صلب للجسم ليكسب الجسم شكله، وليساعده على الحركة.',x:'🦴 العظام نسيج صلب وخفيف وقوي.',d(u){S.showOrg=0;return [0,.6,.2];}},
+  {o:['lig'],n:'الأربطة والأوتار',dur:6,t:'الأربطة نسيج يربط العظام بعضها ببعض، والأوتار نسيج يربط العظام والعضلات.',x:'🔗 عند المفاصل ترتبط العظام بالأربطة.',d(u){return rleg(1,S.bend).K;}},
+  {o:['femur'],n:'العظام لا تتحرك وحدها',dur:6,t:'العظام تتحرك بسهولة، لكنها لا تستطيع الحركة وحدها؛ فمصدر القوة التي تحركها هو الجهاز العضلي.',x:'💪 من يحرّك العظم؟ اكتشف ذلك في المهمة التالية.',d(u){S.vis.mus=1;S.bendT=u>.3?.8:0;return rleg(1,S.bend).K;}}],
+ muscle:[
+  {o:['brain','cord','nerves'],n:'أمر من الدماغ',dur:6,t:'عندما يركض الأرنب تُرسَل أوامر أو تعليمات على شكل إشارات كهربائية من الدماغ إلى العضلات في رجليه لتنقبض أو تنبسط.',x:'⚡ إشارة من الدماغ إلى عضلات الرجل.',d(u){S.bendT=0;return sig(RAB_PATH(),u);}},
+  {o:['biceps'],n:'العضلة تنقبض',dur:6,t:'تقوم العضلات المنقبضة بسحب الوتر الذي يحرّك عظم الرجل.',x:'↗️ العضلة الأمامية للفخذ تقصر وتغلظ، فتُفرد الرجل.',d(u){S.bendT=u;return ORG.biceps.at;}},
+  {o:['tendon'],n:'الوتر',dur:5,t:'ترتبط معظم العضلات مع العظام بأوتار مرنة قوية. فعندما تنقبض العضلات تتحرك العظام.',x:'🪢 الوتر ينقل سحب العضلة إلى العظم.',d(u){S.bendT=1;return ORG.tendon.at;}},
+  {o:['triceps','biceps'],n:'زوج متقابل',dur:7,t:'عندما يركض الأرنب فإن مجموعة من العضلات تسحب رجل الأرنب عاليًا، وتقوم العضلات المقابلة بسحب رجل الأرنب إلى أسفل. وعندما تقوم عضلة ما بالانقباض تقوم العضلة المقابلة بالانبساط.',x:'↔️ تنقبض الخلفية فتنثني الرجل، وتنبسط الأمامية.',d(u){S.bendT=1-u;return ORG.triceps.at;}},
+  {o:['biceps','triceps'],n:'الأرنب يركض',dur:6,t:'وتستمر هذه العملية ما دام الأرنب يركض. فالعضلات تقوم بعملية السحب، ولا تقوم بعملية الدفع أبدًا. ويعمل الجهازان الهيكلي والعضلي في الإنسان بطريقة متشابهة لعملهما في الأرنب.',x:'🐇 انقباض وانبساط متكرر.',d(u,t){S.bendT=Math.sin(t*6)*.5+.5;S.hop=Math.max(0,Math.sin(t*6-1))*.25*(1-u*.3);if(u>=1)S.hop=0;return [0,.8,0];}}],
+ nerve:[
+  {o:['eye'],n:'الأرنب يرى الثعلب',dur:5,t:'افترض أن أرنبًا شاهد ثعلبًا يركض في اتجاهه لكي يفترسه. تبدأ استجابة الأرنب عندما يرى الثعلب.',x:'🦊 ثعلب يقترب!',d(u,t){S.bendT=0;S.hop=0;fox(mix3(FOX0,FOX1,u*.6),t);return [1.72,1.35,.28];}},
+  {o:['eye','nerves'],n:'العين ترسل معلومات',dur:5,t:'تقوم الخلايا العصبية في عيني الأرنب بإرسال معلومات إلى الدماغ.',x:'⚡ إشارة من العين إلى الدماغ.',d(u,t){fox(mix3(FOX0,FOX1,.6+u*.1),t);return sig([[1.72,1.35,.28],[1.6,1.35,.1],RBR],u,'#7FD3FF');}},
+  {o:['brain'],n:'الدماغ يفسّر',dur:5,t:'الدماغ يفسّر المعلومات التي تصله من أعضاء الحس، وينظّم حركات العضلات.',x:'🧠 «خطر! اهرب».',d(u,t){fox(mix3(FOX0,FOX1,.7+u*.1),t);ball(RBR,.26+Math.sin(u*25)*.02,'#FFE066',.35);return RBR;}},
+  {o:['cord','nerves'],n:'الحبل الشوكي والأعصاب',dur:5,t:'ويستجيب الدماغ بإرسال أوامر ينقلها الجهاز العصبي إلى عضلات الأرجل.',x:'⚡ الأمر ينزل في الحبل الشوكي ثم أعصاب الرجل.',d(u,t){fox(mix3(FOX0,FOX1,.8+u*.1),t);return sig(RAB_PATH(),u);}},
+  {o:['biceps','triceps'],n:'الأرنب يركض',dur:6,t:'يحدث ذلك في أقل من جزء من الثانية؛ ليبدأ الأرنب الركض.',x:'🐇💨 الأرنب يهرب.',d(u,t){fox(FOX1,t);S.bendT=Math.sin(t*7)*.5+.5;S.hop=Math.max(0,Math.sin(t*7-1))*.3;return [0,1,0];}}],
+ adr:[
+  {o:['eye','brain'],n:'خطر!',dur:5,t:'يرى الأرنب الثعلب، فيرسل الجهاز العصبي المعلومات إلى الدماغ.',x:'⚠️ الدماغ يدرك الخطر.',d(u,t){S.bpm=72;S.showOrg=1;S.hop=0;S.bendT=0;fox(mix3(FOX0,FOX1,u*.5),t);return RBR;}},
+  {o:['adrenal'],n:'الغدتان الكظريتان',dur:6,t:'وفي الوقت نفسه يقوم جهاز الغدد الصمّاء بإفراز هرمون خاص يسمّى الأدرينالين، من الغدتين الكظريتين فوق الكليتين.',x:'🟣 الغدتان تفرزان الأدرينالين.',d(u,t){fox(mix3(FOX0,FOX1,.5),t);const g=[-.25,.8,.17];ball(g,.1+Math.sin(u*30)*.02,'#FF9BC4',.5);return g;}},
+  {o:['adrenal'],n:'الهرمون في الدم',dur:6,t:'والهرمونات مواد كيميائية تُفرَز في الدم مباشرة، وتغيّر أنشطة الجسم.',x:'🩸 الأدرينالين يسري في الدم نحو القلب.',d(u,t){fox(mix3(FOX0,FOX1,.5+u*.1),t);S.bpm=72+u*20;dotsFlow([-.25,.8,.17],[.55,.45,0],u,4,'#E67AA0',.035,1.5);return [.15,.6,0];}},
+  {o:[],n:'القلب يسرع',dur:6,t:'الأدرينالين يسرّع من نبضات القلب ليزيد من الدم المتدفق إلى العضلات.',x:'❤️ نبضات القلب تزداد.',d(u,t){fox(mix3(FOX0,FOX1,.6+u*.1),t);S.bpm=92+u*60;return [.55,.45,0];}},
+  {o:['biceps','triceps'],n:'مستعد للهرب',dur:6,t:'وحالما تزداد نبضات القلب يصبح الأرنب مستعدًا للهرب أو الدفاع عن نفسه.',x:'🐇💨 الدم يصل إلى عضلات الرجلين، والأرنب يهرب.',d(u,t){fox(FOX1,t);S.bpm=150;dotsFlow([.55,.45,0],ORG.biceps.at,u,4,'#E03131',.035,2);S.bendT=Math.sin(t*7)*.5+.5;S.hop=u>.4?Math.max(0,Math.sin(t*7-1))*.3:0;return [-.3,.4,0];}}]};
+
+const isR=()=>S.who==='rabbit'&&MS[S.mi]&&MS[S.mi].slider!=='pulse';
+const TL=k=>(isR()&&TOURS_R[k])||TOURS[k];
+function drawTour(){const T=S.tour;if(!T)return;const st=TL(T.k)[T.i],u=Math.min(1,(performance.now()-T.t0)/1000/(st.dur/(reduce?4:1)));
+  if(st.d){const p=st.d(u,performance.now()/1000);S.focus=p;S.flash=new Set(st.o);if(p)label(p,st.n);T.u=u;const nb=$('#tnx');if(nb){const ready=u>=1;if(nb.disabled===ready)nb.disabled=!ready;}return;}
+  let p=alongI(PATH.food,st.a+(st.b-st.a)*u);if(st.out)p=[p[0],p[1]-u*.4,p[2]];
+  if(st.a===st.b){p=[p[0],p[1],p[2]+Math.sin(u*30)*.015];}
+  if(st.f==='lump'){const r=st.o==='mouth'?.12-u*.04:.08;ball(p,r,'#9C6B3E',1);}
+  else if(st.f==='pieces'){const sp=.04+u*.08;for(let k=0;k<6;k++)ball([p[0]+(HR(k,1)-.5)*sp*2,p[1]+(HR(k,2)-.5)*sp*2,p[2]+.05],.05-u*.015,'#B07A45',1);}
+  else if(st.f==='fine'){for(let k=0;k<8;k++)ball([p[0]+(HR(k,3)-.5)*.14,p[1]+(HR(k,4)-.5)*.1,p[2]+.05],.025,'#C98B4E',1);}
+  else ball(p,.06,'#6B5A45',st.out?1-u*.7:1);
+  if(st.juice){for(let k=0;k<4;k++){const q=(u*2+k*.25)%1,a=[.2,.92,-.08],b=alongI(PATH.food,9);ball([a[0]+(b[0]-a[0])*q,a[1]+(b[1]-a[1])*q,a[2]+(b[2]-a[2])*q+.04],.03,'#7FD36A',1);}}
+  if(st.absorb){const v=[-.04,.6,-.26];for(let k=0;k<5;k++){const q=(u*4+k*.2)%1,a=alongI(PATH.food,st.a+(st.b-st.a)*Math.max(0,u-.05*k));ball([a[0]+(v[0]-a[0])*q,a[1]+(v[1]-a[1])*q,a[2]+(v[2]-a[2])*q],.035,'#F2C230',1);}
+    const bv=alongI(PATH.artBody,3+u);ball(bv,.04,'#F2C230',1);}
+  S.focus=p;S.flash=new Set(st.o==='pancreas'?['pancreas','liver']:[st.o]);label(p,st.n);T.u=u;
+  const nb=$('#tnx');if(nb){const ready=u>=1;if(nb.disabled===ready)nb.disabled=!ready;}}
+function tourUI(){const T=S.tour,L=TL(T.k),st=L[T.i],w=$('#watch');const last=T.i===L.length-1;
+  w.innerHTML=`<div class="tstep"><span class="tno">${ar(T.i+1)}/${ar(L.length)}</span><b>${st.n}</b></div>
+   <p class="ttx">${st.t}</p><p class="tfd">${st.x||('🍞 '+st.food)}</p>
+   <div class="tnav"><button class="tb" type="button" id="tpv" ${T.i?'':'disabled'} aria-label="الخطوة السابقة">→ السابق</button><button class="tb rp" type="button" id="trp" aria-label="أعد هذه الخطوة">↺</button>
+   ${last?`<button class="tb go2" type="button" id="tq">إلى السؤال ←</button>`:`<button class="tb go2" type="button" id="tnx" disabled>التالي ←</button>`}</div>`;
+  $('#tpv').onclick=()=>tourGo(T.i-1);$('#trp').onclick=()=>tourGo(T.i);if(last)$('#tq').onclick=()=>{S.tour=null;S.flash=null;pane(3);};else $('#tnx').onclick=()=>tourGo(T.i+1);}
+function tourGo(i){S.tour={k:S.tour?S.tour.k:'food',i,t0:performance.now()};S.anim=null;tourUI();}
+function startTour(k){S.sel=null;nav();pane(2);mini(false);S.tour={k,i:0,t0:performance.now()};tourGo(0);}
+
+/* ===== المهام ===== */
+const MS=[
+ {t:'استكشف',k:'استكشاف حر',explore:true},
+ {t:'الهيكل',k:'المهمة ١ · الجهاز الهيكلي',sys:['ske','ner'],intro:'العظام تحمي الأعضاء الطرية. اضغط على العظم الذي يحمي الدماغ، ثم على العظام التي تحمي القلب والرئتين.',find:['skull','ribs'],anim:'skel',
+  q:'أختار الإجابة الصحيحة (من الكتاب): أيٌّ ممّا يأتي له هيكل خارجي دعامي؟',o:['الأرنب','الكلب','الجندب','السمكة'],c:2,h:{0:'الأرنب من الفقاريات؛ هيكله داخلي من العظام.',1:'الكلب من الفقاريات؛ هيكله داخلي.',3:'السمكة من الفقاريات؛ لها عظام داخلية.'},
+  rule:'<b>الجهاز الهيكلي</b>الفقاريات، ومنها الإنسان، لها جهاز هيكلي يتكوّن من العظام والأربطة والأوتار. وللجهاز الهيكلي وظيفتان رئيستان: حماية بعض الأعضاء الطرية في الجسم، وتوفير هيكل صلب للجسم ليكسب الجسم شكله. أمّا المفصليات، ومنها الخنافس والجنادب، فلها هيكل خارجي تتخلّص منه وتكوّن هيكلًا جديدًا حتى تنمو.'},
+ {t:'العضلات',k:'المهمة ٢ · الجهاز العضلي',sys:['ske','mus','ner'],intro:'حرّك المؤشر لتثني الذراع ثم تفردها. راقب العضلتين: الأمامية والخلفية.',slider:'arm',anim:'muscle',
+  q:'التفكير الناقد (من الكتاب): العضلات التي تحرك أصابع يدك موجودة في ذراعك، فكيف تستطيع أصابعك أن تتحرك؟',o:['تتصل عضلات الذراع بعظام الأصابع بأوتار طويلة، فعندما تنقبض تسحب الأوتار الأصابع','تتحرك الأصابع وحدها دون عضلات','العضلات تدفع الأصابع إلى الأمام'],c:0,
+  h:{1:'العظام لا تستطيع الحركة وحدها.',2:'العضلات تسحب ولا تدفع أبدًا.'},
+  rule:'<b>الجهاز العضلي</b>ترتبط معظم العضلات مع العظام بأوتار مرنة قوية. فعندما تنقبض العضلات تتحرك العظام. والعضلات التي تسبب الحركة تعمل في أزواج أو مجموعات متقابلة؛ فعندما تقوم عضلة ما بالانقباض تقوم العضلة المقابلة بالانبساط. والعضلات تقوم بعملية السحب ولا تقوم بعملية الدفع أبدًا.'},
+ {t:'الأعصاب',k:'المهمة ٣ · الجهاز العصبي',sys:['ner','mus'],intro:'كرة قادمة نحو وجهك! رتّب مسار الرسالة: اضغط على الأعضاء بالترتيب.',seq:['eye','brain','cord','nerves','biceps'],
+  hint:{eye:'أي عضو حس يرى الكرة؟',brain:'من يفسّر المعلومات؟',cord:'ممر من الدماغ نزولًا في الظهر.',nerves:'خيوط صفراء تصل إلى الذراع.',biceps:'العضلة التي تثني الذراع.'},anim:'nerve',
+  q:'التفكير الناقد (من الكتاب): ماذا يمكن أن يحدث إذا استغرقت الأوامر المرسلة من الدماغ إلى رجل الأرنب دقيقة؟',o:['لن يستطيع الهرب في الوقت المناسب، فقد يمسك به الثعلب','سيهرب أسرع','لن يتغير شيء'],c:0,
+  h:{1:'كلما تأخر الأمر تأخرت الحركة.',2:'الاستجابة يجب أن تحدث في أقل من جزء من الثانية.'},
+  rule:'<b>الجهاز العصبي</b>يشتمل الجهاز العصبي في الفقاريات على الدماغ والحبل الشوكي والأعصاب وأعضاء الحس. فالدماغ ينظّم حركات العضلات ويفسّر المعلومات التي تصله من أعضاء الحس، والحبل الشوكي يمرّر المعلومات من الدماغ وإليه، والأعصاب ترسل معلومات من أجزاء الجسم المختلفة إلى الدماغ.'},
+ {t:'الهرمونات',k:'المهمة ٤ · جهاز الغدد الصمّاء',sys:['ner','end'],intro:'ماذا يحدث في الجسم عند الإحساس بالخطر؟ شغّل وراقب نبضات القلب.',anim:'adr',
+  q:'التفكير الناقد (من الكتاب): كيف تساعد زيادة نبضات القلب المخلوق الحي على مواجهة الخطر؟',o:['تزيد الدم المتدفق إلى العضلات، فتحصل على ما تحتاج إليه للحركة السريعة','تجعل العظام أقوى','تبطئ حركة العضلات'],c:0,
+  h:{1:'القلب يضخ الدم، والدم لا يقوّي العظام فورًا.',2:'راقب: الجسم أصبح مستعدًا للهرب.'},
+  rule:'<b>جهاز الغدد الصمّاء</b>يعمل الجهاز العصبي مع جهاز الغدد الصمّاء الذي يفرز الهرمونات. والهرمونات مواد كيميائية تُفرَز في الدم مباشرة وتغيّر أنشطة الجسم. فعند الخطر تفرز الغدتان الكظريتان هرمون الأدرينالين الذي يسرّع نبضات القلب ليزيد من الدم المتدفق إلى العضلات.'},
+ {t:'التكامل',k:'المهمة ٥ · تكامل عمل أجهزة الجسم',sys:['ske','mus','ner'],intro:'نشاط الكتاب: أقيس نبضي. حرّك المؤشر من الجلوس إلى الهرولة، وراقب عدد النبضات.',slider:'pulse',
+  q:'أستنتج (من نشاط الكتاب): كيف يتكامل عمل الجهازين الدوراني والعضلي في جسمي؟',o:['كلما زاد عمل العضلات زادت نبضات القلب، ليحمل الدم إليها الأكسجين والغذاء','يعمل كل جهاز وحده دون علاقة بالآخر','تقل نبضات القلب عند الحركة'],c:0,
+  h:{1:'لاحظ: النبضات تغيّرت مع النشاط.',2:'انظر إلى العدّاد عند الهرولة.'},
+  rule:'<b>تكامل أجهزة الجسم</b>إن حركة الجسم تنتج عن انقباض العضلات وانبساطها، ويدعم الجهاز الهيكلي الجسم ويكسبه شكلًا خاصًا ويحمي أعضاءه الداخلية. ووظيفة جهاز الدوران توزيع الدم على جميع خلايا الجسم ليحمل إليها الغذاء والأكسجين. أما الجهاز العصبي فهو المسؤول عن تنظيم جميع أنشطة الجسم.'}];
+const done=new Set();
+const RTX={2:{intro:'حرّك المؤشر لتثني رجل الأرنب ثم تفردها. راقب العضلتين: الأمامية والخلفية للفخذ.'},
+ 3:{intro:'ثعلب يركض نحو الأرنب! رتّب مسار الرسالة: اضغط على الأعضاء بالترتيب.',hint:{eye:'أي عضو حس يرى الثعلب؟',nerves:'خيوط صفراء تصل إلى الرجل.',biceps:'العضلة الأمامية للفخذ التي تحرّك الرجل.'}},
+ 4:{intro:'ماذا يحدث في جسم الأرنب عندما يرى الثعلب؟ شغّل وراقب نبضات القلب.'}};
+function whoUI(){const w=$('#who');w.querySelectorAll('[data-w]').forEach(b=>{const o=b.dataset.w===S.who;b.classList.toggle('on',o);b.setAttribute('aria-pressed',o);});
+  $('#cv').setAttribute('aria-label',isR()?'أرنب ثلاثي الأبعاد يظهر فيه الهيكل والعضلات والأعصاب':'جسم إنسان ثلاثي الأبعاد يظهر فيه الهيكل والعضلات والأعصاب');
+  const R_=isR();cam.dist=R_?5.6:6.2;}
+$('#who').querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{if(S.who===b.dataset.w)return;S.who=b.dataset.w;try{localStorage.setItem('mv-who',S.who);}catch(e){}S.seen=new Set();open(S.mi);
+  if(MS[S.mi].slider==='pulse'&&S.who==='rabbit')toast('نشاط «أقيس نبضي» عن جسمك أنت، لذا يبقى المجسّم إنسانًا هنا.');});
+function nav(){$('#ms').innerHTML=MS.map((m,i)=>`<button type="button" data-m="${i}" class="${i===S.mi?'on':''} ${done.has(i)?'done':''}">${done.has(i)?'✓ ':''}${m.t}</button>`).join('');$('#ms').querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>open(+b.dataset.m));
+  $('#sys').innerHTML=Object.entries(SYS).map(([k,v])=>`<button type="button" data-s="${k}" class="${S.vis[k]?'on':''}" aria-pressed="${!!S.vis[k]}"><i style="background:${v.c}"></i>${v.n}</button>`).join('');
+  $('#sys').querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{const k=b.dataset.s;S.vis[k]=S.vis[k]?0:1;if(!Object.values(S.vis).some(Boolean))S.vis[k]=1;nav();});}
+const toast=t=>{const el=$('#toast');el.textContent=t;el.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(()=>el.hidden=true,2600);};
+let seqI=0,ordI=0;
+function open(i){S.tour=null;S.mi=i;S.sel=null;S.flash=null;S.anim=null;S.breath=0;S.hop=0;seqI=0;ordI=0;const m0=MS[i],c=$('#cin');ORG=isR()?ORG_R:ORG_H;const m=isR()&&RTX[i]?{...m0,...RTX[i],hint:{...(m0.hint||{}),...(RTX[i].hint||{})}}:m0;whoUI();
+  if(m.explore){S.vis={ske:1,mus:1,ner:1,end:1};S.bendT=0;S.showOrg=0;nav();renderExplore();return;}
+  S.vis={ske:0,mus:0,ner:0,end:0};S.run=0;S.bendT=0;S.showOrg=0;S.bpm=72;m.sys.forEach(s=>S.vis[s]=1);if(m.find)S.excFound=new Set();nav();
+  let task='';if(m.seq)task=`<p class="step">١. اضغط على الأعضاء بالترتيب في المجسّم:</p><div class="seq" id="sq">${m.seq.map((k,j)=>`<span>${ar(j+1)}</span>`).join('')}</div><p class="fb" id="sf"></p>`;
+  else if(m.order)task=`<p class="step">١. رتّب الخطوات (اضغط بالترتيب):</p><div class="opts" id="od">${m.mix.map(j=>`<button class="opt" type="button" data-o="${j}">${m.order[j]}</button>`).join('')}</div><div class="seq" id="sq">${m.order.map((_,j)=>`<span>${ar(j+1)}</span>`).join('')}</div><p class="fb" id="sf"></p>`;
+  else if(m.find)task=`<p class="step">١. اضغط على أعضاء الإخراج في المجسّم (الجلد: اضغط على سطح الجسم):</p><div class="chips" id="fd">${m.find.map(k=>`<span data-f="${k}">؟</span>`).join('')}</div><p class="fb" id="sf"></p>`;
+  else if(m.slider==='arm')task=`<label class="step" for="asl">${isR()?'حرّك رجل الأرنب: اثنِها ثم افردها:':'اثنِ الذراع ثم افردها:'}</label><input id="asl" type="range" min="0" max="100" value="0" style="width:100%;direction:ltr;accent-color:var(--accent)"><div class="ends">${isR()?'<span>رجل مثنية</span><span>رجل مفرودة</span>':'<span>ذراع مفرودة</span><span>ذراع مثنية</span>'}</div><p class="fb" id="sf"></p>`;
+  else if(m.slider==='pulse')task=`<label class="step" for="psl">نشاطي:</label><input id="psl" type="range" min="0" max="2" step="1" value="0" style="width:100%;direction:ltr;accent-color:var(--accent)"><div class="ends"><span>جالس</span><span>أمشي</span><span>أهرول</span></div><p class="pulse" id="pr"></p><p class="fb" id="sf"></p>`;
+  else task=`<p class="step">١. شغّل الرحلة وراقب.</p><button class="go" type="button" id="play">▶ شغّل</button>`;
+  c.innerHTML=`<div class="hd"><div><p class="kick">${m.k}</p><h2>${m.t}</h2></div><button class="tg" type="button" id="mn" aria-label="تصغير البطاقة">▾</button></div>
+   <div class="dots" id="dt"></div>
+   <div class="pane" id="p1"><p class="lead">${m.intro}</p>${task}</div>
+   <div class="pane" id="watch" hidden><p class="step">راقب الرحلة في المجسّم 👀</p><p class="hint2">السؤال يظهر بعد قليل.</p><button class="go full" type="button" id="replay">↺ أعد الرحلة</button></div>
+   <div class="pane" id="qq" hidden><p class="step">${m.q}</p><div class="opts">${m.o.map((o,k)=>`<button class="opt" type="button" data-q="${k}">${o}</button>`).join('')}</div><p class="fb" id="qf"></p><button class="go full" type="button" id="replay2" style="background:transparent;color:var(--accent);border:1.5px solid var(--accent)">↺ شاهد الرحلة مرة أخرى</button></div>
+   <div class="pane" id="rr" hidden><p class="fb ok">✓ صحيح!</p><p class="rule">${m.rule}</p>${i<MS.length-1?`<button class="go" type="button" id="nx">المهمة التالية ←</button>`:`<p class="small">أنهيت المهام. انتقل إلى «استكشف» لتراجع وظائف الأعضاء.</p>`}</div>
+   <p class="src">📖 الكتاب ص١٢٠–١٢٦</p>`;
+  pane(1);$('#mn').onclick=()=>mini(!$('.card').classList.contains('mini'));
+  if(m.order)c.querySelectorAll('[data-o]').forEach(b=>b.onclick=()=>{const j=+b.dataset.o;const f=$('#sf');if(j===ordI){b.disabled=true;b.classList.add('right');const sp=$('#sq').children[ordI];sp.className='f';sp.textContent=ar(ordI+1)+' ✓';ordI++;f.textContent='';if(ordI===m.order.length)startAnim();}
+    else{f.className='fb bad';f.textContent=ordI===0?'ابدأ من عودة الدم الذي سلّم أكسجينه إلى القلب.':'ليست هذه. ماذا يحدث للدم بعد «'+m.order[ordI-1]+'»؟';}});
+  if(m.slider==='arm'){let seen=new Set();$('#asl').oninput=e=>{const v=+e.target.value/100;S.bendT=v;const f=$('#sf');f.className='fb';f.innerHTML=isR()?(v>.6?'العضلة <b>الأمامية</b> للفخذ منقبضة (قصيرة غليظة) فتنفرد الرجل، والخلفية منبسطة.':v<.2?'العضلة <b>الخلفية</b> منقبضة فتنثني الرجل، والأمامية منبسطة.':'راقب العضلتين…'):(v>.6?'العضلة <b>الأمامية</b> منقبضة (قصيرة غليظة)، والخلفية منبسطة.':v<.2?'العضلة <b>الخلفية</b> منقبضة، والأمامية منبسطة.':'راقب العضلتين…');if(v>.9)seen.add('b');if(seen.has('b')&&v<.1&&!seen.has('d')){seen.add('d');f.className='fb ok';f.textContent='أحسنت! شاهد الآن كيف يحدث ذلك.';startAnim();}};mini(false);}
+  if(m.slider==='pulse'){S.showOrg=1;const L=[['جالس',72,'نبضك هادئ.'],['أمشي',95,'زادت النبضات.'],['أهرول',135,'زادت النبضات كثيرًا!']];const seen=new Set();const f=()=>{const v=+$('#psl').value;S.bpm=L[v][1];S.run=v;$('#pr').innerHTML=`❤️ <b>${ar(Math.round(L[v][1]/2))}</b> نبضة في ٣٠ ثانية · ${L[v][2]}`;seen.add(v);if(seen.size===3&&!seen.ok){seen.ok=1;$('#sf').className='fb ok';$('#sf').textContent='سجّلت النبضات في الحالات الثلاث.';startAnim();}};$('#psl').oninput=f;f();}
+  if($('#play'))$('#play').onclick=()=>{$('#play').disabled=true;startAnim();};
+  $('#replay').onclick=()=>{S.anim={k:m.anim,t0:performance.now()};};$('#replay2').hidden=!m.anim;$('#replay2').onclick=()=>{if(TL(m.anim||'')){startTour(m.anim);return;}S.anim={k:m.anim,t0:performance.now()};mini(true);setTimeout(()=>mini(false),reduce?300:4500);};
+  c.querySelectorAll('[data-q]').forEach(b=>b.onclick=()=>{const k=+b.dataset.q,f=$('#qf');if(k===m.c){b.classList.add('right');c.querySelectorAll('[data-q]').forEach(x=>x.disabled=true);done.add(i);nav();pane(4);const nx=$('#nx');if(nx)nx.onclick=()=>open(i+1);}
+    else{b.classList.add('wrong');b.disabled=true;f.className='fb bad';f.textContent=m.h[k]||'راقب الرحلة مرة أخرى.';}});}
+function startAnim(){const m=MS[S.mi];if(TL(m.anim||'')){const k=m.anim;setTimeout(()=>startTour(k),700);return;}const go=()=>{if(m.anim){S.anim={k:m.anim,t0:performance.now()};pane(2);setTimeout(()=>{if(MS[S.mi]===m&&!$('#watch').hidden)pane(3);},reduce?300:(m.anim==='blood'?6000:ANIM[m.anim].dur*800));}else pane(3);};setTimeout(go,m.anim?900:600);}
+const SMALL=()=>W<900;
+function mini(on){const c=$('.card');c.classList.toggle('mini',!!on);const b=$('#mn');if(b){b.textContent=on?'▴':'▾';b.setAttribute('aria-label',on?'تكبير البطاقة':'تصغير البطاقة');}}
+function pane(n){const m=MS[S.mi];['p1','watch','qq','rr'].forEach((id,k)=>{const e=$('#'+id);if(e)e.hidden=k+1!==n;});
+  const lab=['أنفّذ','أراقب','أستنتج','القاعدة'];$('#dt').innerHTML=lab.map((l,k)=>`<i class="${k+1<n?'d':k+1===n?'c':''}"></i>`).join('')+`<span>${ar(n)}/٤ · ${lab[n-1]}</span>`;
+  const bodyTask=(n===2&&!TL(m.anim||''))||(n===1&&(m.seq||m.find));mini(SMALL()&&bodyTask);$('.cin').scrollTop=0;}
+function renderExplore(){const c=$('#cin');const all=Object.keys(ORG);mini(false);
+  c.innerHTML=`<p class="kick">استكشاف حر</p><h2>${isR()?'الأرنب: الحركة والإحساس':'الحركة والإحساس'}</h2><p class="lead">${S.sel?'':'اضغط على أي عضو في المجسّم لتعرف اسمه ووظيفته. الأزرار في الأعلى تُظهر الأجهزة أو تخفيها.'}</p>
+   ${S.sel?`<p class="info"><b>${ORG[S.sel].n}</b>${ORG[S.sel].d}<br><small>الجهاز: ${ORG[S.sel].s.map(s=>SYS[s].n).join('، ')}</small></p>`:''}
+   <p class="small">اضغط على عضو في المجسّم، أو على اسمه هنا. اكتشفت <b>${ar(S.seen.size)}</b> من ${ar(all.length)}.</p>
+   <div class="olist">${Object.entries(SYS).map(([sk,sv])=>`<div class="ogrp"><b><i style="background:${sv.c}"></i>الجهاز ${sv.n}</b><div class="chips">${all.filter(k=>ORG[k].s[0]===sk).map(k=>`<button type="button" class="obtn ${S.sel===k?'sel':S.seen.has(k)?'got':''}" data-org="${k}">${S.seen.has(k)?'✓ ':''}${ORG[k].n}</button>`).join('')}</div></div>`).join('')}</div><button class="go full" type="button" id="st1">ابدأ «الهيكل» ←</button>
+   <p class="src">📖 الكتاب ص١٠٨–١١٧</p>`;$('#st1').onclick=()=>open(1);
+  c.querySelectorAll('[data-org]').forEach(b=>b.onclick=()=>{const k=b.dataset.org;if(!on(k)){ORG[k].s.forEach(x=>S.vis[x]=1);nav();}S.sel=k;S.seen.add(k);renderExplore();c.scrollTop=0;});}
+/* الضغط */
+function tagAt(x,y){const inP=(p)=>{let c=false;for(let i=0,j=p.length-1;i<p.length;j=i++){if(((p[i][1]>y)!==(p[j][1]>y))&&(x<(p[j][0]-p[i][0])*(y-p[i][1])/(p[j][1]-p[i][1])+p[i][0]))c=!c;}return c;};
+  const dS=(a,b)=>{const vx=b[0]-a[0],vy=b[1]-a[1],t=Math.max(0,Math.min(1,((x-a[0])*vx+(y-a[1])*vy)/((vx*vx+vy*vy)||1)));return Math.hypot(x-a[0]-vx*t,y-a[1]-vy*t);};
+  const LOW={ribs:1,skull:1,pelvis:1};let low=null;for(let i=HIT.length-1;i>=0;i--){const h=HIT[i];const ok=h.poly?inP(h.poly):h.c?Math.hypot(x-h.c[0],y-h.c[1])<h.c[2]:dS(h.seg[0],h.seg[1])<h.seg[2];if(!ok)continue;if(LOW[h.tag]){if(!low||LOW[h.tag]>LOW[low])low=h.tag;continue;}return h.tag;}return low;}
+function tap(x,y){const k=tagAt(x,y);if(!k)return;const m=isR()&&RTX[S.mi]?{...MS[S.mi],hint:{...(MS[S.mi].hint||{}),...(RTX[S.mi].hint||{})}}:MS[S.mi];
+  if(m.explore){S.sel=k;S.seen.add(k);renderExplore();$('#cin').scrollTop=0;return;}
+  S.sel=k;
+  if(m.seq&&seqI<m.seq.length){const f=$('#sf');if(k===m.seq[seqI]){const sp=$('#sq').children[seqI];sp.className='f';sp.textContent=ORG[k].n;seqI++;f.className='fb ok';f.textContent='صحيح: '+ORG[k].n+'.';if(seqI===m.seq.length){f.textContent='أحسنت! رتّبت المسار. شاهد الرحلة.';startAnim();}}
+    else{f.className='fb bad';f.textContent=(seqI===0?'ليس من هنا يبدأ. ':'ليس بعد «'+ORG[m.seq[seqI-1]].n+'». ')+'تلميح: '+m.hint[m.seq[seqI]];}}
+  else if(m.find){const f=$('#sf');if(m.find.includes(k)&&!S.excFound.has(k)){S.excFound.add(k);const sp=$('#fd').querySelector(`[data-f="${k}"]`);sp.className='got';sp.textContent='✓ '+ORG[k].n;f.className='fb ok';f.textContent=ORG[k].n+': '+ORG[k].d;if(S.excFound.size===m.find.length){f.textContent+=' وجدتها كلها!';startAnim();}}
+    else if(!m.find.includes(k)){f.className='fb bad';f.textContent=ORG[k].n+' ليس المطلوب هنا. ابحث عن العظم الذي يحيط بالعضو.';}}}
+const ptr=new Map();let moved=0;
+cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);ptr.set(e.pointerId,[e.clientX,e.clientY]);moved=0;});
+cv.addEventListener('pointermove',e=>{if(!ptr.has(e.pointerId))return;const [px,py]=ptr.get(e.pointerId);const dx=e.clientX-px,dy=e.clientY-py;moved+=Math.abs(dx)+Math.abs(dy);ptr.set(e.pointerId,[e.clientX,e.clientY]);cam.yaw-=dx*.008;cam.pitch=Math.max(-.5,Math.min(.9,cam.pitch+dy*.006));S.drag=performance.now();});
+cv.addEventListener('pointerup',e=>{ptr.delete(e.pointerId);if(moved<6)tap(e.clientX,e.clientY);});cv.addEventListener('pointercancel',e=>ptr.delete(e.pointerId));
+cv.addEventListener('wheel',e=>{e.preventDefault();cam.dist=Math.max(3.5,Math.min(12,cam.dist*(1+Math.sign(e.deltaY)*.07)));},{passive:false});
+
+/* الحلقة */
+function frame(ms){place();{const by=isR()?.35:1.0,ty=S.tour&&S.focus&&W<900?Math.max(-.6,Math.min(1.9,S.focus[1]*.5+by*.5)):by;cam.t[1]+=(ty-cam.t[1])*(reduce?1:.04);}cx.setTransform(DPR,0,0,DPR,0,0);const g=cx.createRadialGradient(CX0,CY0,50,CX0,CY0,Math.max(W,H));g.addColorStop(0,'#3A2A30');g.addColorStop(1,'#140C10');cx.fillStyle=g;cx.fillRect(0,0,W,H);
+  const idle=!S.drag||performance.now()-S.drag>2500;if(idle&&!reduce)cam.yaw+=(Math.sin(ms/4000)*.5-cam.yaw)*.01;
+  if(S.run&&MS[S.mi].slider==='pulse'){S.bendT=S.run?(Math.sin(ms/1000*(S.run*3))*.5+.5)*.8:0;}
+  if(isR())rabbitBody(ms/1000);else body(ms/1000);
+  drawTour();if(S.anim){const t=(performance.now()-S.anim.t0)/1000*(reduce?3:1);ANIM[S.anim.k].draw(t);}
+  flush();requestAnimationFrame(frame);}
+
+/* سحب البطاقة */
+(()=>{const g=$('#grip'),card=$('.card');let d=null;
+  const clamp=(x,y)=>{const r=card.getBoundingClientRect();return [Math.max(4,Math.min(innerWidth-r.width-4,x)),Math.max(4,Math.min(innerHeight-60,y))];};
+  g.addEventListener('pointerdown',e=>{g.setPointerCapture(e.pointerId);const r=card.getBoundingClientRect();d={dx:e.clientX-r.left,dy:e.clientY-r.top,w:r.width,moved:0};});
+  g.addEventListener('pointermove',e=>{if(!d)return;d.moved++;if(!card.classList.contains('moved')){card.classList.add('moved');card.style.width=d.w+'px';card.style.insetInline='auto';card.style.right='auto';card.style.bottom='auto';}
+    card.classList.add('drag');const [x,y]=clamp(e.clientX-d.dx,e.clientY-d.dy);card.style.left=x+'px';card.style.top=y+'px';});
+  const end=()=>{d=null;card.classList.remove('drag');};g.addEventListener('pointerup',end);g.addEventListener('pointercancel',end);
+  const reset=()=>{card.classList.remove('moved');['width','insetInline','right','bottom','left','top'].forEach(k=>card.style[k]='');};
+  g.addEventListener('dblclick',reset);
+  g.addEventListener('keydown',e=>{const st={ArrowUp:[0,-20],ArrowDown:[0,20],ArrowLeft:[-20,0],ArrowRight:[20,0]}[e.key];if(e.key==='Escape'){reset();return;}if(!st)return;e.preventDefault();const r=card.getBoundingClientRect();
+    if(!card.classList.contains('moved')){card.classList.add('moved');card.style.width=r.width+'px';card.style.insetInline='auto';card.style.right='auto';card.style.bottom='auto';}const [x,y]=clamp(r.left+st[0],r.top+st[1]);card.style.left=x+'px';card.style.top=y+'px';});
+  addEventListener('resize',()=>{if(card.classList.contains('moved')){const r=card.getBoundingClientRect();const [x,y]=clamp(r.left,r.top);card.style.left=x+'px';card.style.top=y+'px';}});})();
+open(0);requestAnimationFrame(frame);
+})();
+</script>

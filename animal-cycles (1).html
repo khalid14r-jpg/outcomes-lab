@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>دورات حياة الحيوانات</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@600;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: a translucent human body stands in a dark examination room; system chips filter what is visible; a mission card guides order-the-path → watch → conclude. */
+:root{--bg:#EEF4EA;--panel:rgba(255,255,255,.95);--ink:#24161A;--muted:#6B5A5E;--line:#E5D6D8;--accent:#C2671B;--accent-soft:#FCEBDA;--ok:#15803D;--ok-bg:#E6F6EA;--bad:#C2410C;--bad-bg:#FFF0E6;
+ --display:"Baloo Bhaijaan 2","IBM Plex Sans Arabic",system-ui,sans-serif;--body:"IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#140D10;--panel:rgba(30,20,24,.95);--ink:#F2E8EA;--muted:#B9A5AA;--line:#3A2A30;--accent:#F2A55E;--accent-soft:#3A2614;--ok:#4ADE80;--ok-bg:#12291C;--bad:#FB923C;--bad-bg:#2E1C10;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#140D10;--panel:rgba(30,20,24,.95);--ink:#F2E8EA;--muted:#B9A5AA;--line:#3A2A30;--accent:#F2A55E;--accent-soft:#3A2614;--ok:#4ADE80;--ok-bg:#12291C;--bad:#FB923C;--bad-bg:#2E1C10;color-scheme:dark}
+html,body{direction:rtl}*{box-sizing:border-box}[hidden]{display:none!important}html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;overflow:hidden}
+#stage{position:fixed;inset:0;touch-action:none;user-select:none}#cv{width:100%;height:100%;display:block;cursor:grab}
+.top{position:fixed;top:0;inset-inline:0;z-index:5;padding:calc(10px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px));display:grid;gap:6px;justify-items:center;pointer-events:none}
+h1{margin:0;font:800 clamp(1.15rem,3vw,1.6rem)/1.2 var(--display);background:var(--panel);padding:4px 16px;border-radius:99px;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.nav{display:flex;gap:4px;background:var(--panel);border-radius:99px;padding:4px;box-shadow:0 2px 10px rgba(0,0,0,.15);pointer-events:auto;flex-wrap:wrap;justify-content:center}
+.nav button{border:0;background:none;color:var(--muted);font:600 .85rem var(--body);padding:4px 11px;border-radius:99px;cursor:pointer}.nav button.on{background:var(--accent);color:#fff}.nav button.done{color:var(--ok)}
+#sys{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;pointer-events:auto}
+#sys button{border:1.5px solid transparent;background:var(--panel);color:var(--ink);font:600 .8rem var(--body);padding:3px 10px;border-radius:99px;cursor:pointer;box-shadow:0 1px 6px rgba(0,0,0,.12)}#sys button.on{border-color:var(--accent)}
+#sys i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-inline-end:5px}
+.card{position:fixed;bottom:0;transition:transform .25s ease;inset-inline:0;z-index:6;margin:0 auto;max-width:620px;padding:0 max(12px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px))}
+.cin{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);display:grid;gap:8px;max-height:42vh;overflow:auto}
+.kick{margin:0;font-size:.78rem;font-weight:700;color:var(--accent)}h2{margin:0;font:800 1.25rem/1.3 var(--display)}
+.lead{margin:0}.step{margin:0;font-weight:700}.small{margin:0;font-size:.85rem;color:var(--muted)}
+.seq{display:flex;flex-wrap:wrap;gap:6px}.seq span{border:1.5px dashed var(--line);border-radius:10px;padding:2px 10px;font-size:.85rem;color:var(--muted);min-width:34px;text-align:center}.seq span.f{border-style:solid;border-color:var(--ok);background:var(--ok-bg);color:var(--ink);font-weight:600}
+.opts{display:grid;gap:6px}.opt{text-align:start;border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:12px;padding:8px 12px;font:500 .95rem var(--body);cursor:pointer}
+.opt.right{border-color:var(--ok);background:var(--ok-bg)}.opt.wrong{border-color:var(--bad);background:var(--bad-bg)}.opt:disabled{cursor:default}
+.fb{margin:0;font-size:.92rem}.fb.ok{color:var(--ok)}.fb.bad{color:var(--bad)}
+.rule{background:var(--accent-soft);border-radius:12px;padding:8px 12px;margin:0}.rule b{display:block;font-family:var(--display)}
+.info{margin:0;background:var(--accent-soft);border-radius:12px;padding:8px 12px}.info b{display:block;font-family:var(--display);font-size:1.05rem}
+.go{border:0;background:var(--accent);color:#fff;border-radius:12px;padding:8px 16px;font:700 .95rem var(--body);cursor:pointer;justify-self:start}.go:disabled{opacity:.45;cursor:default}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.chips{display:flex;flex-wrap:wrap;gap:5px}.chips span{font-size:.78rem;border:1px solid var(--line);border-radius:99px;padding:0 9px;color:var(--muted)}.chips span.got{background:var(--ok-bg);border-color:var(--ok);color:var(--ink)}
+.src{font-size:.72rem;color:var(--muted);margin:0}
+#toast{position:fixed;z-index:8;top:calc(150px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);background:rgba(30,14,18,.92);color:#FBEFF1;border-radius:12px;padding:8px 16px;font-weight:600;max-width:min(90vw,460px);text-align:center;pointer-events:none}
+:focus-visible{outline:3px solid #F59F00;outline-offset:2px}
+@media (min-width:900px){.card{inset-inline:auto;inset-inline-start:max(16px,env(safe-area-inset-right,0px));bottom:auto;top:calc(110px + env(safe-area-inset-top,0px));width:380px;padding:0}.cin{max-height:calc(100vh - 140px)}.hd .tg{display:none}}
+.hd{display:flex;align-items:center;gap:8px}.hd>div{flex:1;min-width:0}.hd .tg{border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:10px;width:36px;height:32px;font-size:1rem;cursor:pointer;flex:none}
+.dots{display:flex;gap:5px;align-items:center;font-size:.75rem;color:var(--muted)}.dots i{width:22px;height:5px;border-radius:9px;background:var(--line)}.dots i.c{background:var(--accent)}.dots i.d{background:var(--ok)}
+.card.mini .lead,.card.mini .src,.card.mini .full{display:none}.card.mini h2{font-size:1rem}.card.mini .cin{gap:5px;padding:8px 14px}
+.tstep{display:flex;align-items:center;gap:8px}.tstep b{font:800 1.15rem var(--display);color:var(--accent)}.tno{font-size:.75rem;background:var(--accent-soft);border-radius:99px;padding:1px 9px;font-variant-numeric:tabular-nums}
+.ttx{margin:0;font-weight:600}.tfd{margin:0;font-size:.9rem;color:var(--muted);background:var(--accent-soft);border-radius:10px;padding:5px 10px}
+.tnav{display:flex;gap:6px}.tb{border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:12px;padding:9px 12px;font:700 .95rem var(--body);cursor:pointer}.tb:disabled{opacity:.4;cursor:default}.tb.go2{flex:1;background:var(--accent);color:#fff;border-color:var(--accent)}.tb.go2:disabled{background:var(--line);border-color:var(--line);color:var(--muted);opacity:1}
+.grip{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:0;background:var(--panel);color:var(--muted);border-radius:14px 14px 0 0;padding:5px 0 3px;cursor:grab;touch-action:none;font:500 .72rem var(--body);margin-bottom:-12px;padding-bottom:14px;box-shadow:0 -2px 10px rgba(0,0,0,.12)}
+.grip span{width:42px;height:5px;border-radius:9px;background:var(--line)}.grip:active{cursor:grabbing}.card.moved{margin:0;max-width:none;transition:none}.card.drag .cin{box-shadow:0 10px 34px rgba(0,0,0,.35)}
+.olist{display:grid;gap:8px}.ogrp{display:grid;gap:4px}.ogrp b{font-size:.78rem;color:var(--muted);display:flex;align-items:center;gap:6px}.ogrp b i{width:9px;height:9px;border-radius:50%}
+.obtn{border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:99px;padding:2px 10px;font:600 .82rem var(--body);cursor:pointer}.obtn.got{border-color:var(--ok);background:var(--ok-bg)}.obtn.sel{border-color:var(--accent);background:var(--accent);color:#fff}
+.srt{display:grid;gap:6px}.srow{display:grid;gap:4px;border-bottom:1px solid var(--line);padding-bottom:6px}.srow.ok>span:first-child{color:var(--ok);font-weight:700}.sbt{display:flex;flex-wrap:wrap;gap:5px}
+.hint2{margin:0;font-size:.85rem;color:var(--muted)}
+.pane{display:grid;gap:8px}
+@media (max-width:600px){h2{font-size:1.1rem}.cin{max-height:40vh}.nav button{padding:3px 8px;font-size:.8rem}}
+</style>
+
+<div id="stage"><canvas id="cv" aria-label="نموذج ثلاثي الأبعاد لحيوانات ومراحل نموها"></canvas></div>
+<div class="top"><h1>دورات حياة الحيوانات</h1><nav class="nav" id="ms" aria-label="المهام"></nav><div id="sys"></div></div>
+<div class="card"><button class="grip" type="button" id="grip" aria-label="اسحب لتحريك البطاقة. اضغط مرتين لإعادتها إلى مكانها"><span></span><small>اسحب لتحريك البطاقة</small></button><div class="cin" id="cin" aria-live="polite"></div></div>
+<div id="toast" role="status" hidden></div>
+
+<script>
+(()=>{'use strict';document.documentElement.dir='rtl';document.documentElement.lang='ar';
+const $=s=>document.querySelector(s),ar=n=>Number(n).toLocaleString('ar-SA');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const cv=$('#cv'),cx=cv.getContext('2d');let W=0,H=0,DPR=1,CX0=0,CY0=0;
+let AVH=600;const fit=()=>{DPR=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);};
+const place=()=>{const top=($('#sys')?.getBoundingClientRect().bottom||100)+8;if($('.card')?.classList.contains('moved')){CX0=W/2;AVH=H-top-10;CY0=top+AVH*.5;return;}if(W>=900){CX0=(W-400)/2;AVH=H-top-10;CY0=top+AVH*.52;}else{const b=$('.card .cin')?.getBoundingClientRect().top||H*.6;AVH=Math.max(160,b-top-6);CX0=W/2;CY0=top+AVH*.5;}};addEventListener('resize',fit);fit();
+
+/* ===== محرّك ===== */
+const cam={yaw:0,pitch:.08,dist:5.2,t:[0,1.3,0]};
+const P=p=>{const cy=Math.cos(cam.yaw),sy=Math.sin(cam.yaw),cp=Math.cos(cam.pitch),sp=Math.sin(cam.pitch);const x=p[0]-cam.t[0],y=p[1]-cam.t[1],z=p[2]-cam.t[2];
+  const x1=x*cy-z*sy,z1=x*sy+z*cy,y2=y*cp-z1*sp,z2=y*sp+z1*cp,d=cam.dist-z2,s=Math.min(W*1.05,AVH*1.18)/Math.max(d,.05);return [CX0+x1*s,CY0-y2*s,d,s];};
+const LT=(()=>{const v=[-.4,.8,.6],n=Math.hypot(...v);return v.map(a=>a/n);})();
+const rgb=h=>{const n=parseInt(h.slice(1),16);return [n>>16&255,n>>8&255,n&255];};
+const col=(h,k)=>{const c=rgb(h).map(v=>Math.max(0,Math.min(255,Math.round(v*k))));return `rgb(${c[0]},${c[1]},${c[2]})`;};
+const sub=(a,b)=>[a[0]-b[0],a[1]-b[1],a[2]-b[2]],crs=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+let Q=[],LB=[],HIT=[];
+const poly=(pts,c,a=1,tag=null)=>Q.push({k:'p',pts,c,a,tag});
+const ball=(p,r,c,a=1,tag=null)=>Q.push({k:'s',p,r,c,a,tag});
+const rod=(p,q,r,c,a=1,tag=null)=>Q.push({k:'l',p,q,r,c,a,tag});
+const label=(p,t)=>LB.push({p,t});
+const flush=()=>{const it=[];HIT=[];for(const o of Q){if(o.k==='p'){o.pr=o.pts.map(P);o.d=o.pr.reduce((s,v)=>s+v[2],0)/o.pr.length;const nn=crs(sub(o.pts[1],o.pts[0]),sub(o.pts[2],o.pts[0])),L=Math.hypot(...nn)||1;o.sh=.62+.45*Math.abs((nn[0]*LT[0]+nn[1]*LT[1]+nn[2]*LT[2])/L);}
+    else if(o.k==='s'){o.pr=P(o.p);o.d=o.pr[2];}else{o.pa=P(o.p);o.pb=P(o.q);o.d=(o.pa[2]+o.pb[2])/2;}it.push(o);}
+  it.sort((a,b)=>b.d-a.d);
+  for(const o of it){cx.globalAlpha=o.a;let h=null;
+    if(o.k==='p'){cx.beginPath();o.pr.forEach((v,i)=>i?cx.lineTo(v[0],v[1]):cx.moveTo(v[0],v[1]));cx.closePath();cx.fillStyle=col(o.c,o.sh);cx.fill();if(o.tag)h={tag:o.tag,poly:o.pr};}
+    else if(o.k==='s'){const [x,y,,s]=o.pr,r=Math.max(.5,o.r*s);const g=cx.createRadialGradient(x-r*.35,y-r*.4,r*.1,x,y,r);g.addColorStop(0,col(o.c,1.45));g.addColorStop(.6,col(o.c,1));g.addColorStop(1,col(o.c,.6));cx.fillStyle=g;cx.beginPath();cx.arc(x,y,r,0,7);cx.fill();if(o.tag)h={tag:o.tag,c:[x,y,r+3]};}
+    else{const w=Math.max(1.2,o.r*(o.pa[3]+o.pb[3]));cx.strokeStyle=col(o.c,1);cx.lineCap='round';cx.lineWidth=w;cx.beginPath();cx.moveTo(o.pa[0],o.pa[1]);cx.lineTo(o.pb[0],o.pb[1]);cx.stroke();if(o.tag)h={tag:o.tag,seg:[o.pa,o.pb,w/2+5]};}
+    if(h)HIT.push(h);}
+  cx.globalAlpha=1;Q=[];
+  cx.font='600 12.5px "IBM Plex Sans Arabic",system-ui,sans-serif';cx.direction='rtl';cx.textBaseline='middle';cx.textAlign='center';
+  for(const l of LB){const [x,y]=P(l.p);const w=cx.measureText(l.t).width+14,lx=Math.min(W-w/2-6,Math.max(w/2+6,x)),ly=y-22;cx.strokeStyle='rgba(255,255,255,.8)';cx.lineWidth=1.2;cx.beginPath();cx.moveTo(x,y);cx.lineTo(lx,ly+10);cx.stroke();
+    cx.fillStyle='rgba(30,14,18,.88)';cx.beginPath();cx.roundRect?cx.roundRect(lx-w/2,ly-11,w,22,8):cx.rect(lx-w/2,ly-11,w,22);cx.fill();cx.fillStyle='#FBEFF1';cx.fillText(l.t,lx,ly);}LB=[];};
+const ellip=(c,rx,ry,rz,colr,a,tag,NU=6,NV=10,rot=0)=>{const cr=Math.cos(rot),sr=Math.sin(rot);const S=(u,v)=>{const x=rx*Math.sin(u)*Math.cos(v),y=ry*Math.cos(u),z=rz*Math.sin(u)*Math.sin(v);return [c[0]+x*cr-y*sr,c[1]+x*sr+y*cr,c[2]+z];};
+  for(let i=0;i<NU;i++)for(let j=0;j<NV;j++){const u0=i/NU*Math.PI,u1=(i+1)/NU*Math.PI,v0=j/NV*2*Math.PI,v1=(j+1)/NV*2*Math.PI;poly([S(u0,v0),S(u1,v0),S(u1,v1),S(u0,v1)],colr,a,tag);}};
+const tube=(path,r,c,a,tag)=>{for(let i=0;i<path.length-1;i++)rod(path[i],path[i+1],r,c,a,tag);};
+const along=(path,t)=>{const L=[0];for(let i=1;i<path.length;i++)L.push(L[i-1]+Math.hypot(...sub(path[i],path[i-1])));const T=Math.max(0,Math.min(1,t))*L[L.length-1];let i=1;while(i<L.length-1&&L[i]<T)i++;const k=(T-L[i-1])/((L[i]-L[i-1])||1);return path[i-1].map((v,j)=>v+(path[i][j]-v)*k);};
+const HR=(i,k=1)=>{const v=Math.sin(i*12.9898+k*78.233)*43758.5453;return v-Math.floor(v);};
+
+/* ===== أدوات ===== */
+const mix3=(a,b,t)=>a.map((v,j)=>v+(b[j]-v)*t);
+const lerpC=(h1,h2,t)=>{const a=rgb(h1),b=rgb(h2);return '#'+a.map((v,i)=>Math.round(v+(b[i]-v)*t).toString(16).padStart(2,'0')).join('');};
+const GY=-1;
+const C=(k,c)=>(S.sel===k||(S.flash&&S.flash.has(k)))?'#FFE066':c;
+const add=(p,d)=>[p[0]+d[0],p[1]+d[1],p[2]+d[2]];
+function ground(r=4.5,cl='#7C9A55'){for(let k=0;k<18;k++){const a0=k/18*2*Math.PI,a1=(k+1)/18*2*Math.PI;poly([[0,GY,0],[r*Math.cos(a0),GY,r*Math.sin(a0)],[r*Math.cos(a1),GY,r*Math.sin(a1)]],k%2?cl:lerpC(cl,'#000000',.08),1);}}
+function water(c,r,cl='#4FA3D1',a=.75){for(let k=0;k<16;k++){const a0=k/16*2*Math.PI,a1=(k+1)/16*2*Math.PI;poly([[c[0],c[1],c[2]],[c[0]+r*Math.cos(a0),c[1],c[2]+r*.8*Math.sin(a0)],[c[0]+r*Math.cos(a1),c[1],c[2]+r*.8*Math.sin(a1)]],k%2?cl:lerpC(cl,'#FFFFFF',.08),a);}}
+function leaf(c,r=1.1,cl='#5FB04A',tag=null,eaten=0){const pts=[];const n=14;for(let k=0;k<n;k++){const a=k/n*2*Math.PI;let rr=r*(1-.35*Math.abs(Math.sin(a)));if(eaten&&Math.cos(a)>.2)rr*=1-eaten*.55*(.6+.4*Math.sin(a*5));pts.push([c[0]+rr*Math.cos(a),c[1]+.04*Math.sin(a*2),c[2]+r*.45*Math.sin(a)]);}poly(pts,cl,1,tag);rod(add(c,[-r,0,0]),add(c,[r*.9,0,0]),.012,'#3E7A2E',1);}
+/* ===== الحيوانات ===== */
+function butterfly(p,s,flap,tag,a=1){const cl=C(tag,'#2B2B2B');rod(add(p,[-.28*s,0,0]),add(p,[.24*s,0,0]),.04*s,cl,a,tag);ball(add(p,[.28*s,.02*s,0]),.06*s,cl,a,tag);
+  rod(add(p,[.3*s,.05*s,0]),add(p,[.45*s,.22*s,.06*s]),.008*s,'#2B2B2B',a);rod(add(p,[.3*s,.05*s,0]),add(p,[.45*s,.22*s,-.06*s]),.008*s,'#2B2B2B',a);
+  [1,-1].forEach(sd=>{const d=[0,Math.sin(flap),sd*Math.cos(flap)];const W=(b1,b2,L,ox,col)=>poly([add(p,[b1*s,0,0]),add(p,[b2*s,0,0]),add(p,[(b2+ox)*s+d[0]*L*s,d[1]*L*s,d[2]*L*s]),add(p,[(b1+ox*.3)*s+d[0]*L*.9*s,d[1]*L*.9*s,d[2]*L*.9*s])],C(tag,col),.95*a,tag);
+    W(-.02,.2,.62,.12,'#F08A24');W(-.24,-.02,.45,-.1,'#E06A1A');ball(add(p,[.12*s,d[1]*.45*s,d[2]*.45*s]),.05*s,'#1E1E1E',a);});}
+function eggs(c,n,cl='#E9E4C8',r=.05,tag=null,spread=.18){for(let k=0;k<n;k++)ball([c[0]+(HR(k,1)-.5)*spread*2,c[1]+r,c[2]+(HR(k,2)-.5)*spread*2],r,cl,1,tag);}
+function caterpillar(p,s,t,tag){const n=9;for(let k=0;k<n;k++){const x=-k*.11*s,y=Math.max(0,Math.sin(t*4-k*.7))*.05*s;ball(add(p,[x,y+.07*s,0]),.075*s,C(tag,k===0?'#3A5A1A':k%2?'#7CC352':'#5FA83A'),1,tag);if(k%2)ball(add(p,[x,y+.13*s,0]),.025*s,'#1E1E1E',1);}}
+function chrysalis(p,s,see,tag){rod(add(p,[0,.6*s,0]),add(p,[0,.38*s,0]),.012*s,'#6B4A2B',1);ellip(p,.12*s,.26*s,.12*s,C(tag,'#7CC9A0'),see?.45:1,tag,6,10);
+  if(see)[1,-1].forEach(sd=>poly([add(p,[0,.1*s,0]),add(p,[0,-.15*s,0]),add(p,[.02*s,-.05*s,sd*.1*s*see]),add(p,[.02*s,.12*s,sd*.09*s*see])],'#F08A24',.9));}
+function locust(p,s,wing,tag,cl0='#7FA34A'){const cl=C(tag,cl0);ellip(add(p,[0,.1*s,0]),.38*s,.1*s,.1*s,cl,1,tag,5,8);ellip(add(p,[.42*s,.14*s,0]),.12*s,.12*s,.1*s,cl,1,tag,4,6);ball(add(p,[.5*s,.2*s,.06*s]),.03*s,'#1E1E1E',1);
+  rod(add(p,[.5*s,.24*s,.03*s]),add(p,[.75*s,.5*s,.08*s]),.008*s,'#5A4A2A',1);rod(add(p,[.5*s,.24*s,-.03*s]),add(p,[.75*s,.5*s,-.08*s]),.008*s,'#5A4A2A',1);
+  [1,-1].forEach(sd=>{rod(add(p,[-.05*s,.08*s,sd*.08*s]),add(p,[-.25*s,.38*s,sd*.16*s]),.025*s,cl,1,tag);rod(add(p,[-.25*s,.38*s,sd*.16*s]),add(p,[-.42*s,GY-p[1]+.02,sd*.2*s]),.015*s,cl,1,tag);
+    [.15,.28].forEach(x=>rod(add(p,[x*s,.06*s,sd*.06*s]),add(p,[(x+.06)*s,GY-p[1]+.02,sd*.18*s]),.012*s,cl,1,tag));
+    if(wing>0){const L=wing*.6;poly([add(p,[.25*s,.2*s,sd*.02*s]),add(p,[(.25-L)*s,.22*s,sd*.03*s]),add(p,[(.25-L)*s,.18*s,sd*.12*s]),add(p,[.2*s,.17*s,sd*.08*s])],C(tag,'#A7865A'),.95,tag);}});}
+function tadpole(p,s,t,legs,tail,tag){const cl=C(tag,'#4A4A38');ellip(p,.16*s,.12*s,.13*s,cl,1,tag,5,8);ball(add(p,[.1*s,.06*s,.08*s]),.025*s,'#111',1);
+  const T=tail*.5*s,w=Math.sin(t*10)*.08*s;if(tail>.05)poly([add(p,[-.12*s,.05*s,0]),add(p,[-.12*s-T,.02*s,w]),add(p,[-.12*s-T,-.02*s,w]),add(p,[-.12*s,-.05*s,0])],C(tag,'#6B6A50'),.95,tag);
+  if(legs>0)[1,-1].forEach(sd=>{rod(add(p,[-.08*s,-.04*s,sd*.08*s]),add(p,[-.18*s,-.12*s*legs,sd*.18*s*legs]),.02*s,cl,1,tag);if(legs>.5)rod(add(p,[.06*s,-.06*s,sd*.08*s]),add(p,[.14*s,-.14*s*(legs-.5)*2,sd*.15*s]),.016*s,cl,1,tag);});}
+function frog(p,s,tag,hop=0){const cl=C(tag,'#5E8C3A'),y=Math.max(0,Math.sin(hop))*.25*s;const q=add(p,[0,y,0]);ellip(add(q,[0,.18*s,0]),.3*s,.17*s,.24*s,cl,1,tag,6,9);ellip(add(q,[.26*s,.26*s,0]),.15*s,.11*s,.17*s,cl,1,tag,5,8);
+  [1,-1].forEach(sd=>{ball(add(q,[.3*s,.37*s,sd*.1*s]),.05*s,'#E8D24A',1);ball(add(q,[.32*s,.38*s,sd*.11*s]),.025*s,'#111',1);
+    rod(add(q,[-.15*s,.12*s,sd*.18*s]),add(q,[-.05*s,.02*s,sd*.38*s]),.05*s,cl,1,tag);rod(add(q,[-.05*s,.02*s,sd*.38*s]),add(q,[-.35*s,0,sd*.3*s]),.035*s,cl,1,tag);rod(add(q,[.18*s,.1*s,sd*.15*s]),add(q,[.28*s,0,sd*.22*s]),.03*s,cl,1,tag);});}
+function camel(p,s,tag,a=1,belly=0){const cl=C(tag,'#D6B27A'),y=p[1];const leg=.9*s;const b=add(p,[0,leg+.25*s,0]);
+  ellip(b,.62*s,.3*s,.3*s,cl,a,tag,6,10);ellip(add(b,[-.05*s,.28*s,0]),.28*s,.22*s,.2*s,cl,a,tag,5,8);
+  rod(add(b,[.5*s,.1*s,0]),add(b,[.78*s,.55*s,0]),.09*s,cl,a,tag);ellip(add(b,[.88*s,.62*s,0]),.2*s,.09*s,.09*s,cl,a,tag,4,7);ball(add(b,[.92*s,.68*s,.07*s]),.02*s,'#2B2B2B',a);
+  rod(add(b,[-.6*s,.05*s,0]),add(b,[-.72*s,-.3*s,0]),.025*s,cl,a,tag);
+  [[.4,1],[.4,-1],[-.4,1],[-.4,-1]].forEach(([x,sd])=>rod(add(b,[x*s,-.15*s,sd*.16*s]),[b[0]+x*s,y,b[2]+sd*.18*s],.055*s,cl,a,tag));
+  if(belly>0){ellip(add(b,[0,-.02*s,0]),.25*s*belly+.02,.15*s*belly+.02,.15*s*belly+.02,'#F2B8A8',.95,null,5,8);}}
+const ORG={butter:{n:'الفراشة',d:'حشرة تمر بالتحوّل الكامل: بيضة، ثم يرقة، ثم عذراء، ثم فراشة مكتملة النمو.'},
+ locust:{n:'الجرادة',d:'حشرة تمر بالتحوّل الناقص: بيضة، ثم حورية، ثم جرادة مكتملة النمو.'},
+ frog:{n:'الضفدع',d:'من البرمائيات؛ يمر بعملية التحوّل: بيوض مخصبة في الماء، ثم أبو ذنيبة، ثم ضفدع غير بالغ، ثم ضفدع بالغ.'},
+ camel:{n:'الجمل',d:'من الثدييات؛ ينمو الجنين داخل جسم الأم، ويولد صغيرًا يشبه أبويه، ثم ينمو حتى يصبح بالغًا.'}};
+/* ===== الرحلات ===== */
+const LF=[0,0,0];
+const TOURS={
+ butter:[
+  {o:[],n:'البيوض',dur:6,t:'تدخل بعض الحيوانات، ومنها الفراش والذباب والنحل، في عملية التحوّل الكامل، وهي أربع مراحل مميزة. تبدأ بالبيضة.',x:'🥚 تضع الفراشة بيوضها على ورقة نبات.',d(u,t){leaf(LF);const p=mix3([1.4,1,0],[.1,.25,0],Math.min(1,u*1.6));butterfly(p,.8,Math.sin(t*12)*.6,'butter');if(u>.6)eggs([.05,0,0],Math.round((u-.6)*25),'#E9E4C8',.04);return [.05,.05,0];}},
+  {o:[],n:'اليرقة',dur:6,t:'تخرج الفراشة من البيضة على هيئة يرقة منتفخة غير مكتملة النمو، ولا تشبه الفراشة البالغة أبدًا؛ فهي تشبه الدودة وليس لها أجنحة.',x:'🐛 يرقة صغيرة تفقس من البيضة.',d(u,t){leaf(LF);eggs([.05,0,0],10-Math.round(u*6),'#E9E4C8',.04);caterpillar([.1+u*.15,0,0],.4+u*.15,t,'lar');return [.1,.1,0];}},
+  {o:[],n:'اليرقة تتغذى وتنمو',dur:7,t:'بعد الفقس تتغذى اليرقة باستمرار، وكلما ازداد نموها ازداد تمدد جلدها الخارجي. وتتغذى غالبًا على أغذية مختلفة عن تلك التي تتغذى عليها الفراشة البالغة.',x:'🍃 اليرقة تأكل الورقة وتكبر.',d(u,t){leaf(LF,1.1,'#5FB04A',null,u);caterpillar([.3+u*.3,0,0],.55+u*.6,t,'lar');return [.3,.15,0];}},
+  {o:[],n:'العذراء',dur:6,t:'المرحلة التالية من دورة الحياة هي مرحلة العذراء، وفيها يغلّف المخلوق بشرنقة صلبة.',x:'🟢 اليرقة تتحول إلى عذراء معلّقة.',d(u,t){leaf(LF,1.1,'#5FB04A',null,1);rod([-.6,1.2,0],[.9,1.2,0],.03,'#6B4A2B',1);if(u<.5)caterpillar(mix3([.6,0,0],[.25,.85,0],u*2),1.1-u,t,null);else chrysalis([.25,.6,0],1.4,0,null);return [.25,.6,0];}},
+  {o:[],n:'داخل الشرنقة',dur:7,t:'لا تُعدّ العذراء مرحلة سكون، بل إن المخلوق داخل الشرنقة يكون نشطًا جدًا؛ حيث يتغير تركيب الجسم الداخلي، وتظهر الأجنحة وأجزاء الفم والأرجل الجديدة.',x:'🔍 داخل الشرنقة: تتكوّن الأجنحة.',d(u){rod([-.6,1.2,0],[.9,1.2,0],.03,'#6B4A2B',1);leaf(LF,1.1,'#5FB04A',null,1);chrysalis([.25,.6,0],1.4,u,null);return [.25,.6,0];}},
+  {o:[],n:'فراشة مكتملة النمو',dur:7,t:'ثم تخرج فراشة مكتملة النمو من الشرنقة.',x:'🦋 تخرج الفراشة، وتنشر أجنحتها، ثم تطير.',d(u,t){rod([-.6,1.2,0],[.9,1.2,0],.03,'#6B4A2B',1);leaf(LF,1.1,'#5FB04A',null,1);ellip([.25,.6,0],.12,.26,.12,'#B8D8C4',.6,null,5,8);const p=u<.4?[.28,.55-u*.3,.05]:mix3([.28,.43,.05],[1.2,1.5,.4],(u-.4)/.6);butterfly(p,.8,u<.4?1.2-u*2:Math.sin(t*12)*.6,'butter');return p;}},
+  {o:[],n:'وتستمر الدورة',dur:6,t:'تضع الفراشة البالغة بيوضًا جديدة، فتبدأ دورة الحياة من جديد. ودورة الحياة سلسلة من مراحل النمو المختلفة التي يمر بها المخلوق الحي.',x:'🔁 بيضة ← يرقة ← عذراء ← فراشة ← بيضة…',d(u,t){const L2=[2.2,0,.4];leaf(L2,.9,'#6CBB55');const p=mix3([1.2,1.5,.4],[2.25,.25,.4],Math.min(1,u*1.5));butterfly(p,.8,Math.sin(t*12)*.6,'butter');if(u>.65)eggs([2.2,0,.4],Math.round((u-.65)*25),'#E9E4C8',.04);return [2.2,.1,.4];}}],
+ locust:[
+  {o:[],n:'البيوض',dur:5,t:'بعض أنواع الحشرات، ومنها الجرادة واليعسوب والنمل الأبيض، تدخل عملية التحوّل الناقص؛ حيث يمر المخلوق بثلاث مراحل فقط بدلًا من أربع.',x:'🥚 بيوض الجرادة في التربة.',d(u){eggs([0,GY,0],12,'#D7B66A',.06,null,.3);return [0,GY+.1,0];}},
+  {o:[],n:'الحورية',dur:6,t:'تأخذ الجرادة شكل جسم الحورية بعد الفقس من البيضة مباشرة، وهي مرحلة تشبه فيها شكل المخلوق المكتمل النمو، ولكنها أصغر حجمًا، وتفتقر إلى الأجنحة وإلى أعضاء التكاثر.',x:'🦗 حورية صغيرة بلا أجنحة.',d(u){eggs([0,GY,0],12-Math.round(u*8),'#D7B66A',.06,null,.3);locust([.5,GY,0],.35+u*.1,0,'locust','#9BC55A');return [.5,GY+.2,0];}},
+  {o:[],n:'الانسلاخ',dur:7,t:'لا تنمو الحشرات تدريجيًا كالثدييات أو الطيور؛ وذلك بسبب وجود الهيكل الخارجي. لذا فهي تنسلخ من هيكلها الصلب مرة واحدة لتغطي مساحة لنمو جسمها.',x:'🔄 تخرج الحورية من هيكلها القديم أكبر حجمًا.',d(u){const old=[.5,GY,0];locust(old,.45,0,null,'#D9D0A8');locust([.5+u*.5,GY,u*.3],.45+u*.15,u*.2,'locust','#9BC55A');return [.8,GY+.25,.15];}},
+  {o:[],n:'تظهر الأجنحة شيئًا فشيئًا',dur:7,t:'الجرادة تمر بعدة انسلاخات قبل أن تصل إلى مرحلة اكتمال النمو (البلوغ). في كل مرة تظهر الأجنحة شيئًا فشيئًا.',x:'🪽 الأجنحة تطول مع كل انسلاخ.',d(u){locust([.6,GY,0],.6+u*.25,.2+u*.45,'locust',lerpC('#9BC55A','#8E9A4E',u));return [.6,GY+.3,0];}},
+  {o:[],n:'جرادة مكتملة النمو',dur:6,t:'تصل الجرادة إلى المرحلة النهائية التي تكون بالغة عندها، فتكتمل أجنحتها وأعضاء تكاثرها.',x:'🔁 بيضة ← حورية ← جرادة بالغة ← بيضة…',d(u){locust([.6,GY,0],.9,1,'locust','#8A7A4A');if(u>.5)eggs([-.5,GY,.3],Math.round((u-.5)*20),'#D7B66A',.06,null,.25);return [.6,GY+.35,0];}}],
+ frog:[
+  {o:[],n:'الإخصاب الخارجي',dur:7,t:'في أثناء تزاوج ضفادع المستنقعات تطلق الأنثى أمشاجها في الماء، ثم يطلق الذكر أمشاجه فوق أمشاج الأنثى، ويحدث الإخصاب. ويسمّى الاندماج الذي يحدث بين المشيجين خارج الجسم الإخصاب الخارجي.',x:'💧 الإخصاب يحدث في الماء خارج جسم الأنثى.',d(u){water([0,GY+.01,0],2.4);frog([-.9,GY+.02,-.3],1,'frog');frog([-.5,GY+.02,.3],.85,'frog');if(u>.2)eggs([.3,GY+.02,0],Math.round((u-.2)*40),'#2E2E2E',.035,null,.28);if(u>.2)eggs([.3,GY+.0,0],Math.round((u-.2)*40),'#DDEBEA',.07,null,.28);return [.2,GY+.1,0];}},
+  {o:[],n:'بيوض مخصبة',dur:5,t:'تنتج الأسماك والبرمائيات أعدادًا هائلة من البيوض؛ لأنه كلما كانت الأعداد كبيرة زادت فرصة حدوث الإخصاب. وتحيط ببيوض الضفادع طبقة تشبه الهلام لحمايتها.',x:'⚫ بيوض كثيرة في كتلة هلامية.',d(u){water([0,GY+.01,0],2.4);eggs([0,GY+.0,0],34,'#DDEBEA',.07,null,.35);eggs([0,GY+.02,0],34,'#2E2E2E',.035,null,.35);return [0,GY+.1,0];}},
+  {o:[],n:'أبو ذنيبة',dur:7,t:'تفقس البيوض فيخرج أبو ذنيبة. يعيش في الماء، وله ذيل يسبح به، ولا يشبه الضفدع البالغ.',x:'〰️ أبو ذنيبة يسبح بذيله في الماء.',d(u,t){water([0,GY+.01,0],2.4);eggs([0,GY,0],Math.round(14*(1-u)),'#DDEBEA',.07,null,.35);const p=[Math.cos(t*.6)*.8,GY+.15,Math.sin(t*.6)*.5];tadpole(p,1+u*.4,t,0,1,'tad');return p;}},
+  {o:[],n:'تظهر الأرجل',dur:7,t:'ينمو أبو ذنيبة، فتظهر الأرجل الخلفية أولًا، ثم الأرجل الأمامية.',x:'🦵 الأرجل الخلفية ثم الأمامية.',d(u,t){water([0,GY+.01,0],2.4);const p=[Math.cos(t*.5)*.7,GY+.18,Math.sin(t*.5)*.45];tadpole(p,1.5,t,u,1-u*.3,'tad');return p;}},
+  {o:[],n:'ضفدع غير بالغ',dur:7,t:'يقصر الذيل حتى يختفي، ويتغيّر شكل الجسم، فيصبح ضفدعًا صغيرًا غير بالغ يستطيع أن يخرج من الماء.',x:'🐸 الذيل يختفي، والضفدع الصغير يخرج إلى اليابسة.',d(u,t){water([0,GY+.01,0],2.4);if(u<.5){const p=mix3([.3,GY+.18,0],[1.9,GY+.12,.2],u*2);tadpole(p,1.5,t,1,.7-u*1.4,'tad');return p;}const p=[1.9+(u-.5)*1.2,GY+.02,.2];frog(p,.5,'frog',(u-.5)*12);return p;}},
+  {o:[],n:'ضفدع بالغ',dur:6,t:'ينمو الضفدع الصغير حتى يصبح ضفدعًا بالغًا مكتمل النمو، ثم يعود إلى الماء ليتكاثر، فتبدأ الدورة من جديد.',x:'🔁 بيوض ← أبو ذنيبة ← ضفدع غير بالغ ← ضفدع بالغ…',d(u){water([0,GY+.01,0],2.4);const p=[2.5,GY+.02,.2];frog(p,.5+u*.5,'frog');return add(p,[0,.3,0]);}}],
+ camel:[
+  {o:[],n:'الإخصاب الداخلي',dur:6,t:'مكّن الله تعالى الزواحف والطيور والثدييات من التغلب على مشكلة الجفاف بالإخصاب الداخلي، وهو عملية اندماج المشيج المذكر مع المشيج المؤنث داخل جسم الأنثى.',x:'🔒 الإخصاب داخل جسم الأم، فتحمي البيضة المخصبة من الجفاف.',d(u){camel([0,GY,0],1,'camel',.45,.05+u*.1);return [0,GY+1.1,0];}},
+  {o:[],n:'الجنين داخل جسم الأم',dur:7,t:'تنمو البيوض المخصبة في معظم الثدييات داخل جسم الأم لتكوين الأجنة. وتؤمّن الثدييات لأجنتها الحماية والغذاء في أثناء نمو الجنين داخل جسم الأم.',x:'🤰 الجنين يكبر داخل جسم الأم.',d(u){camel([0,GY,0],1,'camel',.45,.15+u*.85);return [0,GY+1.1,0];}},
+  {o:[],n:'الولادة',dur:6,t:'تتكاثر جميع الثدييات بالولادة، إلا آكل النمل ومنقار البط؛ فإنهما يتكاثران بالبيض.',x:'🐪 يولد صغير الجمل (الحُوار).',d(u){camel([0,GY,0],1,'camel',1);camel([-1.1+u*.2,GY,.9],.35+u*.05,'baby',Math.min(1,u*2));return [-.9,GY+.6,.9];}},
+  {o:[],n:'صغير يشبه أبويه',dur:6,t:'يشبه صغير الثدييات أبويه منذ ولادته، فلا يمر بتحوّل. ويرضع الصغير الحليب من أمه.',x:'🍼 الحُوار يشبه أمه، لكنه أصغر.',d(u){camel([0,GY,0],1,'camel',1);camel([.2,GY,.9],.42,'baby',1);return [.2,GY+.6,.9];}},
+  {o:[],n:'ينمو حتى البلوغ',dur:7,t:'عندما تبدأ معظم الحيوانات حياتها تستمر في النمو لتصبح أفرادًا بالغة. فالصغير يكبر تدريجيًا حتى يصبح جملًا بالغًا يتكاثر.',x:'🔁 إخصاب داخلي ← جنين ← ولادة ← صغير ← بالغ…',d(u){camel([-1.2,GY,-.4],1,'camel',1);const s=.42+u*.55;camel([.9,GY,.6],s,'baby',1);return [.9,GY+s*1.2,.6];}}]};
+const TL=k=>TOURS[k];
+const SCN={all:{t:[0,-.1,0],d:5.6},butter:{t:[.3,.3,0],d:2.7},locust:{t:[.5,-.65,0],d:2.3},frog:{t:[.4,-.8,0],d:2.9},camel:{t:[0,.1,.2],d:5},cmp:{t:[0,-.1,0],d:5.6}};
+const ALLP={butter:[-1.7,.45,-.2],locust:[-.8,GY,.7],frog:[.5,GY+.02,.7],camel:[1.6,GY,-.7]};
+function scene(t){const sc=S.scene;
+  if(sc==='frog'){ground(4.5,'#7C9A55');}else ground(sc==='camel'?6:4.5,sc==='camel'?'#D8BE8A':'#7C9A55');
+  if(S.tour)return;
+  if(sc==='all'||sc==='cmp'){leaf([-1.7,0,-.2],.8);butterfly(ALLP.butter,1.1,Math.sin(t*6)*.5,'butter');locust(ALLP.locust,1.1,1,'locust','#8A7A4A');water([.5,GY+.01,.7],.9);frog(ALLP.frog,.8,'frog');camel(ALLP.camel,.95,'camel');}
+  else if(sc==='butter'){leaf(LF);butterfly([.2,.6,.2],.8,Math.sin(t*6)*.5,'butter');}
+  else if(sc==='locust'){locust([.5,GY,0],.9,1,'locust','#8A7A4A');}
+  else if(sc==='frog'){water([0,GY+.01,0],2.4);frog([.6,GY+.02,0],.9,'frog');}
+  else if(sc==='camel'){camel([0,GY,0],1,'camel');}
+  if(S.sel&&ALLP[S.sel]&&(sc==='all'||sc==='cmp'))label(add(ALLP[S.sel],[0,S.sel==='camel'?2.2:.6,0]),ORG[S.sel].n);}
+function drawTour(t){const T=S.tour;if(!T)return;const st=TL(T.k)[T.i],u=Math.min(1,(performance.now()-T.t0)/1000/(st.dur/(reduce?4:1)));
+  const p=st.d(u,t);S.focus=p;S.flash=new Set(st.o);if(p)label(p,st.n);T.u=u;const nb=$('#tnx');if(nb){const ready=u>=1;if(nb.disabled===ready)nb.disabled=!ready;}}
+function tourUI(){const T=S.tour,L=TL(T.k),st=L[T.i],w=$('#watch');const last=T.i===L.length-1;
+  w.innerHTML=`<div class="tstep"><span class="tno">${ar(T.i+1)}/${ar(L.length)}</span><b>${st.n}</b></div>
+   <p class="ttx">${st.t}</p><p class="tfd">${st.x}</p>
+   <div class="tnav"><button class="tb" type="button" id="tpv" ${T.i?'':'disabled'} aria-label="الخطوة السابقة">→ السابق</button><button class="tb rp" type="button" id="trp" aria-label="أعد هذه الخطوة">↺</button>
+   ${last?`<button class="tb go2" type="button" id="tq">إلى السؤال ←</button>`:`<button class="tb go2" type="button" id="tnx" disabled>التالي ←</button>`}</div>`;
+  $('#tpv').onclick=()=>tourGo(T.i-1);$('#trp').onclick=()=>tourGo(T.i);if(last)$('#tq').onclick=()=>{S.tour=null;S.flash=null;pane(3);};else $('#tnx').onclick=()=>tourGo(T.i+1);}
+function tourGo(i){S.tour={k:S.tour.k,i,t0:performance.now()};tourUI();}
+function startTour(k){S.sel=null;pane(2);mini(false);S.tour={k,i:0,t0:performance.now()};tourUI();}
+const SORTS={cmp:{bins:['الفراشة','الجرادة','الضفدع','الجمل'],items:[
+ ['أربع مراحل، منها العذراء',0,'التحوّل الكامل: بيضة، يرقة، عذراء، بالغ.'],
+ ['ثلاث مراحل: بيضة، حورية، بالغ',1,'التحوّل الناقص.'],
+ ['الصغير يشبه الدودة ولا يشبه البالغ أبدًا',0,'اليرقة لا تشبه الفراشة البالغة.'],
+ ['تنسلخ عدة مرات وتظهر أجنحتها تدريجيًا',1,'الحورية تنسلخ لتنمو.'],
+ ['الإخصاب خارجي في الماء',2,'تطلق الأنثى أمشاجها في الماء.'],
+ ['الصغير يعيش في الماء وله ذيل',2,'أبو ذنيبة يعيش في الماء.'],
+ ['ينمو الجنين داخل جسم الأم',3,'الثدييات تحمي أجنتها داخل جسم الأم.'],
+ ['الصغير يشبه أبويه منذ ولادته',3,'لا يمر صغير الجمل بتحوّل.']]}};
+
+/* ===== الحالة والمهام ===== */
+const S={scene:'all',sel:null,mi:0,seen:new Set(),tour:null,flash:null,focus:null};
+const INFO=k=>ORG[k];
+const ST5='بيضة';
+const MS=[
+ {t:'استكشف',k:'استكشاف حر',explore:true,scene:'all'},
+ {t:'الفراشة',k:'المهمة ١ · التحوّل الكامل',scene:'butter',intro:'كيف تصبح البيضة الصغيرة فراشة؟ رتّب مراحل دورة حياة الفراشة أولًا.',order:['البيضة','اليرقة','العذراء','فراشة مكتملة النمو'],mix:[2,0,3,1],anim:'butter',
+  q:'أقارن (من الكتاب): فيمَ تختلف مرحلة اليرقة عن مرحلة الفراشة المكتملة النمو؟',o:['اليرقة تشبه الدودة وليس لها أجنحة، وتتغذى على أغذية مختلفة عن الفراشة البالغة','اليرقة فراشة صغيرة لها أجنحة قصيرة','لا فرق بينهما إلا في الحجم'],c:0,
+  h:{1:'هل رأيت أجنحة على اليرقة؟',2:'قارن الشكل والأجنحة والغذاء، لا الحجم فقط.'},
+  rule:'<b>التحوّل الكامل</b>تمر بعض الحيوانات، ومنها البرمائيات والحشرات، بعملية تسمّى التحوّل، وهي سلسلة من مراحل النمو المميزة المختلف بعضها عن بعض. والتحوّل نوعان: كامل وناقص. يمر الفراش والذباب والنحل في التحوّل الكامل بأربع مراحل: البيضة، فاليرقة، فالعذراء، فالحيوان البالغ.'},
+ {t:'الجرادة',k:'المهمة ٢ · التحوّل الناقص',scene:'locust',intro:'جرادة صغيرة تشبه أمها، لكن بلا أجنحة. شغّل وراقب كيف تنمو.',anim:'locust',
+  q:'التفكير الناقد (من الكتاب): لماذا لا تنمو الجرادة تدريجيًا كالثدييات والزواحف والطيور؟',o:['بسبب الهيكل الخارجي الصلب؛ فهي تنسلخ منه لتغطي مساحة لنمو جسمها','لأنها لا تتغذى في مرحلة الحورية','لأنها تنمو داخل شرنقة مثل الفراشة'],c:0,
+  h:{1:'الحورية تتغذى وتكبر. ماذا تركت خلفها في كل انسلاخ؟',2:'الجرادة لا تمر بمرحلة العذراء.'},
+  rule:'<b>التحوّل الناقص</b>بعض أنواع الحشرات، ومنها الجرادة واليعسوب والنمل الأبيض، تدخل عملية التحوّل الناقص؛ حيث يمر المخلوق بثلاث مراحل فقط: البيضة، فالحورية، فالحيوان المكتمل النمو. والحورية تشبه المخلوق المكتمل النمو، لكنها أصغر حجمًا، وتفتقر إلى الأجنحة وإلى أعضاء التكاثر.'},
+ {t:'الضفدع',k:'المهمة ٣ · دورة حياة البرمائيات',scene:'frog',intro:'بركة فيها ضفادع. شغّل وراقب كيف يتحوّل البيض إلى ضفدع.',anim:'frog',
+  q:'التفكير الناقد (من الكتاب): لماذا تضع البرمائيات بيوضًا كثيرة في الماء؟',o:['لأن الإخصاب خارجي في الماء، فتقل فرصة التقاء الأمشاج، وقد تتعرض البيوض لخطر كبير؛ فالأعداد الكبيرة تزيد فرصة البقاء','لأن الماء يصنع البيوض','لأن البيوض في الماء لا تحتاج إلى إخصاب'],c:0,
+  h:{1:'الأنثى هي التي تضع البيوض.',2:'رأيت الذكر يطلق أمشاجه فوق البيوض؛ أي إن الإخصاب ضروري.'},
+  rule:'<b>دورة حياة الضفدع</b>يحدث الإخصاب الخارجي في البرمائيات ومعظم الأسماك؛ حيث تطرح خلاياها الجنسية في الماء. والإخصاب الخارجي محفوف بالمخاطر؛ لأن كميات الماء الضخمة تقلل فرصة التقاء الأمشاج، لذا تنتج الأسماك والبرمائيات أعدادًا هائلة من البيوض. وتمر دورة حياة الضفدع بمراحل: بيوض مخصبة، ثم أبو ذنيبة، ثم ضفدع غير بالغ، ثم ضفدع بالغ.'},
+ {t:'الجمل',k:'المهمة ٤ · دورة حياة الثدييات',scene:'camel',intro:'ناقة في الصحراء. شغّل وراقب كيف ينمو صغيرها.',anim:'camel',
+  q:'أقارن: فيمَ تختلف دورة حياة الجمل عن دورة حياة الضفدع؟',o:['الجمل: إخصاب داخلي، وينمو الجنين داخل جسم الأم، ويولد صغيرًا يشبه أبويه. الضفدع: إخصاب خارجي في الماء، ويمر بالتحوّل','الجمل يضع بيوضًا كثيرة في الماء مثل الضفدع','الاثنان يمران بمرحلة أبي ذنيبة'],c:0,
+  h:{1:'الثدييات تتكاثر بالولادة إلا آكل النمل ومنقار البط.',2:'هل يشبه صغير الجمل أبا ذنيبة؟'},
+  rule:'<b>الثدييات</b>تنمو البيوض المخصبة في معظم الثدييات داخل جسم الأم لتكوين الأجنة، وتؤمّن الثدييات لأجنتها الحماية والغذاء في أثناء نمو الجنين داخل جسم الأم. وتتكاثر جميع الثدييات بالولادة إلا آكل النمل ومنقار البط؛ فإنهما يتكاثران بالبيض.'},
+ {t:'أقارن وأتوقّع',k:'المهمة ٥ · مقارنة دورات الحياة',scene:'cmp',intro:'صنّف كل صفة: لأي حيوان هي؟',sort:'cmp',
+  q:'أتوقّع: وجدتَ حشرة داخل شرنقة صلبة معلّقة بغصن. ماذا سيخرج منها؟',o:['حشرة مكتملة النمو لها أجنحة','يرقة صغيرة','بيضة'],c:0,
+  h:{1:'اليرقة مرحلة تسبق العذراء، لا تليها.',2:'البيضة أول مرحلة، والعذراء قبل الأخيرة.'},
+  rule:'<b>دورات حياة الحيوانات</b>دورة الحياة سلسلة من مراحل النمو المختلفة التي يمر بها المخلوق الحي من مرحلة تكوّنه إلى مرحلة البلوغ. بعض الحيوانات يمر بتحوّل كامل (الفراشة)، وبعضها بتحوّل ناقص (الجرادة)، والبرمائيات تمر بالتحوّل وصغارها تعيش في الماء (الضفدع)، والثدييات ينمو جنينها داخل جسم الأم ويولد صغيرها يشبه أبويه (الجمل).'}];
+const done=new Set();
+function nav(){$('#ms').innerHTML=MS.map((m,i)=>`<button type="button" data-m="${i}" class="${i===S.mi?'on':''} ${done.has(i)?'done':''}">${done.has(i)?'✓ ':''}${m.t}</button>`).join('');$('#ms').querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>open(+b.dataset.m));}
+const toast=t=>{const el=$('#toast');el.textContent=t;el.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(()=>el.hidden=true,2800);};
+let seqI=0,sortN=0;
+function open(i){S.tour=null;S.mi=i;S.sel=null;S.selAt=null;S.flash=null;seqI=0;sortN=0;const m=MS[i],c=$('#cin');S.scene=m.scene;nav();
+  if(m.explore){renderExplore();return;}
+  let task='';if(m.order)task=`<p class="step">رتّب المراحل (اضغط بالترتيب):</p><div class="opts" id="od">${m.mix.map(j=>`<button class="opt" type="button" data-o="${j}">${m.order[j]}</button>`).join('')}</div><div class="seq" id="sq">${m.order.map((_,j)=>`<span>${ar(j+1)}</span>`).join('')}</div><p class="fb" id="sf"></p>`;
+  else if(m.seq)task=`<p class="step">اضغط على أجزاء الزهرة بالترتيب في المجسّم:</p><div class="seq" id="sq">${m.seq.map((k,j)=>`<span>${ar(j+1)}</span>`).join('')}</div><p class="fb" id="sf"></p>`;
+  else if(m.sort){const so=SORTS[m.sort];task=`<div class="srt">${so.items.map(([t,a],j)=>`<div class="srow" data-r="${j}"><span>${t}</span><span class="sbt">${so.bins.map((b,k)=>`<button type="button" class="obtn" data-b="${k}">${b}</button>`).join('')}</span></div>`).join('')}</div><p class="fb" id="sf"></p>`;}
+  else task=`<button class="go" type="button" id="play">▶ شغّل</button>`;
+  c.innerHTML=`<div class="hd"><div><p class="kick">${m.k}</p><h2>${m.t}</h2></div><button class="tg" type="button" id="mn" aria-label="تصغير البطاقة">▾</button></div>
+   <div class="dots" id="dt"></div>
+   <div class="pane" id="p1"><p class="lead">${m.intro}</p>${task}</div>
+   <div class="pane" id="watch" hidden></div>
+   <div class="pane" id="qq" hidden><p class="step">${m.q}</p><div class="opts">${m.o.map((o,k)=>`<button class="opt" type="button" data-q="${k}">${o}</button>`).join('')}</div><p class="fb" id="qf"></p>${m.anim?`<button class="go full" type="button" id="replay2" style="background:transparent;color:var(--accent);border:1.5px solid var(--accent)">↺ شاهد الرحلة مرة أخرى</button>`:''}</div>
+   <div class="pane" id="rr" hidden><p class="fb ok">✓ صحيح!</p><p class="rule">${m.rule}</p>${i<MS.length-1?`<button class="go" type="button" id="nx">المهمة التالية ←</button>`:`<p class="small">أنهيت المهام. انتقل إلى «استكشف» لتراجع الحيوانات الأربعة.</p>`}</div>
+   <p class="src">📖 كتاب العلوم للصف الخامس ص٦٧–٧٢</p>`;
+  pane(1);$('#mn').onclick=()=>mini(!$('.card').classList.contains('mini'));
+  if(m.order){let oi=0;c.querySelectorAll('[data-o]').forEach(b=>b.onclick=()=>{const j=+b.dataset.o,f=$('#sf');if(j===oi){b.disabled=true;b.classList.add('right');const sp=$('#sq').children[oi];sp.className='f';sp.textContent=m.order[j];oi++;f.className='fb ok';f.textContent='صحيح.';if(oi===m.order.length){f.textContent='أحسنت! رتّبت المراحل. شاهد الرحلة.';startAnim();}}else{f.className='fb bad';f.textContent=oi===0?'ابدأ من أول مرحلة: ماذا تضع الفراشة على الورقة؟':'ليست هذه. ماذا يأتي بعد «'+m.order[oi-1]+'»؟';}});}
+  if($('#play'))$('#play').onclick=()=>{$('#play').disabled=true;startAnim();};
+  if($('#replay2'))$('#replay2').onclick=()=>startTour(m.anim);
+  if(m.sort){const so=SORTS[m.sort];c.querySelectorAll('.srow').forEach(r=>{const j=+r.dataset.r,[t,a,why]=so.items[j];r.querySelectorAll('[data-b]').forEach(b=>b.onclick=()=>{const f=$('#sf');
+    if(+b.dataset.b===a){b.classList.add('got');r.querySelectorAll('[data-b]').forEach(x=>x.disabled=true);r.classList.add('ok');sortN++;f.className='fb ok';f.textContent='صحيح. '+why;if(sortN===so.items.length){f.textContent='أحسنت! صنّفت الصفات كلها.';startAnim();}}
+    else{b.disabled=true;b.style.opacity=.4;f.className='fb bad';f.textContent='«'+t+'» ليست صفة '+so.bins[+b.dataset.b]+'. '+why;}});});}
+  c.querySelectorAll('[data-q]').forEach(b=>b.onclick=()=>{const k=+b.dataset.q,f=$('#qf');if(k===m.c){b.classList.add('right');c.querySelectorAll('[data-q]').forEach(x=>x.disabled=true);done.add(i);nav();pane(4);const nx=$('#nx');if(nx)nx.onclick=()=>open(i+1);}
+    else{b.classList.add('wrong');b.disabled=true;f.className='fb bad';f.textContent=m.h[k]||'راقب الرحلة مرة أخرى.';}});}
+function startAnim(){const m=MS[S.mi];if(m.anim){const k=m.anim;setTimeout(()=>startTour(k),600);}else setTimeout(()=>pane(3),700);}
+const SMALL=()=>W<900;
+function mini(on){const c=$('.card');c.classList.toggle('mini',!!on);const b=$('#mn');if(b){b.textContent=on?'▴':'▾';b.setAttribute('aria-label',on?'تكبير البطاقة':'تصغير البطاقة');}}
+function pane(n){const m=MS[S.mi];['p1','watch','qq','rr'].forEach((id,k)=>{const e=$('#'+id);if(e)e.hidden=k+1!==n;});
+  const lab=['أنفّذ','أراقب','أستنتج','القاعدة'];$('#dt').innerHTML=lab.map((l,k)=>`<i class="${k+1<n?'d':k+1===n?'c':''}"></i>`).join('')+`<span>${ar(n)}/٤ · ${lab[n-1]}</span>`;
+  mini(false);$('.cin').scrollTop=0;}
+function renderExplore(){const c=$('#cin');const all=Object.keys(ORG);mini(false);
+  c.innerHTML=`<p class="kick">استكشاف حر</p><h2>دورات حياة الحيوانات</h2><p class="lead">${S.sel?'':'تمر المخلوقات الحية بدورات حياة. اضغط على أي حيوان في المجسّم، أو على اسمه هنا.'}</p>
+   ${S.sel?`<p class="info"><b>${ORG[S.sel].n}</b>${ORG[S.sel].d}</p>`:''}
+   <p class="small">اكتشفت <b>${ar(S.seen.size)}</b> من ${ar(all.length)}.</p>
+   <div class="chips">${all.map(k=>`<button type="button" class="obtn ${S.sel===k?'sel':S.seen.has(k)?'got':''}" data-org="${k}">${S.seen.has(k)?'✓ ':''}${ORG[k].n}</button>`).join('')}</div>
+   <button class="go full" type="button" id="st1">ابدأ «الفراشة» ←</button><p class="src">📖 كتاب العلوم للصف الخامس ص٦٨–٧٢</p>`;$('#st1').onclick=()=>open(1);
+  c.querySelectorAll('[data-org]').forEach(b=>b.onclick=()=>{const k=b.dataset.org;S.sel=k;S.seen.add(k);renderExplore();c.scrollTop=0;});}
+/* الضغط */
+function tagAt(x,y){const inP=(p)=>{let c=false;for(let i=0,j=p.length-1;i<p.length;j=i++){if(((p[i][1]>y)!==(p[j][1]>y))&&(x<(p[j][0]-p[i][0])*(y-p[i][1])/(p[j][1]-p[i][1])+p[i][0]))c=!c;}return c;};
+  const dS=(a,b)=>{const vx=b[0]-a[0],vy=b[1]-a[1],t=Math.max(0,Math.min(1,((x-a[0])*vx+(y-a[1])*vy)/((vx*vx+vy*vy)||1)));return Math.hypot(x-a[0]-vx*t,y-a[1]-vy*t);};
+  const LOW={};let low=null;for(let i=HIT.length-1;i>=0;i--){const h=HIT[i];const ok=h.poly?inP(h.poly):h.c?Math.hypot(x-h.c[0],y-h.c[1])<h.c[2]:dS(h.seg[0],h.seg[1])<h.seg[2];if(!ok)continue;if(LOW[h.tag]){if(!low||LOW[h.tag]>LOW[low])low=h.tag;continue;}return h.tag;}return low;}
+function tap(x,y){if(S.tour)return;const k=tagAt(x,y);if(!k)return;const m=MS[S.mi];
+  if(m.explore){if(!ORG[k])return;S.sel=k;S.seen.add(k);renderExplore();$('#cin').scrollTop=0;return;}
+  if(ORG[k])S.sel=k;
+  if(false){const f=$('#sf');if(k===m.seq[seqI]){const sp=$('#sq').children[seqI];sp.className='f';sp.textContent=ORG[k].n;seqI++;f.className='fb ok';f.textContent='صحيح: '+ORG[k].n+'.';if(seqI===m.seq.length){f.textContent='أحسنت! رتّبت المسار. شاهد الرحلة.';startAnim();}}
+    else{f.className='fb bad';f.textContent=(seqI===0?'ليس من هنا تبدأ. ':'ليس بعد «'+ORG[m.seq[seqI-1]].n+'». ')+'تلميح: '+m.hint[m.seq[seqI]];}}
+  else if(INFO(k))toast(INFO(k).n+': '+INFO(k).d);}
+const ptr=new Map();let moved=0;
+cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);ptr.set(e.pointerId,[e.clientX,e.clientY]);moved=0;});
+cv.addEventListener('pointermove',e=>{if(!ptr.has(e.pointerId))return;const [px,py]=ptr.get(e.pointerId);const dx=e.clientX-px,dy=e.clientY-py;moved+=Math.abs(dx)+Math.abs(dy);ptr.set(e.pointerId,[e.clientX,e.clientY]);cam.yaw-=dx*.008;cam.pitch=Math.max(-.4,Math.min(1.1,cam.pitch+dy*.006));S.drag=performance.now();});
+cv.addEventListener('pointerup',e=>{ptr.delete(e.pointerId);if(moved<6)tap(e.clientX,e.clientY);});cv.addEventListener('pointercancel',e=>ptr.delete(e.pointerId));
+cv.addEventListener('wheel',e=>{e.preventDefault();S.zoom=Math.max(.5,Math.min(2,(S.zoom||1)*(1+Math.sign(e.deltaY)*.07)));},{passive:false});
+
+/* الحلقة */
+function frame(ms){place();const sc=SCN[S.scene];const f=S.tour&&S.focus?S.focus:null;const tgt=f?mix3(sc.t,f,.5):sc.t;for(let i=0;i<3;i++)cam.t[i]+=(tgt[i]-cam.t[i])*(reduce?1:.05);cam.dist+=(sc.d*(S.zoom||1)-cam.dist)*(reduce?1:.06);
+  cx.setTransform(DPR,0,0,DPR,0,0);const g=cx.createLinearGradient(0,0,0,H);g.addColorStop(0,S.scene==='camel'?'#F6D9A8':'#BFE3F5');g.addColorStop(1,S.scene==='camel'?'#FBEFD8':'#EEF6E3');cx.fillStyle=g;cx.fillRect(0,0,W,H);
+  const idle=!S.drag||performance.now()-S.drag>2500;if(idle&&!reduce)cam.yaw+=(Math.sin(ms/4500)*.45-cam.yaw)*.01;
+  scene(ms/1000);drawTour(ms/1000);flush();requestAnimationFrame(frame);}
+
+/* سحب البطاقة */
+(()=>{const g=$('#grip'),card=$('.card');let d=null;
+  const clamp=(x,y)=>{const r=card.getBoundingClientRect();return [Math.max(4,Math.min(innerWidth-r.width-4,x)),Math.max(4,Math.min(innerHeight-60,y))];};
+  g.addEventListener('pointerdown',e=>{g.setPointerCapture(e.pointerId);const r=card.getBoundingClientRect();d={dx:e.clientX-r.left,dy:e.clientY-r.top,w:r.width,moved:0};});
+  g.addEventListener('pointermove',e=>{if(!d)return;d.moved++;if(!card.classList.contains('moved')){card.classList.add('moved');card.style.width=d.w+'px';card.style.insetInline='auto';card.style.right='auto';card.style.bottom='auto';}
+    card.classList.add('drag');const [x,y]=clamp(e.clientX-d.dx,e.clientY-d.dy);card.style.left=x+'px';card.style.top=y+'px';});
+  const end=()=>{d=null;card.classList.remove('drag');};g.addEventListener('pointerup',end);g.addEventListener('pointercancel',end);
+  const reset=()=>{card.classList.remove('moved');['width','insetInline','right','bottom','left','top'].forEach(k=>card.style[k]='');};
+  g.addEventListener('dblclick',reset);
+  g.addEventListener('keydown',e=>{const st={ArrowUp:[0,-20],ArrowDown:[0,20],ArrowLeft:[-20,0],ArrowRight:[20,0]}[e.key];if(e.key==='Escape'){reset();return;}if(!st)return;e.preventDefault();const r=card.getBoundingClientRect();
+    if(!card.classList.contains('moved')){card.classList.add('moved');card.style.width=r.width+'px';card.style.insetInline='auto';card.style.right='auto';card.style.bottom='auto';}const [x,y]=clamp(r.left+st[0],r.top+st[1]);card.style.left=x+'px';card.style.top=y+'px';});
+  addEventListener('resize',()=>{if(card.classList.contains('moved')){const r=card.getBoundingClientRect();const [x,y]=clamp(r.left,r.top);card.style.left=x+'px';card.style.top=y+'px';}});})();
+open(0);requestAnimationFrame(frame);
+})();
+</script>
