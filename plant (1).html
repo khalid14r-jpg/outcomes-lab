@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>رحلة إلى داخل النبات</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@600;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: one full-bleed 3D stage whose backdrop darkens as the student dives from sunlit plant to microscopic cell; a breadcrumb rail on top and a label card at the bottom. */
+:root{--bg:#EEF4EA;--panel:rgba(255,255,255,.94);--ink:#14231A;--muted:#5A6B5F;--line:#D5E0D2;--accent:#2F8A3E;--accent-soft:#E2F2E0;--ok:#15803D;--ok-bg:#E6F6EA;--bad:#C2410C;--bad-bg:#FFF0E6;
+ --display:"Baloo Bhaijaan 2","IBM Plex Sans Arabic",system-ui,sans-serif;--body:"IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0E1612;--panel:rgba(20,30,25,.94);--ink:#E6F0E8;--muted:#9FB3A5;--line:#2C3B32;--accent:#6CCB77;--accent-soft:#1A3322;--ok:#4ADE80;--ok-bg:#12291C;--bad:#FB923C;--bad-bg:#2E1C10;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E1612;--panel:rgba(20,30,25,.94);--ink:#E6F0E8;--muted:#9FB3A5;--line:#2C3B32;--accent:#6CCB77;--accent-soft:#1A3322;--ok:#4ADE80;--ok-bg:#12291C;--bad:#FB923C;--bad-bg:#2E1C10;color-scheme:dark}
+html,body{direction:rtl}*{box-sizing:border-box}html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;overflow:hidden}
+#stage{position:fixed;inset:0;touch-action:none;user-select:none}
+#cv{width:100%;height:100%;display:block;cursor:grab}#cv:active{cursor:grabbing}
+.top{position:fixed;top:0;inset-inline:0;z-index:5;padding:calc(10px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px));display:grid;gap:8px;justify-items:center;pointer-events:none}
+h1{margin:0;font:800 clamp(1.15rem,3vw,1.6rem)/1.2 var(--display);background:var(--panel);padding:4px 16px;border-radius:99px;box-shadow:0 2px 10px rgba(0,0,0,.12)}
+#crumbs{display:flex;gap:4px;align-items:center;background:var(--panel);border-radius:99px;padding:4px;box-shadow:0 2px 10px rgba(0,0,0,.12);pointer-events:auto;flex-wrap:wrap;justify-content:center}
+#crumbs button{border:0;background:none;color:var(--muted);font:600 .9rem var(--body);padding:5px 12px;border-radius:99px;cursor:pointer}
+#crumbs button.on{background:var(--accent);color:#fff}#crumbs i{color:var(--muted);font-style:normal;font-size:.8rem}
+.side{position:fixed;inset-inline-end:max(12px,env(safe-area-inset-left,0px));top:50%;transform:translateY(-50%);z-index:5;display:grid;gap:6px;justify-items:center;background:var(--panel);border-radius:18px;padding:8px 6px;box-shadow:0 2px 10px rgba(0,0,0,.12)}
+.side button{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--line);background:var(--panel);color:var(--ink);font:700 1.3rem var(--body);cursor:pointer;line-height:1}
+#zr{writing-mode:vertical-lr;direction:rtl;height:min(220px,32vh);width:28px;accent-color:var(--accent)}
+.side small{font-size:.7rem;color:var(--muted)}
+.card{position:fixed;bottom:0;inset-inline:0;z-index:6;margin:0 auto;max-width:620px;padding:0 max(12px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px))}
+.cin{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.15);display:grid;gap:8px;max-height:46vh;overflow:auto}
+.kick{margin:0;font-size:.78rem;font-weight:700;color:var(--accent);letter-spacing:.02em}
+h2{margin:0;font:800 1.3rem/1.3 var(--display)}
+.lead{margin:0}
+.hint{margin:0;font-size:.85rem;color:var(--muted)}
+.parts{display:flex;flex-wrap:wrap;gap:6px}.parts span{font-size:.8rem;border:1px solid var(--line);border-radius:99px;padding:1px 10px;color:var(--muted)}.parts span.got{background:var(--ok-bg);border-color:var(--ok);color:var(--ink)}
+.info{margin:0;background:var(--accent-soft);border-radius:12px;padding:8px 12px}.info b{display:block;font-family:var(--display);font-size:1.05rem}
+.q{display:grid;gap:6px;border-top:1px solid var(--line);padding-top:8px}.q p{margin:0;font-weight:700}
+.opt{text-align:start;border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:12px;padding:8px 12px;font:500 .95rem var(--body);cursor:pointer}.opt.right{border-color:var(--ok);background:var(--ok-bg)}.opt.wrong{border-color:var(--bad);background:var(--bad-bg)}.opt:disabled{cursor:default}
+.fb{margin:0;font-size:.9rem;min-height:1.2em}.fb.ok{color:var(--ok)}.fb.bad{color:var(--bad)}
+.tg{border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:10px;padding:5px 12px;font:600 .88rem var(--body);cursor:pointer;justify-self:start}.tg[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.src{font-size:.75rem;color:var(--muted);margin:0}
+:focus-visible{outline:3px solid #F59F00;outline-offset:2px}
+@media (min-width:900px){.card{inset-inline:auto;inset-inline-start:max(16px,env(safe-area-inset-right,0px));bottom:16px;width:410px;padding:0}.cin{max-height:calc(100vh - 150px)}}
+@media (max-width:600px){.side{top:auto;bottom:auto;top:132px;transform:none}#zr{height:150px}.cin{max-height:40vh}h2{font-size:1.1rem}}
+</style>
+
+<div id="stage"><canvas id="cv" aria-label="نموذج ثلاثي الأبعاد لنبات: كبّر لترى خلاياه"></canvas></div>
+<div class="top"><h1>رحلة إلى داخل النبات</h1><nav id="crumbs" aria-label="مستويات التكبير"></nav></div>
+<div class="side"><button id="zin" type="button" aria-label="تكبير">＋</button><input id="zr" type="range" min="0" max="340" value="0" aria-label="مستوى التكبير"><button id="zout" type="button" aria-label="تصغير">－</button><small>تكبير</small></div>
+<div class="card"><div class="cin" aria-live="polite"><p class="kick" id="kick"></p><h2 id="name"></h2><p class="lead" id="lead"></p><div id="extra"></div><p class="hint" id="hint"></p><p class="src">العلوم · الصف السادس · مدرسة الحافظ بن عساكر الابتدائية · أ. خالد رفيع الحمدي</p></div></div>
+
+<script>
+(()=>{'use strict';document.documentElement.dir='rtl';document.documentElement.lang='ar';
+const $=s=>document.querySelector(s),ar=n=>Number(n).toLocaleString('ar-SA');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const cv=$('#cv'),cx=cv.getContext('2d');let W=0,H=0,DPR=1;
+const fit=()=>{DPR=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);};addEventListener('resize',fit);fit();
+
+/* ===== محرّك صغير ثلاثي الأبعاد ===== */
+const cam={yaw:.5,pitch:.2,dist:10,t:[0,0,0]};let CX0=0,CY0=0;const center=()=>{if(W>=900){CX0=80+(W-80-430)/2;CY0=H*.52;}else{CX0=W/2;CY0=H*.36;}};
+const P=p=>{const cy=Math.cos(cam.yaw),sy=Math.sin(cam.yaw),cp=Math.cos(cam.pitch),sp=Math.sin(cam.pitch);const x=p[0]-cam.t[0],y=p[1]-cam.t[1],z=p[2]-cam.t[2];
+  const x1=x*cy-z*sy,z1=x*sy+z*cy,y2=y*cp-z1*sp,z2=y*sp+z1*cp,d=cam.dist-z2,s=Math.min(W,H)*1.1/Math.max(d,.05);return [CX0+x1*s,CY0-y2*s,d,s];};
+const LT=(()=>{const v=[-.4,.85,.5],n=Math.hypot(...v);return v.map(a=>a/n);})();
+const rgb=h=>{const n=parseInt(h.slice(1),16);return [n>>16&255,n>>8&255,n&255];};
+const col=(h,k)=>{const c=rgb(h).map(v=>Math.max(0,Math.min(255,Math.round(v*k))));return `rgb(${c[0]},${c[1]},${c[2]})`;};
+const sub=(a,b)=>[a[0]-b[0],a[1]-b[1],a[2]-b[2]],crs=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+let Q=[],LB=[],HIT=[];
+const poly=(pts,c,a=1,st=null,tag=null)=>Q.push({k:'p',pts,c,a,st,tag});
+const ball=(p,r,c,a=1,tag=null)=>Q.push({k:'s',p,r,c,a,tag});
+const rod=(p,q,r,c,a=1,tag=null)=>Q.push({k:'l',p,q,r,c,a,tag});
+const label=(p,t)=>LB.push({p,t});
+const clip=(pts,n,c)=>{const o=[];for(let i=0;i<pts.length;i++){const A=pts[i],B=pts[(i+1)%pts.length],da=A[0]*n[0]+A[1]*n[1]+A[2]*n[2]-c,db=B[0]*n[0]+B[1]*n[1]+B[2]*n[2]-c;if(da<=0)o.push(A);if((da<=0)!==(db<=0)){const t=da/(da-db);o.push([A[0]+(B[0]-A[0])*t,A[1]+(B[1]-A[1])*t,A[2]+(B[2]-A[2])*t]);}}return o;};
+const flush=(alpha)=>{const it=[];for(const o of Q){if(o.k==='p'){const pr=o.pts.map(P);if(pr.some(v=>v[2]<.15))continue;o.pr=pr;o.d=pr.reduce((s,v)=>s+v[2],0)/pr.length;const nn=crs(sub(o.pts[1],o.pts[0]),sub(o.pts[2],o.pts[0])),L=Math.hypot(...nn)||1;o.sh=.6+.45*Math.abs((nn[0]*LT[0]+nn[1]*LT[1]+nn[2]*LT[2])/L);}
+    else if(o.k==='s'){o.pr=P(o.p);if(o.pr[2]<.15)continue;o.d=o.pr[2];}else{o.pa=P(o.p);o.pb=P(o.q);if(o.pa[2]<.15||o.pb[2]<.15)continue;o.d=(o.pa[2]+o.pb[2])/2;}it.push(o);}
+  it.sort((a,b)=>b.d-a.d);
+  for(const o of it){cx.globalAlpha=o.a*alpha;let hit=null;
+    if(o.k==='p'){cx.beginPath();o.pr.forEach((v,i)=>i?cx.lineTo(v[0],v[1]):cx.moveTo(v[0],v[1]));cx.closePath();cx.fillStyle=col(o.c,o.sh);cx.fill();if(o.st){cx.strokeStyle=o.st;cx.lineWidth=1;cx.lineJoin='round';cx.stroke();}if(o.tag)hit={tag:o.tag,poly:o.pr};}
+    else if(o.k==='s'){const [x,y,,s]=o.pr,r=o.r*s;if(r<.3)continue;const g=cx.createRadialGradient(x-r*.35,y-r*.4,r*.1,x,y,r);g.addColorStop(0,col(o.c,1.5));g.addColorStop(.6,col(o.c,1));g.addColorStop(1,col(o.c,.6));cx.fillStyle=g;cx.beginPath();cx.arc(x,y,r,0,7);cx.fill();if(o.tag)hit={tag:o.tag,c:[x,y,r]};}
+    else{const w=Math.max(1,o.r*(o.pa[3]+o.pb[3]));cx.strokeStyle=col(o.c,1);cx.lineCap='round';cx.lineWidth=w;cx.beginPath();cx.moveTo(o.pa[0],o.pa[1]);cx.lineTo(o.pb[0],o.pb[1]);cx.stroke();if(o.tag)hit={tag:o.tag,seg:[o.pa,o.pb,w/2+4]};}
+    if(hit&&alpha>.9)HIT.push(hit);}
+  cx.globalAlpha=1;Q=[];};
+const drawLabels=(alpha)=>{cx.globalAlpha=alpha;cx.font='600 13px "IBM Plex Sans Arabic",system-ui,sans-serif';cx.direction='rtl';cx.textBaseline='middle';cx.textAlign='center';
+  for(const l of LB){const [x,y,d]=P(l.p);if(d<.2)continue;const w=cx.measureText(l.t).width+16,lx=Math.min(W-w/2-8,Math.max(w/2+8,x+40)),ly=Math.max(120,y-36);
+    cx.strokeStyle='rgba(255,255,255,.85)';cx.lineWidth=1.4;cx.beginPath();cx.moveTo(x,y);cx.lineTo(lx,ly);cx.stroke();cx.fillStyle='#fff';cx.beginPath();cx.arc(x,y,3.5,0,7);cx.fill();
+    cx.fillStyle='rgba(12,22,16,.88)';cx.beginPath();cx.roundRect?cx.roundRect(lx-w/2,ly-12,w,24,9):cx.rect(lx-w/2,ly-12,w,24);cx.fill();cx.fillStyle='#F2F8F3';cx.fillText(l.t,lx,ly);}cx.globalAlpha=1;LB=[];};
+
+/* أشكال مساعدة */
+const ellip=(c,rx,ry,rz,colr,a,tag,NU=8,NV=10,rot=0)=>{const cr=Math.cos(rot),sr=Math.sin(rot);const S=(u,v)=>{const x=rx*Math.sin(u)*Math.cos(v),y=ry*Math.cos(u),z=rz*Math.sin(u)*Math.sin(v);return [c[0]+x*cr-y*sr,c[1]+x*sr+y*cr,c[2]+z];};
+  for(let i=0;i<NU;i++)for(let j=0;j<NV;j++){const u0=i/NU*Math.PI,u1=(i+1)/NU*Math.PI,v0=j/NV*2*Math.PI,v1=(j+1)/NV*2*Math.PI;poly([S(u0,v0),S(u1,v0),S(u1,v1),S(u0,v1)],colr,a,null,tag);}};
+const box=(x0,y0,z0,x1,y1,z1,colr,a,st,tag,cut=null)=>{const F=[[[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]],[[x0,y0,z0],[x0,y1,z0],[x1,y1,z0],[x1,y0,z0]],[[x0,y0,z0],[x0,y0,z1],[x0,y1,z1],[x0,y1,z0]],[[x1,y0,z0],[x1,y1,z0],[x1,y1,z1],[x1,y0,z1]],[[x0,y1,z0],[x0,y1,z1],[x1,y1,z1],[x1,y1,z0]],[[x0,y0,z0],[x1,y0,z0],[x1,y0,z1],[x0,y0,z1]]];
+  F.forEach(f=>{const p=cut!=null?clip(f,[0,0,1],cut):f;if(p.length>=3)poly(p,colr,a,st,tag);});};
+const HR=(i,k=1)=>{const v=Math.sin(i*12.9898+k*78.233)*43758.5453;return v-Math.floor(v);};
+
+/* ===== المستويات ===== */
+const leafOutline=(L,Wd,n=10)=>{const o=[];for(let i=0;i<=n;i++){const t=i/n;o.push([t*L,Wd*Math.pow(Math.sin(Math.PI*t),.85)]);}for(let i=n-1;i>0;i--){const t=i/n;o.push([t*L,-Wd*Math.pow(Math.sin(Math.PI*t),.85)]);}return o;};
+const LEAVES=[[1.1,0,1.5,.9],[1.7,2.4,1.6,.8],[2.3,.9,1.7,.95],[2.9,3.6,1.5,.8],[3.4,1.9,1.3,.7]];/* ارتفاع، اتجاه، طول، ميل */
+const leafAt=(h,ang,len,tilt,t)=>{const ca=Math.cos(ang),sa=Math.sin(ang),base=[.0,h,0];const pts=leafOutline(len,len*.32).map(([u,v])=>{const lift=u*Math.sin(tilt)*.5-u*u*.12;return [base[0]+ca*u*Math.cos(tilt*.4)-sa*v,base[1]+lift+Math.sin(t*1.5+h)*.02*u,base[2]+sa*u*Math.cos(tilt*.4)+ca*v];});return pts;};
+const FOCUS0=(()=>{const [h,ang,len,tilt]=LEAVES[2];const u=len*.55,lift=u*Math.sin(tilt)*.5-u*u*.12;return [Math.cos(ang)*u*Math.cos(tilt*.4),h+lift,Math.sin(ang)*u*Math.cos(tilt*.4)];})();
+const LV=[
+ {name:'النبات',view:{yaw:.55,pitch:.18},C:[0,2,0],F:FOCUS0,D:11,
+  draw(t){for(let k=0;k<16;k++){const a0=k/16*2*Math.PI,a1=(k+1)/16*2*Math.PI;poly([[0,0,0],[2.4*Math.cos(a0),0,2.4*Math.sin(a0)],[2.4*Math.cos(a1),0,2.4*Math.sin(a1)]],'#8B5E3C',1);}
+   [[.0,-.1,0,-.9,-1.4,.3],[0,-.1,0,.8,-1.2,-.4],[0,-.1,0,.1,-1.7,.6],[-.9,-1.4,.3,-1.3,-2,.5],[.8,-1.2,-.4,1.2,-1.9,-.2]].forEach(([a,b,c,d,e,f])=>rod([a,b,c],[d,e,f],.04,'#C9A27A',.85,'root'));
+   const st=[[0,0,0],[.05,1.2,0],[-.05,2.4,.02],[.03,3.6,0],[0,4.2,0]];for(let i=0;i<st.length-1;i++)rod(st[i],st[i+1],.11-.015*i,'#4F8A2F',1,'stem');
+   LEAVES.forEach(([h,ang,len,tilt],i)=>{const p=leafAt(h,ang,len,tilt,t);poly(p,i===2?'#4CAF50':'#3E9A3E',1,'rgba(30,80,30,.5)','leaf');rod([0,h,0],p[Math.floor(p.length/4)],.02,'#2F6E2A',1);});
+   ball([0,4.35,0],.18,'#F4C430',1,'flower');for(let k=0;k<6;k++){const a=k/6*2*Math.PI;ellip([.32*Math.cos(a),4.35,.32*Math.sin(a)],.22,.08,.12,'#E86FA3',1,'flower',4,6);}
+   label([0,4.6,0],'الزهرة');label(leafAt(...LEAVES[3],t)[5],'الورقة');label([0,1.8,0],'الساق');label([.6,-1.3,-.3],'الجذر');}},
+ {name:'الورقة',view:{yaw:0,pitch:.5},C:[0,0,0],F:[.9,.15,.45],D:9,
+  draw(t){const L=6,Wd=1.9,N=14;const surf=(u,v)=>{const w=Wd*Math.pow(Math.sin(Math.PI*u),.85);return [u*L-L/2,.25*Math.sin(Math.PI*u)-.18*(v*v)+.02*Math.sin(t+u*4),v*w];};
+   for(let i=0;i<N;i++)for(let j=-3;j<3;j++){const u0=i/N,u1=(i+1)/N,v0=j/3,v1=(j+1)/3;poly([surf(u0,v0),surf(u1,v0),surf(u1,v1),surf(u0,v1)],(i+j)%2?'#46A74A':'#4CAF50',1,null,'leaf');}
+   for(let i=0;i<N;i++)rod(surf(i/N,0),surf((i+1)/N,0),.035,'#8BC98A',1);
+   for(let k=1;k<7;k++){const u=k/7.5;[-1,1].forEach(s=>{rod(surf(u,0),surf(u+.08,s*.85),.015,'#8BC98A',1);});}
+   const F=this.F,sq=.22;poly([[F[0]-sq,F[1]+.03,F[2]-sq],[F[0]+sq,F[1]+.03,F[2]-sq],[F[0]+sq,F[1]+.03,F[2]+sq],[F[0]-sq,F[1]+.03,F[2]+sq]],'#FFE066',.45,'#FFF3A3');
+   label(F,'نكبّر هنا');}},
+ {name:'نسيج الورقة',view:{yaw:.45,pitch:.35},C:[0,0,0],F:[0,.9,1.25],D:11,
+  draw(t){const X=6.2,Z=3,EP='#BFE3A0',ST='rgba(40,90,30,.55)';
+   for(let i=0;i<8;i++)for(let k=0;k<4;k++)box(-X/2+i*X/8,1.6,-Z/2+k*Z/4,-X/2+(i+1)*X/8-.03,2,-Z/2+(k+1)*Z/4-.03,EP,1,ST,'tissue');
+   for(let i=0;i<10;i++)for(let k=0;k<4;k++){const x0=-X/2+i*X/10+.04,z0=-Z/2+k*Z/4+.08;box(x0,.25,z0,x0+X/10-.08,1.55,z0+Z/4-.16,'#9ED38A',.95,ST,'tissue');
+     for(let c=0;c<3;c++)ball([x0+.18+(c%2)*.2,.45+c*.4,z0+Z/4-.12],.07,'#2E8B3A',1);}
+   for(let n=0;n<26;n++)ball([-X/2+.4+HR(n,1)*(X-.8),-.6+HR(n,2)*1.1-.3,-Z/2+.3+HR(n,3)*(Z-.6)],.32+HR(n,4)*.12,'#B7DD9C',.95,'tissue');
+   for(let i=0;i<8;i++)for(let k=0;k<4;k++)box(-X/2+i*X/8,-1.75,-Z/2+k*Z/4,-X/2+(i+1)*X/8-.03,-1.4,-Z/2+(k+1)*Z/4-.03,EP,1,ST,'tissue');
+   label([0,.9,1.25],'خلية واحدة');label([2.6,-.6,1.2],'خلايا متراصّة في طبقات');}},
+ {name:'الخلية النباتية',view:{yaw:.5,pitch:.22},C:[0,0,0],F:[0,0,0],D:7.2,
+  draw(t){const cut=S.cut?.05:null;const w=1.25,hh=2.1,dd=1.25;
+   box(-w,-hh,-dd,w,hh,dd,'#7CB85A',cut!=null?.95:.97,'rgba(40,90,30,.7)','wall',cut);
+   box(-w+.1,-hh+.1,-dd+.1,w-.1,hh-.1,dd-.1,'#E3C25A',cut!=null?.7:0,'rgba(180,140,40,.9)','mem',cut);if(cut!=null)box(-w+.28,-hh+.28,-dd+.28,w-.28,hh-.28,dd-.28,'#EEF7D8',.75,null,'cyto',cut);
+   if(cut!=null||S.sel){ellip([.1,-.35,-.1],.85,1.35,.8,'#9FD3F0',.6,'vac',8,12);
+    ellip([-.62,1.2,-.25],.42,.4,.42,'#8F5BD0',1,'nuc',6,10);ball([-.6,1.22,-.05],.14,'#5A2E9A',1,'nuc');
+    for(let n=0;n<11;n++){const a=n/11*2*Math.PI,y=-1.7+HR(n,5)*3.4,x=Math.cos(a)*(.95),z=Math.sin(a)*(.9)*.7-.3;ellip([x,y,z],.26,.12,.14,'#2F9E44',1,'chl',4,6,HR(n,6)*3);}
+    for(let n=0;n<4;n++){const x=-.7+n*.45,y=1.75-n*.9;rod([x-.18,y,-.6+n*.1],[x+.18,y+.08,-.6+n*.1],.08,'#F08C3A',1,'mito');}
+    for(let n=0;n<30;n++)ball([-1+HR(n,7)*2,-1.9+HR(n,8)*3.8,-1+HR(n,9)*1],.03,'#C9B458',.9,'cyto');}
+   if(S.sel){const p=PARTS[S.sel].at;label(p,PARTS[S.sel].n);}}}];
+const PARTS={wall:{n:'الجدار الخلوي',d:'طبقة صلبة تحيط بالغشاء البلازمي، تدعم الخلية النباتية وتعطيها شكلها وتحميها.',at:[1.25,1.2,-.4]},
+ mem:{n:'الغشاء البلازمي',d:'يحيط بالخلية، ويسمح بدخول المواد وخروجها.',at:[1.13,-1.5,-.6]},
+ cyto:{n:'السيتوبلازم',d:'مادة تشبه الهلام فيها كمية كبيرة من الماء، وفيها أجزاء الخلية.',at:[.6,-1.8,-.5]},
+ nuc:{n:'النواة',d:'مركز التحكّم في الخلية، وفيها الكروموسومات.',at:[-.62,1.2,-.25]},
+ vac:{n:'الفجوة',d:'تخزن الماء والغذاء وبعض الفضلات، وهي كبيرة في الخلية النباتية.',at:[.1,-.35,-.1]},
+ chl:{n:'البلاستيدات الخضراء',d:'فيها الكلوروفيل الأخضر الذي يمتص طاقة الضوء لصنع الغذاء.',at:[.95,.2,-.3]},
+ mito:{n:'الميتوكندريا',d:'مصدر طاقة الخلية: تحرر الطاقة من الغذاء.',at:[-.25,1.75,-.6]}};
+const ORG={root:'الجذر: يمتص الماء والأملاح المعدنية من التربة.',stem:'الساق: يدعم النبات ويحمل الأوراق والأزهار.',leaf:'الورقة: من وظائفها القيام بعملية البناء الضوئي.',flower:'الزهرة: عضو التكاثر في بعض أنواع النباتات.',tissue:'مجموعة خلايا متشابهة تقوم بالوظيفة نفسها: نسيج.'};
+const TXT=[{k:'المستوى ١ · مخلوق حي',l:'النبات مخلوق حي عديد الخلايا، له أعضاء: الجذر، والساق، والورقة، والزهرة.',h:'اضغط على أي عضو لتعرف وظيفته، ثم كبّر (＋) لتقترب من الورقة.'},
+ {k:'المستوى ٢ · عضو',l:'الورقة عضو في النبات، ومن وظائفها القيام بعملية البناء الضوئي.',h:'كبّر أكثر لترى ما تتكوّن منه الورقة.'},
+ {k:'المستوى ٣ · نسيج',l:'الورقة مكوّنة من خلايا كثيرة متراصّة في طبقات. والخلايا المتشابهة التي تقوم بالوظيفة نفسها تشكّل نسيجًا.',h:'كبّر أكثر لتدخل إلى خلية واحدة.'},
+ {k:'المستوى ٤ · خلية',l:'الخلية: أصغر جزء في النبات قادر على الحياة. اضغط على أجزائها لتعرفها.',h:'دوّر الخلية بالسحب. اكتشف الأجزاء السبعة.'}];
+
+/* ===== الحالة والتفاعل ===== */
+const S={z:0,zt:0,cut:true,sel:null,got:new Set(),org:null,lastLv:-1,qDone:false,drag:0};
+const crumbs=$('#crumbs');crumbs.innerHTML=LV.map((l,i)=>`${i?'<i>←</i>':''}<button type="button" data-l="${i}">${l.name}</button>`).join('');
+crumbs.querySelectorAll('[data-l]').forEach(b=>b.onclick=()=>{S.zt=+b.dataset.l;});
+const zr=$('#zr');zr.oninput=()=>{S.zt=+zr.value/100;S.z=S.zt;};
+$('#zin').onclick=()=>{S.zt=Math.min(3.4,Math.floor(S.zt+1e-6)+1);};$('#zout').onclick=()=>{S.zt=Math.max(0,Math.ceil(S.zt-1e-6)-1);};
+const lvNow=()=>Math.min(3,Math.max(0,Math.round(S.z-.15)));
+function panel(){const L=lvNow(),T=TXT[L];if(L!==S.lastLv){S.lastLv=L;S.sel=null;S.org=null;$('#kick').textContent=T.k;$('#name').textContent=LV[L].name;$('#lead').textContent=T.l;$('#hint').textContent=T.h;crumbs.querySelectorAll('[data-l]').forEach(b=>b.classList.toggle('on',+b.dataset.l===L));extra();}}
+function extra(){const L=lvNow(),ex=$('#extra');
+  if(L<3){ex.innerHTML=S.org?`<p class="info">${S.org}</p>`:'';return;}
+  ex.innerHTML=`<button class="tg" type="button" id="cut" aria-pressed="${S.cut}">${S.cut?'🔪 الخلية مقطوعة: أغلقها':'🔪 اقطع الخلية لترى داخلها'}</button>
+   ${S.sel?`<p class="info"><b>${PARTS[S.sel].n}</b>${PARTS[S.sel].d}</p>`:''}
+   <div class="parts">${Object.keys(PARTS).map(k=>`<span class="${S.got.has(k)?'got':''}">${S.got.has(k)?'✓ ':''}${PARTS[k].n}</span>`).join('')}</div>
+   <p class="hint" style="margin:0">اكتشفت ${ar(S.got.size)} من ${ar(7)}</p>
+   ${S.got.size>=7||S.qDone?`<div class="q" id="qq"><p>سؤال: لماذا كانت أوراق النبات خضراء؟</p>${['لأن جدار الخلية أخضر','لأن في خلاياها بلاستيدات خضراء فيها الكلوروفيل','لأن الفجوة مملوءة بماء أخضر'].map((o,i)=>`<button class="opt" type="button" data-o="${i}">${o}</button>`).join('')}<p class="fb" id="qfb"></p></div>`:''}`;
+  $('#cut').onclick=()=>{S.cut=!S.cut;extra();};
+  ex.querySelectorAll('[data-o]').forEach(b=>b.onclick=()=>{const i=+b.dataset.o,f=$('#qfb');if(i===1){b.classList.add('right');ex.querySelectorAll('[data-o]').forEach(x=>x.disabled=true);f.className='fb ok';f.innerHTML='صحيح! البلاستيدات الخضراء في خلايا الورقة فيها <b>الكلوروفيل</b>، وهو الذي يكسب النبات لونه الأخضر.';S.qDone=true;}
+    else{b.classList.add('wrong');b.disabled=true;f.className='fb bad';f.textContent=i===0?'اضغط على الجدار الخلوي: هل لونه هو سبب اخضرار الورقة؟ ابحث عن الأجسام الخضراء الصغيرة.':'الفجوة تخزن الماء، ولونها ليس أخضر. ما الأجسام الخضراء داخل الخلية؟';}});}
+
+/* الضغط والسحب */
+const ptr=new Map();let pd=0,moved=0,downAt=[0,0];
+cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);ptr.set(e.pointerId,[e.clientX,e.clientY]);moved=0;downAt=[e.clientX,e.clientY];S.drag=performance.now();});
+cv.addEventListener('pointermove',e=>{if(!ptr.has(e.pointerId))return;const [px,py]=ptr.get(e.pointerId);
+  if(ptr.size===1){cam.yaw-=(e.clientX-px)*.008;cam.pitch=Math.max(-1.1,Math.min(1.35,cam.pitch+(e.clientY-py)*.008));}
+  ptr.set(e.pointerId,[e.clientX,e.clientY]);moved+=Math.abs(e.clientX-px)+Math.abs(e.clientY-py);S.drag=performance.now();
+  if(ptr.size===2){const [a,b]=[...ptr.values()],d=Math.hypot(a[0]-b[0],a[1]-b[1]);if(pd){S.zt=Math.max(0,Math.min(3.4,S.zt+(d-pd)*.006));S.z=S.zt;}pd=d;}});
+const up=e=>{ptr.delete(e.pointerId);pd=0;if(moved<6&&ptr.size===0)tap(e.clientX,e.clientY);};cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',e=>{ptr.delete(e.pointerId);pd=0;});
+cv.addEventListener('wheel',e=>{e.preventDefault();S.zt=Math.max(0,Math.min(3.4,S.zt-Math.sign(e.deltaY)*.12));},{passive:false});
+const inPoly=(x,y,p)=>{let c=false;for(let i=0,j=p.length-1;i<p.length;j=i++){if(((p[i][1]>y)!==(p[j][1]>y))&&(x<(p[j][0]-p[i][0])*(y-p[i][1])/(p[j][1]-p[i][1])+p[i][0]))c=!c;}return c;};
+const dSeg=(x,y,a,b)=>{const vx=b[0]-a[0],vy=b[1]-a[1],t=Math.max(0,Math.min(1,((x-a[0])*vx+(y-a[1])*vy)/((vx*vx+vy*vy)||1)));return Math.hypot(x-a[0]-vx*t,y-a[1]-vy*t);};
+function tap(x,y){let tag=null;for(let i=HIT.length-1;i>=0;i--){const h=HIT[i];if(h.poly&&inPoly(x,y,h.poly)||h.c&&Math.hypot(x-h.c[0],y-h.c[1])<h.c[2]||h.seg&&dSeg(x,y,h.seg[0],h.seg[1])<h.seg[2]){tag=h.tag;break;}}
+  if(!tag)return;const L=lvNow();if(L===3&&PARTS[tag]){if(tag!=='wall'&&tag!=='mem'&&!S.cut)return;S.sel=tag;S.got.add(tag);extra();}else if(L<3&&ORG[tag]){S.org=ORG[tag];extra();}}
+addEventListener('keydown',e=>{if(e.key==='+'||e.key==='='){$('#zin').click();}else if(e.key==='-'){$('#zout').click();}});
+
+/* ===== الحلقة ===== */
+const sm=u=>u<0?0:u>1?1:u*u*(3-2*u);
+const BG=['#DDEFF9','#CFE8F2','#24382C','#0F1C16'];
+function frame(ms){const t=reduce?0:ms/1000;S.z+=(S.zt-S.z)*(reduce?1:.08);if(Math.abs(S.zt-S.z)<.002)S.z=S.zt;zr.value=Math.round(S.z*100);panel();
+  center();cx.setTransform(DPR,0,0,DPR,0,0);const zi=Math.min(3,Math.floor(S.z)),fz=S.z-zi;
+  const g=cx.createLinearGradient(0,0,0,H);const mix=(a,b,k)=>{const A=rgb(a),B=rgb(b);return `rgb(${A.map((v,i)=>Math.round(v+(B[i]-v)*k)).join(',')})`;};
+  const c1=mix(BG[zi],BG[Math.min(3,zi+1)],zi<3?sm((fz-.5)/.5):0);g.addColorStop(0,c1);g.addColorStop(1,mix(BG[zi],'#000000',.25));cx.fillStyle=g;cx.fillRect(0,0,W,H);
+  HIT=[];const idle=performance.now()-S.drag>1800;
+  const passes=[];for(let L=0;L<4;L++){const u=S.z-L;let a=0;if(u>=-.35&&u<0)a=(u+.35)/.35;else if(u>=0&&u<=.65)a=1;else if(u>.65&&u<1&&L<3)a=1-(u-.65)/.35;else if(L===3&&u>=0)a=1;if(a>0)passes.push([L,u,a]);}
+  for(const [L,u,a] of passes){const lv=LV[L],uu=Math.max(-.35,Math.min(1,u));cam.dist=lv.D*Math.pow(.17,Math.max(-.35,L===3?Math.min(u,.4):uu));const k=sm(Math.max(0,Math.min(1,uu/.9)));cam.t=lv.C.map((c,i)=>c+(lv.F[i]-c)*(L===3?0:k));
+    if(idle&&L===lvNow()){const sway=reduce?0:Math.sin(t*.35)*.35;cam.yaw+=(lv.view.yaw+sway-cam.yaw)*.02;cam.pitch+=(lv.view.pitch-cam.pitch)*.02;}
+    lv.draw(t);flush(a);drawLabels(a*(L===lvNow()?1:0));}
+  requestAnimationFrame(frame);}
+requestAnimationFrame(frame);
+})();
+</script>
